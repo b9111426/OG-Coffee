@@ -50,7 +50,7 @@ export default {
 #app {
   text-align: center;
   color: #2c3e50;
-  background-color: lighten($primary, 10%);
+  background-color: lighten($secondary, 10%);
 }
 @keyframes ldio-1p09ol9yjzs {
   0% {
