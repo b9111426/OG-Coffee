@@ -1,26 +1,85 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: '/login',
+    component: () => import('../views/Login.vue')
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: '/',
+    component: () => import('../views/FrontView.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../views/HomeView.vue')
+      },
+      {
+        path: 'products',
+        component: () => import('../views/ProductsView.vue')
+      },
+      {
+        path: 'product/:id',
+        component: () => import('../views/ProductView.vue')
+      },
+      {
+        path: 'coupon',
+        component: () => import('../views/CouponView.vue')
+      },
+      {
+        path: 'about',
+        component: () => import('../views/About.vue')
+      },
+      {
+        path: 'quest',
+        component: () => import('../views/QuestionView.vue')
+      },
+      {
+        path: 'newer',
+        component: () => import('../views/NewUser.vue')
+      },
+      {
+        path: 'cart',
+        component: () => import('../views/CartView.vue')
+      }
+    ]
   },
-];
+  {
+    path: '/admin',
+    component: () => import('../views/Dashboard/DashboardView.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../views/Dashboard/AdminProducts.vue')
+      },
+      {
+        path: 'order',
+        component: () => import('../views/Dashboard/AdminOrder.vue')
+      },
+      {
+        path: 'coupon',
+        component: () => import('../views/Dashboard/AdminCoupon.vue')
+      },
+      {
+        path: 'article',
+        component: () => import('../views/Dashboard/AdminArticle.vue')
+      },
+      {
+        path: 'cart',
+        component: () => import('../views/Dashboard/AdminCart.vue')
+      }
+    ]
+  },
+  {
+    path: '/:patchMatch(.*)*',
+    component: () => import('../views/NotFound.vue')
+  }
+
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-});
+  linkActiveClass: 'active'
+})
 
-export default router;
+export default router
