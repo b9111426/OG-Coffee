@@ -6,27 +6,27 @@
         建立新的產品
       </button>
     </div>
-    <table class="table mt-4">
-      <thead>
-        <tr class="table-light">
-          <th width="120">分類</th>
-          <th>產品名稱</th>
-          <th width="120" class="text-end">原價</th>
-          <th width="120" class="text-end">售價</th>
-          <th width="130" class="text-center">是否啟用</th>
-          <th width="120" class="text-center">編輯</th>
-        </tr>
-      </thead>
-      <tbody v-for="item in products" :key="item.id">
-        <tr>
-          <td>{{ item.category }}</td>
-          <td>{{ item.title }}</td>
-          <td class="text-end">{{ item.origin_price }}</td>
-          <td class="text-end">{{ item.price }}</td>
-          <td>
-            <div class="container">
-              <div class="d-flex flex-row">
-                <div class="form-check form-switch">
+    <div class="card p-3">
+      <table class="table mt-4 table-hover">
+        <thead>
+          <tr class="table-light">
+            <th width="120">分類</th>
+            <th>產品名稱</th>
+            <th width="120" class="text-end">原價</th>
+            <th width="120" class="text-end">售價</th>
+            <th width="130" class="text-center">是否啟用</th>
+            <th width="160" class="text-center">編輯</th>
+          </tr>
+        </thead>
+        <tbody v-for="item in products" :key="item.id">
+          <tr>
+            <td>{{ item.category }}</td>
+            <td>{{ item.title }}</td>
+            <td class="text-end">{{ item.origin_price }}</td>
+            <td class="text-end">{{ item.price }}</td>
+            <td>
+              <div class="container px-3">
+                <div class="form-check d-flex justify-content-between">
                   <input
                     class="form-check-input me-2"
                     type="checkbox"
@@ -38,36 +38,36 @@
                     class="form-check-label"
                     :for="`flexSwitchCheckDefault${item.id}`"
                   >
-                    <span v-if="item.is_enabled" class="text-success"
+                    <span v-if="item.is_enabled" class="text-primary"
                       >啟用</span
                     >
-                    <span v-else>未啟用</span>
+                    <span v-else class="text-secondary">未啟用</span>
                   </label>
                 </div>
               </div>
-            </div>
-          </td>
-          <td>
-            <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm"
-                @click="openModal(false, item)"
-              >
-                編輯
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                @click="openDelModal(item)"
-              >
-                刪除
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+            <td class="text-center">
+              <div class="btn-group">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm"
+                  @click="openModal(false, item)"
+                >
+                  查看細節
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  @click="openDelModal(item)"
+                >
+                  刪除
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- 分頁 -->
