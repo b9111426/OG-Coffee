@@ -11,41 +11,41 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('../views/HomeView.vue')
+        component: () => import('../views/FrontView/HomeView.vue')
       },
       {
         path: 'products',
-        component: () => import('../views/ProductsView.vue')
+        component: () => import('../views/FrontView/ProductsView.vue')
       },
       {
         path: 'product/:id',
-        component: () => import('../views/ProductView.vue')
+        component: () => import('../views/FrontView/ProductView.vue')
       },
       {
         path: 'coupon',
-        component: () => import('../views/CouponView.vue')
+        component: () => import('../views/FrontView/CouponView.vue')
       },
       {
         path: 'about',
-        component: () => import('../views/AboutOG.vue')
+        component: () => import('../views/FrontView/AboutOG.vue')
       },
       {
         path: 'quest',
-        component: () => import('../views/QuestionView.vue')
+        component: () => import('../views/FrontView/QuestionView.vue')
       },
       {
         path: 'newer',
-        component: () => import('../views/NewUser.vue')
+        component: () => import('../views/FrontView/NewUser.vue')
       },
       {
         path: 'cart',
-        component: () => import('../views/CartView.vue')
+        component: () => import('../views/FrontView/CartView.vue')
       }
     ]
   },
   {
     path: '/admin',
-    component: () => import('../views/Dashboard/DashboardView.vue'),
+    component: () => import('../views/DashboardView.vue'),
     children: [
       {
         path: '',
