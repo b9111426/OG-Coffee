@@ -50,6 +50,7 @@ export default {
 #app {
   text-align: center;
   color: #2c3e50;
+  background-color: lighten($primary, 10%);
 }
 @keyframes ldio-1p09ol9yjzs {
   0% {
@@ -77,28 +78,28 @@ export default {
   animation-duration: 0.7575757575757576s;
 }
 .ldio-1p09ol9yjzs > div div:nth-child(1) > div {
-  background: #e15b64;
+  background: #da6a38;
   transform: rotate(0deg);
 }
 .ldio-1p09ol9yjzs > div div:nth-child(2) {
   animation-duration: 1.0101010101010102s;
 }
 .ldio-1p09ol9yjzs > div div:nth-child(2) > div {
-  background: #f47e60;
+  background: #f08437;
   transform: rotate(0deg);
 }
 .ldio-1p09ol9yjzs > div div:nth-child(3) {
   animation-duration: 1.5151515151515151s;
 }
 .ldio-1p09ol9yjzs > div div:nth-child(3) > div {
-  background: #f8b26a;
+  background: #f49c2d;
   transform: rotate(0deg);
 }
 .ldio-1p09ol9yjzs > div div:nth-child(4) {
   animation-duration: 3.0303030303030303s;
 }
 .ldio-1p09ol9yjzs > div div:nth-child(4) > div {
-  background: #abbd81;
+  background: #faca7b;
   transform: rotate(0deg);
 }
 .loadingio-spinner-wedges-rkqu80odf0m {
