@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/LoginView.vue')
   },
   {
     path: '/',
@@ -27,7 +27,7 @@ const routes = [
       },
       {
         path: 'about',
-        component: () => import('../views/About.vue')
+        component: () => import('../views/AboutOG.vue')
       },
       {
         path: 'quest',
@@ -73,7 +73,6 @@ const routes = [
     path: '/:patchMatch(.*)*',
     component: () => import('../views/NotFound.vue')
   }
-
 ]
 
 const router = createRouter({

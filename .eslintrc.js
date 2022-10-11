@@ -25,8 +25,9 @@ module.exports = {
       }
     ],
 
-    quotes: ['error', 'single'], //使用單引號
-    semi: ['error', 'never'], //不使用分號結尾
+    quotes: ['error', 'single'],
+    semi: ['error', 'never'],
+    'vue/multi-word-component-names': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   }
