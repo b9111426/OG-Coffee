@@ -6,8 +6,9 @@
       <div class="container mt-5">
         <div class="d-flex align-items-end">
           <router-link
-            class="navbar-brand fs-2 pb-2"
+            class="navbar-brand frontNavbar-logo"
             style="line-height: 1"
+            title="橘子咖啡"
             to="/"
             >橘子咖啡</router-link
           >
@@ -55,6 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .topHeader .navbar-nav li > a {
   text-transform: capitalize;
   color: #333;
@@ -65,5 +67,13 @@ export default {
     background-color: #333;
     color: #fff;
   }
+}
+.frontNavbar-logo {
+  background: url('~@/assets/images/OG-Coffee.svg') no-repeat center center/
+    100% 100%;
+  width: 100px;
+  height: 48px;
+  position: relative;
+  @include hide-text;
 }
 </style>
