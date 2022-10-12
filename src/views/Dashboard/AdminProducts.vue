@@ -6,27 +6,35 @@
         建立新的產品
       </button>
     </div>
-    <div class="card p-3">
+    <div class="card mt-3 px-3">
       <table class="table mt-4 table-hover">
         <thead>
           <tr class="table-light">
             <th width="120">分類</th>
+            <th width="150" class="text-center">預覽</th>
             <th>產品名稱</th>
             <th width="120" class="text-end">原價</th>
             <th width="120" class="text-end">售價</th>
-            <th width="130" class="text-center">是否啟用</th>
+            <th width="145" class="text-center">是否啟用</th>
             <th width="160" class="text-center">編輯</th>
           </tr>
         </thead>
         <tbody v-for="item in products" :key="item.id">
           <tr>
             <td>{{ item.category }}</td>
+            <td class="text-center">
+              <img
+                class="pre-pic img-thumbnail"
+                :src="item.imageUrl"
+                alt="縮圖"
+              />
+            </td>
             <td>{{ item.title }}</td>
             <td class="text-end">{{ item.origin_price }}</td>
             <td class="text-end">{{ item.price }}</td>
             <td>
-              <div class="container px-3">
-                <div class="form-check d-flex justify-content-between">
+              <div class="container ps-4">
+                <div class="form-check d-flex justify-content-start">
                   <input
                     class="form-check-input me-2"
                     type="checkbox"
@@ -69,9 +77,12 @@
       </table>
     </div>
   </div>
-
   <!-- 分頁 -->
-  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+  <Pagination
+    class="mt-4"
+    :pages="pagination"
+    @emit-pages="getProducts"
+  ></Pagination>
 
   <!-- 刪除產品 -->
   <DelModal
@@ -178,10 +189,19 @@ export default {
     }
   },
   mounted() {
-    this.emitter.emit('loading')
     this.getProducts()
+  },
+  beforeCreated() {
+    this.emitter.emit('loading')
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.pre-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center center;
+}
+</style>
