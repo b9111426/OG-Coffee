@@ -79,7 +79,7 @@
   </div>
   <!-- 分頁 -->
   <Pagination
-    class="mt-4"
+    class="mt-3"
     :pages="pagination"
     @emit-pages="getProducts"
   ></Pagination>

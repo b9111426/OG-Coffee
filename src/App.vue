@@ -8,8 +8,9 @@
           <div><div></div></div>
           <div><div></div></div>
         </div>
-      </div></div
-  ></Loading>
+      </div>
+    </div>
+  </Loading>
   <ToastMessages></ToastMessages>
   <router-view />
 </template>
@@ -29,19 +30,8 @@ export default {
       emitter
     }
   },
-  methods: {
-    loading() {
-      this.isLoading = true
-      setTimeout(() => {
-        this.isLoading = false
-      }, 1000)
-    }
-  },
-  mounted() {
-    emitter.on('loading', () => {
-      this.loading()
-    })
-  }
+  methods: {},
+  mounted() {}
 }
 </script>
 <style lang="scss">

@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading" :z-index="1060"></Loading>
   <img
     class="min-vw-100"
     src="https://images.unsplash.com/photo-1525610553991-2bede1a236e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
@@ -10,10 +11,16 @@
 export default {
   inject: ['emitter'],
   data() {
-    return {}
+    return {
+      isLoading: false
+    }
+  },
+  beforeCreate() {
+    this.isLoading = true
   },
   mounted() {
     this.emitter.emit('loading')
+    this.isLoading = false
   }
 }
 </script>
