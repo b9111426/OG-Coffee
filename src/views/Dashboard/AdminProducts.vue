@@ -197,7 +197,8 @@ export default {
   },
   created() {
     this.$store.dispatch('handLoading', true)
-  }
+  },
+  computed: {}
 }
 </script>
 

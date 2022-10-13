@@ -1,36 +1,39 @@
 import { createStore } from 'vuex'
-//import { apiGetAdminProducts } from '../api'
-import { apiGetData } from '../api/index'
-
+import axios from 'axios'
 export default createStore({
   state: {
     isLoading: false,
-    products: [],
-    pagination: {}
+    isLogin: false
   },
   actions: {
     handLoading({ commit }, payload) {
       commit('handLoadState', payload)
     },
-    handAdminProducts() {
-      apiGetData().then((res) => console.log(res.data))
+    handLogin({ commit }, userInfo) {
+      axios
+        .post(`${process.env.VUE_APP_API}admin/signin`, userInfo)
+        .then((res) => {
+          const { token, expired } = res.data
+          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+          commit('handLoginState', true)
+        })
+        .catch(() => {})
     }
   },
   mutations: {
     handLoadState(state, boolean) {
       state.isLoading = boolean
+    },
+    handLoginState(state, boolean) {
+      state.isLogin = boolean
     }
-    //handAdminProductsState(state, data) {
-    //  state.products = data
-    //  //state.pagination = data.pagination
-    //}
   },
   getters: {
     isLoading(state) {
       return state.isLoading
+    },
+    isLogin(state) {
+      return state.isLogin
     }
-    //getAdminProducts(state) {
-    //  return state.products
-    //}
   }
 })

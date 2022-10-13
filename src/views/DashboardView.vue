@@ -7,7 +7,6 @@
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
-
 export default {
   inject: ['emitter'],
   data() {
@@ -24,7 +23,6 @@ export default {
   },
   methods: {
     checkLogin() {
-      this.$store.dispatch('handLoading', false)
       const token = document.cookie.replace(
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
@@ -52,9 +50,6 @@ export default {
         this.$router.push('/login')
       }
     }
-  },
-  created() {
-    this.$store.dispatch('handLoading', true)
   }
 }
 </script>

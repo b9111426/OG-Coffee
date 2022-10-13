@@ -51,6 +51,7 @@
           </form>
         </div>
         <p class="mt-3 mb-3 text-muted">&copy; 2022 - 傑瑞</p>
+        <p>{{ isLogin }}</p>
       </div>
     </div>
   </div>
@@ -69,21 +70,34 @@ export default {
   },
   methods: {
     signIn() {
-      const api = `${process.env.VUE_APP_API}admin/signin`
-      this.$http
-        .post(api, this.user)
-        .then((res) => {
-          const { token, expired } = res.data
-          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
-          this.$httpMessageState(res, '登入')
-          this.$router.push('/admin')
-        })
-        .catch(() => {
-          this.emitter.emit('push-message', {
-            style: 'danger',
-            title: '發生錯誤'
-          })
-        })
+      this.$store.dispatch('handLogin', this.user)
+      //const api = `${process.env.VUE_APP_API}admin/signin`
+      //this.$http
+      //  .post(api, this.user)
+      //  .then((res) => {
+      //    const { token, expired } = res.data
+      //    document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+      //    this.$httpMessageState(res, '登入')
+      //    this.$router.push('/admin')
+      //  })
+      //  .catch(() => {
+      //    this.emitter.emit('push-message', {
+      //      style: 'danger',
+      //      title: '發生錯誤'
+      //    })
+      //  })
+    },
+    pushAddress() {
+      this.$router.push('/admin')
+    }
+  },
+  computed: {
+    isLogin() {
+      const state = this.$store.getters.isLogin
+      //if (state) {
+      //  this.pushAddress()
+      //}
+      return state
     }
   }
 }
