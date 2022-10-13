@@ -35,12 +35,16 @@ export default {
         `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       ).then((res) => {
         this.products = res.data.products
+        this.$store.dispatch('handLoading', false)
       })
     }
   },
   mounted() {
     this.emitter.emit('loading')
     this.getProducts()
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
   }
 }
 </script>

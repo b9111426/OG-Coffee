@@ -51,6 +51,9 @@ export default {
         this.$router.push('/login')
       }
     }
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
   }
 }
 </script>

@@ -106,6 +106,7 @@ export default {
         .then((response) => {
           this.orders = response.data.orders
           this.pagination = response.data.pagination
+          this.$store.dispatch('handLoading', false)
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息')
@@ -159,6 +160,9 @@ export default {
   mounted() {
     this.emitter.emit('loading')
     this.getOrders()
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
   }
 }
 </script>

@@ -2,6 +2,7 @@ body{
   font-family: 'Noto Sans TC',-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",Roboto,"Helvetica Neue",Arial,sans-serif;
 
   font-weight: 300;
+  background-color: lighten($secondary, 10%);
 }
 thead>tr>th{
   border: none;

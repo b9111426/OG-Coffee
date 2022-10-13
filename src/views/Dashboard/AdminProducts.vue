@@ -131,6 +131,7 @@ export default {
         .then((res) => {
           this.products = res.data.products
           this.pagination = res.data.pagination
+          this.$store.dispatch('handLoading', false)
         })
         .catch((err) => {
           alert(err.data.message)
@@ -193,6 +194,9 @@ export default {
   },
   beforeCreated() {
     this.emitter.emit('loading')
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
   }
 }
 </script>

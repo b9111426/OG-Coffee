@@ -11,6 +11,9 @@ import FrontNavbar from '@/components/FrontNavbar.vue'
 export default {
   components: {
     FrontNavbar
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
   }
 }
 </script>

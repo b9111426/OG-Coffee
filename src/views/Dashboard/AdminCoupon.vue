@@ -119,6 +119,7 @@ export default {
         .get(url, this.tempProduct)
         .then((response) => {
           this.coupons = response.data.coupons
+          this.$store.dispatch('handLoading', false)
         })
         .catch((err) => {
           this.$httpMessageState(err.response, '錯誤訊息')
@@ -160,6 +161,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch('handLoading', true)
     this.emitter.emit('loading')
     this.getCoupons()
   }
