@@ -75,5 +75,10 @@ export default {
   height: 48px;
   position: relative;
   @include hide-text;
+  &:active,
+  &:hover {
+    -webkit-animation: jello-horizontal 0.4s both ease-in-out;
+    animation: jello-horizontal 0.4s both ease-in-out;
+  }
 }
 </style>

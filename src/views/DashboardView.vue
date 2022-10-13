@@ -24,6 +24,7 @@ export default {
   },
   methods: {
     checkLogin() {
+      this.$store.dispatch('handLoading', false)
       const token = document.cookie.replace(
         /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'

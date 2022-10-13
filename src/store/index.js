@@ -1,22 +1,36 @@
 import { createStore } from 'vuex'
+//import { apiGetAdminProducts } from '../api'
+import { apiGetData } from '../api/index'
 
 export default createStore({
   state: {
-    isLoading: false
+    isLoading: false,
+    products: [],
+    pagination: {}
   },
   actions: {
-    handLoading(context, payload) {
-      context.commit('handLoadState', payload)
+    handLoading({ commit }, payload) {
+      commit('handLoadState', payload)
+    },
+    handAdminProducts() {
+      apiGetData().then((res) => console.log(res.data))
     }
   },
   mutations: {
-    handLoadState(state, payload) {
-      state.isLoading = payload
+    handLoadState(state, boolean) {
+      state.isLoading = boolean
     }
+    //handAdminProductsState(state, data) {
+    //  state.products = data
+    //  //state.pagination = data.pagination
+    //}
   },
   getters: {
     isLoading(state) {
       return state.isLoading
     }
+    //getAdminProducts(state) {
+    //  return state.products
+    //}
   }
 })
