@@ -45,27 +45,27 @@ const routes = [
   },
   {
     path: '/admin',
-    component: () => import('../views/DashboardView.vue'),
+    component: () => import('../views/AdminView.vue'),
     children: [
       {
         path: '',
-        component: () => import('../views/Dashboard/AdminProducts.vue')
+        component: () => import('../views/AdminView/AdminProducts.vue')
       },
       {
         path: 'order',
-        component: () => import('../views/Dashboard/AdminOrder.vue')
+        component: () => import('../views/AdminView/AdminOrder.vue')
       },
       {
         path: 'coupon',
-        component: () => import('../views/Dashboard/AdminCoupon.vue')
+        component: () => import('../views/AdminView/AdminCoupon.vue')
       },
       {
         path: 'article',
-        component: () => import('../views/Dashboard/AdminArticle.vue')
+        component: () => import('../views/AdminView/AdminArticle.vue')
       },
       {
         path: 'cart',
-        component: () => import('../views/Dashboard/AdminCart.vue')
+        component: () => import('../views/AdminView/AdminCart.vue')
       }
     ]
   },
