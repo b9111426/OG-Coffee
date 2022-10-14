@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { apiGetData } from '@/api'
+import { apiSignInRequest } from '@/api'
 export default {
   inject: ['emitter'],
   data() {
@@ -89,12 +89,12 @@ export default {
   },
   methods: {
     signIn() {
-      apiGetData(this.user)
+      apiSignInRequest(this.user)
         .then((res) => {
           const { token, expired } = res.data
           document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
           this.$httpMessageState(res, '登入')
-          //this.$router.push('/admin')
+          this.$router.push('/admin')
         })
         .catch(() => {
           this.emitter.emit('push-message', {
@@ -131,8 +131,12 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('handLoading', false)
     this.isSave = JSON.parse(localStorage.getItem('isSave'))
     this.user = JSON.parse(localStorage.getItem('OGCoffeeUser'))
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
   }
 }
 </script>
