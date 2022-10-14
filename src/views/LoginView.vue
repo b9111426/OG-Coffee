@@ -34,8 +34,9 @@
               <input
                 class="form-check-input me-2"
                 type="checkbox"
-                value=""
                 id="loginChecked"
+                @input="saveCode"
+                :checked="isSave"
               />
               <label class="form-check-label" for="loginChecked">
                 記住我
@@ -50,14 +51,14 @@
             </button>
           </form>
         </div>
-        <p class="mt-3 mb-3 text-muted">&copy; 2022 - 傑瑞</p>
-        <p>{{ isLogin }}</p>
+        <p class="mt-3 mb-3 text-muted">&copy; 2022 - OG Coffee</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { apiGetData } from '@/api'
 export default {
   inject: ['emitter'],
   data() {
@@ -65,12 +66,13 @@ export default {
       user: {
         username: '',
         password: ''
-      }
+      },
+      isSave: false
     }
   },
   methods: {
     signIn() {
-      this.$store.dispatch('handLogin', this.user)
+      //this.$store.dispatch('signIn', this.user)
       //const api = `${process.env.VUE_APP_API}admin/signin`
       //this.$http
       //  .post(api, this.user)
@@ -87,18 +89,20 @@ export default {
       //    })
       //  })
     },
-    pushAddress() {
-      this.$router.push('/admin')
+    saveCode() {
+      this.isSave = !this.isSave
+      if (this.isSave) {
+        localStorage.setItem('OGCoffeePass', JSON.stringify(this.user))
+        localStorage.setItem('isSave', JSON.stringify(true))
+      } else {
+        localStorage.setItem('isSave', JSON.stringify(false))
+      }
     }
   },
-  computed: {
-    isLogin() {
-      const state = this.$store.getters.isLogin
-      //if (state) {
-      //  this.pushAddress()
-      //}
-      return state
-    }
+  mounted() {
+    apiGetData(30).then((res) => console.log(res.data.results))
+    //this.isSave = JSON.parse(localStorage.getItem('isSave'))
+    //this.user = JSON.parse(localStorage.getItem('OGCoffeePass'))
   }
 }
 </script>
