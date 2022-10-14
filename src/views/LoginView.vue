@@ -74,7 +74,6 @@
 </template>
 
 <script>
-import { apiSignInRequest } from '@/api'
 export default {
   inject: ['emitter'],
   data() {
@@ -90,7 +89,7 @@ export default {
   methods: {
     async signIn() {
       try {
-        const res = await apiSignInRequest(this.user)
+        const res = await this.$store.dispatch('signInRequest', this.user)
         const { token, expired } = res.data
         document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
         this.$httpMessageState(res, '登入')
