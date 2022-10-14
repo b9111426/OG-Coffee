@@ -1,2 +1,2 @@
-import { getDataRequest } from './getDataRequest'
-export const apiGetData = getDataRequest
+import { signInRequest } from './signInRequest'
+export const apiSignInRequest = signInRequest
