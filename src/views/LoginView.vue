@@ -26,13 +26,24 @@
             </div>
             <div class="form-floating">
               <input
-                type="password"
-                class="form-control"
+                :type="isIconShow ? 'password' : 'type'"
+                class="form-control position-relative"
                 id="password"
                 placeholder="Password"
                 v-model="user.password"
                 required
               />
+              <span
+                class="eyeIcon position-absolute top-0 end-0 mt-2 me-3"
+                @click="switchIcon"
+              >
+                <i v-show="!isIconShow" class="bi bi-eye text-primary fs-4"></i>
+                <i
+                  v-show="isIconShow"
+                  class="bi bi-eye-slash text-primary fs-4"
+                ></i>
+              </span>
+
               <label for="password">Password</label>
             </div>
             <div class="form-check my-3 d-flex justify-content-start">
@@ -72,7 +83,8 @@ export default {
         username: '',
         password: ''
       },
-      isSave: false
+      isSave: true,
+      isIconShow: true
     }
   },
   methods: {
@@ -103,6 +115,9 @@ export default {
         }
         localStorage.setItem('OGCoffeeUser', JSON.stringify(this.user))
       }
+    },
+    switchIcon() {
+      this.isIconShow = !this.isIconShow
     }
   },
   watch: {
@@ -128,5 +143,8 @@ export default {
   max-width: 330px;
   padding: 15px;
   margin: auto;
+}
+.eyeIcon {
+  cursor: pointer;
 }
 </style>
