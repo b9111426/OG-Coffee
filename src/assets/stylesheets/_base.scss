@@ -4,7 +4,19 @@ body{
   font-weight: 300;
   background-color: lighten($secondary, 10%);
 }
-thead>tr>th{
+thead th,tbody:last-child td{
   border: none;
+}
+thead th:first-child{
+  border-radius: 7px 0 0 0;
+}
+thead th:last-child{
+  border-radius: 0 7px 0 0;
+}
+tbody:last-child td:first-child{
+  border-radius: 0 0 0 7px;
+}
+tbody:last-child td:last-child{
+  border-radius: 0 0  7px 0;
 }
 @include jello-effect;
