@@ -6,7 +6,12 @@
       <div class="row justify-content-center">
         <h1 class="h2 mb-3 font-weight-normal">後台管理中心</h1>
         <div class="col-8">
-          <form id="form" class="form-signin" @submit.prevent="login">
+          <form
+            id="form"
+            class="form-signin"
+            @submit.prevent="login"
+            ref="siginForm"
+          >
             <div class="form-floating mb-3">
               <input
                 type="email"
@@ -72,37 +77,47 @@ export default {
   },
   methods: {
     signIn() {
-      //this.$store.dispatch('signIn', this.user)
-      //const api = `${process.env.VUE_APP_API}admin/signin`
-      //this.$http
-      //  .post(api, this.user)
-      //  .then((res) => {
-      //    const { token, expired } = res.data
-      //    document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
-      //    this.$httpMessageState(res, '登入')
-      //    this.$router.push('/admin')
-      //  })
-      //  .catch(() => {
-      //    this.emitter.emit('push-message', {
-      //      style: 'danger',
-      //      title: '發生錯誤'
-      //    })
-      //  })
+      apiGetData(this.user)
+        .then((res) => {
+          const { token, expired } = res.data
+          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+          this.$httpMessageState(res, '登入')
+          //this.$router.push('/admin')
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '發生錯誤'
+          })
+        })
     },
     saveCode() {
       this.isSave = !this.isSave
+      localStorage.setItem('isSave', JSON.stringify(this.isSave))
       if (this.isSave) {
-        localStorage.setItem('OGCoffeePass', JSON.stringify(this.user))
-        localStorage.setItem('isSave', JSON.stringify(true))
+        localStorage.setItem('OGCoffeeUser', JSON.stringify(this.user))
       } else {
-        localStorage.setItem('isSave', JSON.stringify(false))
+        this.user = {
+          username: '',
+          password: ''
+        }
+        localStorage.setItem('OGCoffeeUser', JSON.stringify(this.user))
       }
     }
   },
+  watch: {
+    user: {
+      handler() {
+        if (this.isSave) {
+          localStorage.setItem('OGCoffeeUser', JSON.stringify(this.user))
+        }
+      },
+      deep: true
+    }
+  },
   mounted() {
-    apiGetData(30).then((res) => console.log(res.data.results))
-    //this.isSave = JSON.parse(localStorage.getItem('isSave'))
-    //this.user = JSON.parse(localStorage.getItem('OGCoffeePass'))
+    this.isSave = JSON.parse(localStorage.getItem('isSave'))
+    this.user = JSON.parse(localStorage.getItem('OGCoffeeUser'))
   }
 }
 </script>

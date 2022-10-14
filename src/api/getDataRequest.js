@@ -1,5 +1,4 @@
 import axios from 'axios'
 
-export const getDataRequest = (num) => {
-  return axios.get(`https://randomuser.me/api/?results=${num}`)
-}
+export const getDataRequest = (userInfo) =>
+  axios.post(`${process.env.VUE_APP_API}admin/signin`, userInfo)
