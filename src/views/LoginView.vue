@@ -88,20 +88,20 @@ export default {
     }
   },
   methods: {
-    signIn() {
-      apiSignInRequest(this.user)
-        .then((res) => {
-          const { token, expired } = res.data
-          document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
-          this.$httpMessageState(res, '登入')
-          this.$router.push('/admin')
+    async signIn() {
+      try {
+        const res = await apiSignInRequest(this.user)
+        const { token, expired } = res.data
+        document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
+        this.$httpMessageState(res, '登入')
+        this.$router.push('/admin')
+      } catch (err) {
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '發生錯誤'
         })
-        .catch(() => {
-          this.emitter.emit('push-message', {
-            style: 'danger',
-            title: '發生錯誤'
-          })
-        })
+        throw new Error(err.message)
+      }
     },
     saveCode() {
       this.isSave = !this.isSave
@@ -133,7 +133,12 @@ export default {
   mounted() {
     this.$store.dispatch('handLoading', false)
     this.isSave = JSON.parse(localStorage.getItem('isSave'))
-    this.user = JSON.parse(localStorage.getItem('OGCoffeeUser'))
+    const userInfo = JSON.parse(localStorage.getItem('OGCoffeeUser'))
+    if (userInfo === null) {
+      return
+    } else {
+      this.user = JSON.parse(localStorage.getItem('OGCoffeeUser'))
+    }
   },
   created() {
     this.$store.dispatch('handLoading', true)
