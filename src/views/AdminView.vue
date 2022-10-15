@@ -7,8 +7,8 @@
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
+import { apiCheckRequest } from '@/api'
 export default {
-  inject: ['emitter'],
   data() {
     return {
       checkSuccess: false
@@ -18,35 +18,25 @@ export default {
     AdminNavbar
   },
   mounted() {
-    this.emitter.emit('loading')
+    this.$store.dispatch('handLoading', true)
     this.checkLogin()
   },
   methods: {
-    checkLogin() {
+    async checkLogin() {
       const token = document.cookie.replace(
         /(?:(?:^|.*;\s*)ogCoffeeToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
       if (token) {
-        this.$http.defaults.headers.common.Authorization = token
-        const api = `${process.env.VUE_APP_API}api/user/check`
-        this.$http
-          .post(api, { api_token: this.token })
-          .then(() => {
-            this.checkSuccess = true
-          })
-          .catch(() => {
-            this.emitter.emit('push-message', {
-              style: 'danger',
-              title: '請先登入'
-            })
-            this.$router.push('/login')
-          })
+        try {
+          await apiCheckRequest(token)
+          this.checkSuccess = true
+        } catch (err) {
+          this.$store.dispatch('fireToast', { res: err.response })
+          this.$router.push('/login')
+        }
       } else {
-        this.emitter.emit('push-message', {
-          style: 'danger',
-          title: '請先登入'
-        })
+        this.$store.dispatch('fireToast', { title: '請先登入' })
         this.$router.push('/login')
       }
     }

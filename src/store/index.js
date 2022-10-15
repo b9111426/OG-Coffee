@@ -5,7 +5,6 @@ import Orders from './Orders/index'
 import Coupon from './Coupon/index'
 import Cart from './Cart/index'
 import Articles from './Articles/index'
-import Sigin from './Sigin/index'
 import Components from './Components/index'
 
 export default createStore({
@@ -19,7 +18,6 @@ export default createStore({
     Coupon,
     Cart,
     Articles,
-    Sigin,
     Components
   }
 })

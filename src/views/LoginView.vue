@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { apiSignInRequest } from '@/api'
 export default {
   data() {
     return {
@@ -82,8 +83,12 @@ export default {
   },
   methods: {
     async signIn() {
+      if (this.user.username === '' || this.user.password === '') {
+        this.$store.dispatch('fireToast', { title: '請先填入資料' })
+        return
+      }
       try {
-        const res = await this.$store.dispatch('signInRequest', this.user)
+        const res = await apiSignInRequest(this.user)
         const { token, expired } = res.data
         document.cookie = `ogCoffeeToken=${token}; expires=${new Date(expired)}`
         this.$store.dispatch('fireToast', { res, title: '登入' })

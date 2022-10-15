@@ -2,36 +2,34 @@
   <div
     class="toast-container position-fixed pe-3 pt-3 top-0 end-0"
     style="z-index: 1500"
-    ref="toast"
   >
     <div
-      v-for="(msg, key) in messages"
-      :key="key"
+      v-for="(i, idx) in messages"
+      :key="i.id"
       class="toast show slide-in-blurred-right"
-      :class="`toast${key}`"
       role="alert"
     >
       <div class="toast-header">
         <i
-          v-if="msg.style === 'success'"
-          :class="`text-${msg.style}`"
+          v-if="i.style === 'success'"
+          :class="`text-${i.style}`"
           class="bi bi-check-square-fill fs-3 me-2"
         ></i>
         <i
           v-else
-          :class="`text-${msg.style}`"
+          :class="`text-${i.style}`"
           class="bi bi-exclamation-square-fill fs-3 me-2"
         ></i>
-        <strong class="me-auto">{{ msg.title }}</strong>
+        <strong class="me-auto">{{ i.title }}</strong>
         <button
           type="button"
           class="btn-close"
-          @click="clearToast(key)"
+          @click="clearToast(idx)"
           aria-label="Close"
         ></button>
       </div>
-      <div class="toast-body" v-if="msg.content">
-        {{ msg.content }}
+      <div class="toast-body" v-if="i.content">
+        {{ i.content }}
       </div>
     </div>
   </div>
@@ -49,7 +47,7 @@ export default {
     toastAutoClear() {
       setTimeout(() => {
         this.messages.shift()
-      }, 4000)
+      }, 3000)
     },
     clearToast(index) {
       this.messages.splice(index, 1)
@@ -58,8 +56,8 @@ export default {
   mounted() {
     emitter.on('push-message', (message) => {
       // 接收資料
-      const { style, title, content } = message
-      this.messages.push({ style, title, content })
+      const { style, title, content, id } = message
+      this.messages.push({ style, title, content, id })
       this.toastAutoClear()
     })
   }
