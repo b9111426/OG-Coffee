@@ -24,7 +24,7 @@ export default {
   methods: {
     checkLogin() {
       const token = document.cookie.replace(
-        /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+        /(?:(?:^|.*;\s*)ogCoffeeToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
       if (token) {

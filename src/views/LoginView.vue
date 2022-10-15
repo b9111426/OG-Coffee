@@ -6,12 +6,7 @@
       <div class="row justify-content-center">
         <h1 class="h2 mb-3 font-weight-normal">後台管理中心</h1>
         <div class="col-8">
-          <form
-            id="form"
-            class="form-signin"
-            @submit.prevent="login"
-            ref="siginForm"
-          >
+          <form id="form" class="form-signin" @submit.prevent="login">
             <div class="form-floating mb-3">
               <input
                 type="email"
@@ -26,7 +21,7 @@
             </div>
             <div class="form-floating">
               <input
-                :type="isIconShow ? 'password' : 'type'"
+                :type="isEyeShow ? 'password' : 'type'"
                 class="form-control position-relative"
                 id="password"
                 placeholder="Password"
@@ -37,9 +32,9 @@
                 class="eyeIcon position-absolute top-0 end-0 mt-2 me-3"
                 @click="switchIcon"
               >
-                <i v-show="!isIconShow" class="bi bi-eye text-primary fs-4"></i>
+                <i v-show="!isEyeShow" class="bi bi-eye text-primary fs-4"></i>
                 <i
-                  v-show="isIconShow"
+                  v-show="isEyeShow"
                   class="bi bi-eye-slash text-primary fs-4"
                 ></i>
               </span>
@@ -75,7 +70,6 @@
 
 <script>
 export default {
-  inject: ['emitter'],
   data() {
     return {
       user: {
@@ -83,7 +77,7 @@ export default {
         password: ''
       },
       isSave: true,
-      isIconShow: true
+      isEyeShow: true
     }
   },
   methods: {
@@ -91,14 +85,11 @@ export default {
       try {
         const res = await this.$store.dispatch('signInRequest', this.user)
         const { token, expired } = res.data
-        document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
-        this.$httpMessageState(res, '登入')
+        document.cookie = `ogCoffeeToken=${token}; expires=${new Date(expired)}`
+        this.$store.dispatch('fireToast', { res, title: '登入' })
         this.$router.push('/admin')
       } catch (err) {
-        this.emitter.emit('push-message', {
-          style: 'danger',
-          title: '發生錯誤'
-        })
+        this.$store.dispatch('fireToast', { res: err.response })
         throw new Error(err.message)
       }
     },
@@ -116,7 +107,7 @@ export default {
       }
     },
     switchIcon() {
-      this.isIconShow = !this.isIconShow
+      this.isEyeShow = !this.isEyeShow
     }
   },
   watch: {

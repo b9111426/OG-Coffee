@@ -1,12 +1,13 @@
 <template>
   <div
-    class="toast-container position-fixed pe-3 top-0 end-0"
+    class="toast-container position-fixed pe-3 pt-3 top-0 end-0"
     style="z-index: 1500"
+    ref="toast"
   >
     <div
       v-for="(msg, key) in messages"
       :key="key"
-      class="toast show"
+      class="toast show slide-in-blurred-right"
       :class="`toast${key}`"
       role="alert"
     >
@@ -37,15 +38,15 @@
 </template>
 
 <script>
+import emitter from '@/libs/emitter'
 export default {
   data() {
     return {
       messages: []
     }
   },
-  inject: ['emitter'],
   methods: {
-    toastShow() {
+    toastAutoClear() {
       setTimeout(() => {
         this.messages.shift()
       }, 4000)
@@ -55,11 +56,11 @@ export default {
     }
   },
   mounted() {
-    this.emitter.on('push-message', (message) => {
+    emitter.on('push-message', (message) => {
       // 接收資料
-      const { style = 'success', title, content } = message
+      const { style, title, content } = message
       this.messages.push({ style, title, content })
-      this.toastShow()
+      this.toastAutoClear()
     })
   }
 }
