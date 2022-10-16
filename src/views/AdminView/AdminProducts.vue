@@ -142,45 +142,49 @@ export default {
       const productComponent = this.$refs.productModal
       productComponent.openModal()
     },
-    updateProduct(product) {
-      this.emitter.emit('loading')
-      this.tempProduct = product
-      let url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
-      let method = 'post'
-      if (!this.isNew) {
-        url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
-        method = 'put'
-      }
+    async updateProduct(product) {
       const productComponent = this.$refs.productModal
-      this.$http[method](url, { data: this.tempProduct })
-        .then((res) => {
-          productComponent.hideModal()
-          this.$httpMessageState(res, '更新付款狀態')
-          this.getProducts(this.currentPage)
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
+      this.tempProduct = product
+
+      try {
+        let res = null
+        if (!this.isNew) {
+          res = await this.$store.dispatch(
+            'Products/modifyProduct',
+            this.tempProduct.id
+          )
+        }
+
+        res = await this.$store.dispatch(
+          'Products/addProduct',
+          this.tempProduct
+        )
+
+        productComponent.hideModal()
+        this.$store.dispatch('fireToast', { res })
+        this.getProducts(this.currentPage)
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
     },
     openDelModal(item) {
       this.tempProduct = { ...item }
       const delComponent = this.$refs.delModal
       delComponent.openModal()
     },
-    delProduct() {
-      const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
-      this.$http
-        .delete(url)
-        .then((res) => {
-          const delComponent = this.$refs.delModal
-          this.emitter.emit('loading')
-          delComponent.hideModal()
-          this.$httpMessageState(res, res.data.message)
-          this.getProducts(this.currentPage)
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
+    async delProduct() {
+      try {
+        const res = await this.$store.dispatch(
+          'Products/delProduct',
+          this.tempProduct.id
+        )
+        const delComponent = this.$refs.delModal
+        delComponent.hideModal()
+        this.$store.dispatch('fireToast', { res })
+        this.getProducts(this.currentPage)
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
     }
   },
   mounted() {

@@ -13,6 +13,19 @@ export const checkRequest = (token) => {
   return axios.post(`${process.env.VUE_APP_API}api/user/check`)
 }
 
-export const pageRequest = (page) => adminApi.get(`/products/?page=${page}`)
+export const productPageRequest = (page) =>
+  adminApi.get(`/products/?page=${page}`)
 
-export const deleteRequest = () => {}
+export const delProductRequest = (id) => adminApi.delete(`/product/${id}`)
+
+export const upLoadRequest = (formData) =>
+  adminApi.post('/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+
+export const modifyProductRequest = (id) => adminApi.put(`/product/${id}`)
+
+export const addProductRequest = (product) =>
+  adminApi.post('/product', { data: product })

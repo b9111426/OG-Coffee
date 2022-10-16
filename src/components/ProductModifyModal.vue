@@ -2,12 +2,14 @@
   <div
     id="productModal"
     ref="modal"
-    class="modal fade"
+    class="modal scale-in-center"
     tabindex="-1"
     aria-labelledby="productModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl modal-dialog-scrollable text-start">
+    <div
+      class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable text-start"
+    >
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
           <h5 id="productModalLabel" class="modal-title">
@@ -16,7 +18,7 @@
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close bg-gray me-1"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
@@ -36,10 +38,13 @@
               <div class="mb-3">
                 <label for="customFile" class="form-label"
                   >或 上傳圖片
-                  <i
-                    class="fas fa-spinner fa-spin"
+                  <div
                     v-if="status.fileUploading"
-                  ></i>
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                 </label>
                 <input
                   type="file"
@@ -49,42 +54,48 @@
                   @change="uploadFile"
                 />
               </div>
-              <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
+              <img
+                class="img-fluid img-thumbnail"
+                :class="tempProduct.imageUrl ? 'img-thumbnail' : ''"
+                :src="tempProduct.imageUrl"
+                alt=""
+              />
 
               <div class="mb-3">
                 <h3>多圖設置</h3>
-                <div v-if="Array.isArray(tempProduct.imagesUrl)">
+                <div v-if="Array.isArray(tempProduct.imageUrl)">
                   <template
-                    v-for="(img, key) in tempProduct.imagesUrl"
+                    v-for="(img, key) in tempProduct.imageUrl"
                     :key="key + '21345'"
                   >
                     <input
                       type="text"
                       class="form-control"
-                      v-model="tempProduct.imagesUrl[key]"
+                      v-model="tempProduct.imageUrl[key]"
                       placeholder="請輸入圖片連結"
                     />
                     <img
-                      class="img-fluid"
-                      :src="tempProduct.imagesUrl[key]"
+                      class="img-fluid img-thumbnail"
+                      :class="tempProduct.imageUrl[key] ? 'img-thumbnail' : ''"
+                      :src="tempProduct.imageUrl[key]"
                       alt=""
                     />
                   </template>
 
                   <button
                     v-if="
-                      !tempProduct.imagesUrl.length ||
-                      tempProduct.imagesUrl[tempProduct.imagesUrl.length - 1]
+                      !tempProduct.imageUrl.length ||
+                      tempProduct.imageUrl[tempProduct.imageUrl.length - 1]
                     "
                     class="btn btn-outline-primary btn-sm d-block w-100"
-                    @click="tempProduct.imagesUrl.push('')"
+                    @click="tempProduct.imageUrl.push('')"
                   >
                     新增圖片
                   </button>
                   <button
                     v-else
                     class="btn btn-outline-danger btn-sm d-block w-100"
-                    @click="tempProduct.imagesUrl.pop()"
+                    @click="tempProduct.imageUrl.pop()"
                   >
                     刪除最後一個圖片
                   </button>
@@ -221,7 +232,7 @@ export default {
     return {
       status: {},
       tempProduct: {
-        imagesUrl: []
+        imageUrl: []
       }
     }
   },
@@ -231,40 +242,29 @@ export default {
   watch: {
     product() {
       this.tempProduct = this.product
-      if (!this.tempProduct.imagesUrl) {
-        this.tempProduct.imagesUrl = []
-      }
       if (!this.tempProduct.imageUrl) {
-        this.tempProduct.imageUrl = ''
+        this.tempProduct.imageUrl = []
       }
     }
   },
   methods: {
-    uploadFile() {
-      const uploadedFile = this.$refs.fileInput.files[0]
-      const formData = new FormData()
-      formData.append('file-to-upload', uploadedFile)
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-      this.status.fileUploading = true
-      this.$http
-        .post(url, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then((res) => {
-          this.status.fileUploading = false
-          if (res.data.success) {
-            this.tempProduct.imageUrl = res.data.imageUrl
-            this.$refs.fileInput.value = ''
-          } else {
-            this.$refs.fileInput.value = ''
-          }
-        })
-        .catch((err) => {
-          this.status.fileUploading = false
-          console.log(err)
-        })
+    async uploadFile() {
+      try {
+        const uploadedFile = this.$refs.fileInput.files[0]
+        const formData = new FormData()
+        formData.append('file-to-upload', uploadedFile)
+        const res = await this.$store.dispatch('Products/upLoadFile', formData)
+        this.status.fileUploading = false
+        if (res.data.success) {
+          this.tempProduct.imageUrl = res.data.imageUrl
+          this.$refs.fileInput.value = ''
+        } else {
+          this.$refs.fileInput.value = ''
+        }
+      } catch (err) {
+        this.status.fileUploading = false
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
     }
   }
 }

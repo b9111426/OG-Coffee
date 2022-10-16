@@ -91,7 +91,7 @@ export default {
         const res = await apiSignInRequest(this.user)
         const { token, expired } = res.data
         document.cookie = `ogCoffeeToken=${token}; expires=${new Date(expired)}`
-        this.$store.dispatch('fireToast', { res, title: '登入' })
+        this.$store.dispatch('fireToast', { res, title: '登入成功' })
         this.$router.push('/admin')
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })

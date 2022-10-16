@@ -1,7 +1,7 @@
 <template>
   <div
     class="toast-container position-fixed pe-3 pt-3 top-0 end-0"
-    style="z-index: 1500"
+    style="z-index: 1600"
   >
     <div
       v-for="(i, idx) in messages"
@@ -23,12 +23,12 @@
         <strong class="me-auto">{{ i.title }}</strong>
         <button
           type="button"
-          class="btn-close"
+          class="btn-close bg-gray p-2 me-2"
           @click="clearToast(idx)"
           aria-label="Close"
         ></button>
       </div>
-      <div class="toast-body" v-if="i.content">
+      <div class="toast-body bg-gray" v-if="i.content">
         {{ i.content }}
       </div>
     </div>

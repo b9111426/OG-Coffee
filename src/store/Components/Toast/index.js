@@ -14,10 +14,9 @@ export default {
   mutations: {
     handToastState(state, data) {
       const { res, title } = data
-
       if (res?.data?.success) {
         state.style = 'success'
-        state.title = `${title || '更新'}成功`
+        state.title = `${title || res?.data?.message || '更新成功'}`
       } else {
         state.style = 'danger'
 
