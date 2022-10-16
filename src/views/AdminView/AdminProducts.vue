@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody v-for="item in products" :key="item.id">
-          <tr>
+          <tr class="align-middle">
             <td>{{ item.category }}</td>
             <td class="text-center">
               <img
@@ -61,7 +61,7 @@
                   class="btn btn-outline-primary btn-sm"
                   @click="openModal(false, item)"
                 >
-                  查看細節
+                  檢視
                 </button>
                 <button
                   type="button"
@@ -104,15 +104,12 @@
 import Pagination from '@/components/Pagination.vue'
 import DelModal from '@/components/DelModal.vue'
 import ProductModifyModal from '@/components/ProductModifyModal.vue'
-import { apiPageRequest } from '@/api'
 
 export default {
   inject: ['emitter'],
   data() {
     return {
-      products: [],
       isNew: false,
-      pagination: {},
       tempProduct: {
         imagesUrl: []
       },
@@ -125,16 +122,14 @@ export default {
     ProductModifyModal
   },
   methods: {
-    getProducts(page = 1) {
-      apiPageRequest(page)
-        .then((res) => {
-          this.products = res.data.products
-          this.pagination = res.data.pagination
-          this.$store.dispatch('handLoading', false)
-        })
-        .catch((err) => {
-          alert(err.data.message)
-        })
+    async getProducts(page = 1) {
+      try {
+        await this.$store.dispatch('Products/getProducts', page)
+        this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        this.$store.dispatch('handLoading', false)
+        this.$store.dispatch('fireToast', err)
+      }
     },
     openModal(isNew, product) {
       if (isNew) {
@@ -193,6 +188,14 @@ export default {
   },
   created() {
     this.$store.dispatch('handLoading', true)
+  },
+  computed: {
+    products() {
+      return this.$store.getters['Products/productsData']
+    },
+    pagination() {
+      return this.$store.getters['Products/productsPage']
+    }
   }
 }
 </script>

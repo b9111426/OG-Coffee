@@ -112,31 +112,30 @@
   }  
 }
 
-//fade-out效果
-@mixin fade-out-top{
-  @-webkit-keyframes fade-out-top {
+//scale-in效果
+@mixin scale-in-center{
+  @-webkit-keyframes scale-in-center {
     0% {
-      -webkit-transform: translateY(0);
-              transform: translateY(0);
+      -webkit-transform: scale(0);
+              transform: scale(0);
       opacity: 1;
     }
     100% {
-      -webkit-transform: translateY(-50px);
-              transform: translateY(-50px);
-      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
     }
   }
-  @keyframes fade-out-top {
+  @keyframes scale-in-center {
     0% {
-      -webkit-transform: translateY(0);
-              transform: translateY(0);
+      -webkit-transform: scale(0);
+              transform: scale(0);
       opacity: 1;
     }
     100% {
-      -webkit-transform: translateY(-50px);
-              transform: translateY(-50px);
-      opacity: 0;
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
     }
   }
 } 
-
