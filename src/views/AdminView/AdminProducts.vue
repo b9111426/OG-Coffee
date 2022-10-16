@@ -104,6 +104,7 @@
 import Pagination from '@/components/Pagination.vue'
 import DelModal from '@/components/DelModal.vue'
 import ProductModifyModal from '@/components/ProductModifyModal.vue'
+import { apiPageRequest } from '@/api'
 
 export default {
   inject: ['emitter'],
@@ -125,9 +126,7 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`
-      this.$http
-        .get(url)
+      apiPageRequest(page)
         .then((res) => {
           this.products = res.data.products
           this.pagination = res.data.pagination
@@ -192,13 +191,9 @@ export default {
   mounted() {
     this.getProducts()
   },
-  beforeCreated() {
-    this.emitter.emit('loading')
-  },
   created() {
     this.$store.dispatch('handLoading', true)
-  },
-  computed: {}
+  }
 }
 </script>
 
