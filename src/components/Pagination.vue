@@ -16,16 +16,19 @@
       </li>
       <li
         class="page-item mx-1"
-        :class="{ active: page === pages.current_page }"
-        v-for="page in pages.total_pages"
-        :key="page + '452'"
+        :class="{ active: i === pages.current_page }"
+        v-for="i in pages.total_pages"
+        :key="i + '452'"
       >
         <a
           class="page-link rounded-circle"
           href="#"
-          @click.prevent="updatePage(page)"
-          >{{ page }}</a
+          @click.prevent="updatePage(i)"
+          >{{ i }}</a
         >
+      </li>
+      <li v-if="!pages.current_page" class="page-item disabled mx-1">
+        <a href="#" class="bg-gray text-white page-link rounded-circle">1</a>
       </li>
       <li>
         <button
