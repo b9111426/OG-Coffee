@@ -22,6 +22,7 @@ export default {
 
 #app {
   text-align: center;
-  color: #2c3e50;
+  color: $gray-800;
+  padding-bottom: 30px;
 }
 </style>

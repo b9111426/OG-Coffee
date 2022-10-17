@@ -5,6 +5,7 @@ import getters from './getters'
 export default {
   namespaced: true,
   state: {
+    allProducts: [],
     products: [],
     pagination: {}
   },

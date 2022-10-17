@@ -12,7 +12,7 @@ export const checkRequest = (token) => {
   adminApi.defaults.headers.common.Authorization = token
   return axios.post(`${process.env.VUE_APP_API}api/user/check`)
 }
-
+export const allProductRequest = () => adminApi.get('/products/all')
 export const productPageRequest = (page) =>
   adminApi.get(`/products/?page=${page}`)
 
@@ -25,7 +25,8 @@ export const upLoadRequest = (formData) =>
     }
   })
 
-export const modifyProductRequest = (id) => adminApi.put(`/product/${id}`)
+export const modifyProductRequest = (id, product) =>
+  adminApi.put(`/product/${id}`, { data: product })
 
 export const addProductRequest = (product) =>
   adminApi.post('/product', { data: product })

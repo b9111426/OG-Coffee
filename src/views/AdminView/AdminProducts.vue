@@ -1,8 +1,30 @@
 <template>
   <h2>產品列表</h2>
   <div class="container text-start">
-    <div class="text-end mt-4">
-      <button class="btn btn-primary" type="button" @click="openModal(true)">
+    <div class="d-flex align-items-center mt-4 px-3">
+      <div class="bg-white p-2 rounded text-dark position-relative">
+        <strong>
+          產品總數
+          <span
+            class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
+            >{{ allProductNum }}
+          </span>
+        </strong>
+      </div>
+      <div class="bg-white p-2 rounded text-dark position-relative ms-4">
+        <strong>
+          已啟用
+          <span
+            class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
+            >{{ allEnabled }}
+          </span>
+        </strong>
+      </div>
+      <button
+        class="ms-auto btn btn-primary"
+        type="button"
+        @click="openModal(true)"
+      >
         建立新的產品
       </button>
     </div>
@@ -61,7 +83,7 @@
                   class="btn btn-outline-primary btn-sm"
                   @click="openModal(false, item)"
                 >
-                  檢視
+                  編輯
                 </button>
                 <button
                   type="button"
@@ -73,6 +95,9 @@
               </div>
             </td>
           </tr>
+        </tbody>
+        <tbody v-if="products.length === 0" class="text-center">
+          <td colspan="7" class="fs-3 text-gray py-4">產品列表已空</td>
         </tbody>
       </table>
     </div>
@@ -131,6 +156,13 @@ export default {
         this.$store.dispatch('fireToast', err)
       }
     },
+    async getAllProducts() {
+      try {
+        await this.$store.dispatch('Products/getAllProducts')
+      } catch (err) {
+        this.$store.dispatch('fireToast', err)
+      }
+    },
     openModal(isNew, product) {
       if (isNew) {
         this.tempProduct = {}
@@ -149,18 +181,17 @@ export default {
       try {
         let res = null
         if (!this.isNew) {
+          const data = { id: this.tempProduct.id, product: this.tempProduct }
+          res = await this.$store.dispatch('Products/modifyProduct', data)
+        } else {
           res = await this.$store.dispatch(
-            'Products/modifyProduct',
-            this.tempProduct.id
+            'Products/addProduct',
+            this.tempProduct
           )
         }
 
-        res = await this.$store.dispatch(
-          'Products/addProduct',
-          this.tempProduct
-        )
-
         productComponent.hideModal()
+        this.getAllProducts()
         this.$store.dispatch('fireToast', { res })
         this.getProducts(this.currentPage)
       } catch (err) {
@@ -172,16 +203,17 @@ export default {
       const delComponent = this.$refs.delModal
       delComponent.openModal()
     },
-    async delProduct() {
+    async delProduct(title) {
       try {
-        const res = await this.$store.dispatch(
-          'Products/delProduct',
-          this.tempProduct.id
-        )
+        await this.$store.dispatch('Products/delProduct', this.tempProduct.id)
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
-        this.$store.dispatch('fireToast', { res })
+        this.$store.dispatch('fireToast', {
+          title: `${title}產品已刪除`,
+          style: 'success'
+        })
         this.getProducts(this.currentPage)
+        this.getAllProducts()
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
@@ -189,6 +221,7 @@ export default {
   },
   mounted() {
     this.getProducts()
+    this.getAllProducts()
   },
   created() {
     this.$store.dispatch('handLoading', true)
@@ -199,6 +232,12 @@ export default {
     },
     pagination() {
       return this.$store.getters['Products/productsPage']
+    },
+    allProductNum() {
+      return this.$store.getters['Products/allProductNum']
+    },
+    allEnabled() {
+      return this.$store.getters['Products/allEnabled']
     }
   }
 }

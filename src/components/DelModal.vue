@@ -15,7 +15,7 @@
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close bg-gray me-1"
             data-bs-dismiss="modal"
             aria-label="Close"
             @click="handClass"
@@ -37,7 +37,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click="$emit('del-item')"
+            @click="$emit('del-item', this.item.title)"
           >
             確認刪除
           </button>

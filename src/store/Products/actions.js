@@ -3,51 +3,36 @@ import {
   apiDelProduct,
   apiUpLoad,
   apiModifyProduct,
-  apiAddProduct
+  apiAddProduct,
+  apiAllProduct
 } from '@/api'
 
 export default {
   async getProducts({ commit }, page) {
-    try {
-      const res = await apiProductPage(page)
-      commit('handGetProducts', res)
-      return res
-    } catch (err) {
-      throw new Error(err)
-    }
+    const res = await apiProductPage(page)
+    commit('handGetProducts', res)
+  },
+  async getAllProducts({ commit }) {
+    const res = await apiAllProduct()
+    commit('handAllProducts', res)
   },
 
   async delProduct(context, id) {
-    try {
-      const res = await apiDelProduct(id)
-      return res
-    } catch (err) {
-      throw new Error(err)
-    }
+    const res = await apiDelProduct(id)
+    return res
   },
   async upLoadFile(context, formData) {
-    try {
-      const res = await apiUpLoad(formData)
-      return res
-    } catch (err) {
-      throw new Error(err)
-    }
+    const res = await apiUpLoad(formData)
+    return res
   },
 
-  async modifyProduct(context, id) {
-    try {
-      const res = await apiModifyProduct(id)
-      return res
-    } catch (err) {
-      throw new Error(err)
-    }
+  async modifyProduct(context, data) {
+    const { id, product } = data
+    const res = await apiModifyProduct(id, product)
+    return res
   },
   async addProduct(context, product) {
-    try {
-      const res = await apiAddProduct(product)
-      return res
-    } catch (err) {
-      throw new Error(err)
-    }
+    const res = await apiAddProduct(product)
+    return res
   }
 }

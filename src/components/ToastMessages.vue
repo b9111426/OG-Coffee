@@ -55,7 +55,6 @@ export default {
   },
   mounted() {
     emitter.on('push-message', (message) => {
-      // 接收資料
       const { style, title, content, id } = message
       this.messages.push({ style, title, content, id })
       this.toastAutoClear()

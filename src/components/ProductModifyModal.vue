@@ -55,8 +55,8 @@
                 />
               </div>
               <img
-                class="img-fluid img-thumbnail"
-                :class="tempProduct.imageUrl ? 'img-thumbnail' : ''"
+                class="img-fluid"
+                :class="tempProduct.imageUrl.length ? 'img-thumbnail' : ''"
                 :src="tempProduct.imageUrl"
                 alt=""
               />
@@ -75,7 +75,7 @@
                       placeholder="請輸入圖片連結"
                     />
                     <img
-                      class="img-fluid img-thumbnail"
+                      class="img-fluid"
                       :class="tempProduct.imageUrl[key] ? 'img-thumbnail' : ''"
                       :src="tempProduct.imageUrl[key]"
                       alt=""
