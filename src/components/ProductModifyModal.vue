@@ -66,8 +66,8 @@
                 <div class="row">
                   <div class="col-6 border-end">
                     <div class="mb-3">
-                      <label for="imageUrl" class="form-label"
-                        >輸入圖片網址</label
+                      <label for="imageUrl" class="h6 form-label mb-2"
+                        >輸入圖片網址:</label
                       >
                       <input
                         type="text"
@@ -77,8 +77,8 @@
                       />
                     </div>
                     <div class="mb-5">
-                      <label for="customFile" class="form-label"
-                        >或 上傳圖片
+                      <label for="customFile" class="h6 form-label mb-2"
+                        >或上傳圖片取得圖片連結:
                       </label>
                       <input
                         type="file"
@@ -102,8 +102,21 @@
                       v-for="(item, key) in tempProduct.imageUrl"
                       :key="key + '21345'"
                     >
-                      <h5 class="mb-1">圖片{{ key + 1 }}</h5>
-                      <img class="img-fluid img-thumbnail" :src="item" alt="" />
+                      <h6 class="mb-1">圖片{{ key + 1 }}</h6>
+                      <div class="position-relative">
+                        <img
+                          class="img-fluid img-thumbnail"
+                          :src="item"
+                          alt=""
+                        />
+                        <button
+                          type="button"
+                          :data-idx="key"
+                          class="btn-close bg-white p-2 position-absolute top-0 start-0 mt-3 ms-3"
+                          aria-label="Close"
+                          @click="removePic($event)"
+                        ></button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -269,12 +282,7 @@ export default {
         const formData = new FormData()
         formData.append('file-to-upload', uploadedFile)
         const res = await this.$store.dispatch('Products/upLoadFile', formData)
-        if (res.data.success) {
-          this.tempProduct.imageUrl.push(res.data.imageUrl)
-          this.$refs.fileInput.value = null
-        } else {
-          this.$refs.fileInput.value = null
-        }
+        this.$refs.fileUrl.value = res.data.imageUrl
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
@@ -286,6 +294,11 @@ export default {
       }
       this.tempProduct.imageUrl.push(url)
       this.$refs.fileUrl.value = null
+      this.$refs.fileInput.value = null
+    },
+    removePic(e) {
+      const idx = e.target.getAttribute('data-idx')
+      this.tempProduct.imageUrl.splice(idx, 1)
     }
   }
 }
