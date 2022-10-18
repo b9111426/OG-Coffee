@@ -71,7 +71,7 @@
                     <span v-if="item.is_enabled" class="text-primary"
                       >啟用</span
                     >
-                    <span v-else class="text-secondary">未啟用</span>
+                    <span v-else class="text-gray-dark">未啟用</span>
                   </label>
                 </div>
               </div>
