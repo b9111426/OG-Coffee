@@ -169,14 +169,14 @@ export default {
         this.$store.dispatch('handLoading', false)
       } catch (err) {
         this.$store.dispatch('handLoading', false)
-        this.$store.dispatch('fireToast', err)
+        throw new Error(err)
       }
     },
     async getAllProducts() {
       try {
         await this.$store.dispatch('Products/getAllProducts')
       } catch (err) {
-        this.$store.dispatch('fireToast', err)
+        throw new Error(err)
       }
     },
     async updateProduct({ product, isNew }) {

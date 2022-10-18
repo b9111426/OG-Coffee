@@ -66,8 +66,8 @@
                 <div class="row">
                   <div class="col-6 border-end">
                     <div class="mb-3">
-                      <label for="imageUrl" class="h6 form-label mb-2"
-                        >輸入圖片網址:</label
+                      <label for="imageUrl" class="fw-bold form-label mb-2"
+                        >輸入圖片網址</label
                       >
                       <input
                         type="text"
@@ -77,8 +77,8 @@
                       />
                     </div>
                     <div class="mb-5">
-                      <label for="customFile" class="h6 form-label mb-2"
-                        >或上傳圖片取得圖片連結:
+                      <label for="customFile" class="fw-bold form-label mb-2"
+                        >或上傳圖片取得圖片連結
                       </label>
                       <input
                         type="file"
@@ -131,7 +131,7 @@
               <!--基本資料-->
               <div class="mt-3">
                 <div class="mb-3">
-                  <label for="title" class="form-label">標題</label>
+                  <label for="title" class="form-label fw-bold">標題</label>
                   <input
                     id="title"
                     type="text"
@@ -143,7 +143,9 @@
 
                 <div class="row">
                   <div class="mb-3 col-md-6">
-                    <label for="category" class="form-label">分類</label>
+                    <label for="category" class="form-label fw-bold"
+                      >分類</label
+                    >
                     <input
                       id="category"
                       type="text"
@@ -153,7 +155,7 @@
                     />
                   </div>
                   <div class="mb-3 col-md-6">
-                    <label for="price" class="form-label">單位</label>
+                    <label for="price" class="form-label fw-bold">單位</label>
                     <input
                       id="unit"
                       type="text"
@@ -166,7 +168,9 @@
 
                 <div class="row">
                   <div class="mb-3 col-md-6">
-                    <label for="origin_price" class="form-label">原價</label>
+                    <label for="origin_price" class="form-label fw-bold"
+                      >原價</label
+                    >
                     <input
                       id="origin_price"
                       type="number"
@@ -177,7 +181,7 @@
                     />
                   </div>
                   <div class="mb-3 col-md-6">
-                    <label for="price" class="form-label">售價</label>
+                    <label for="price" class="form-label fw-bold">售價</label>
                     <input
                       id="price"
                       type="number"
@@ -191,7 +195,9 @@
                 <hr />
 
                 <div class="mb-3">
-                  <label for="description" class="form-label">產品描述</label>
+                  <label for="description" class="form-label fw-bold"
+                    >產品描述</label
+                  >
                   <textarea
                     id="description"
                     type="text"
@@ -202,7 +208,9 @@
                   </textarea>
                 </div>
                 <div class="mb-3">
-                  <label for="content" class="form-label">說明內容</label>
+                  <label for="content" class="form-label fw-bold"
+                    >說明內容</label
+                  >
                   <textarea
                     id="description"
                     type="text"
@@ -222,7 +230,7 @@
                       :true-value="1"
                       :false-value="0"
                     />
-                    <label class="form-check-label" for="is_enabled"
+                    <label class="form-check-label fw-bold" for="is_enabled"
                       >是否啟用</label
                     >
                   </div>
