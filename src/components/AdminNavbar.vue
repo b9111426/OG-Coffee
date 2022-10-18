@@ -32,9 +32,6 @@
             <router-link class="nav-link" to="/admin/article">貼文</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/article">Blog</router-link>
-          </li>
-          <li class="nav-item">
             <router-link class="nav-link" to="/admin/cart">購物車</router-link>
           </li>
         </ul>

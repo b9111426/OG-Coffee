@@ -62,7 +62,7 @@
                     type="checkbox"
                     :id="item.id"
                     v-model="item.is_enabled"
-                    @change="updateProduct(item, item.id)"
+                    @change="updateProduct({ product: item, isNew: false })"
                   />
                   <label
                     class="form-check-label"
@@ -147,6 +147,22 @@ export default {
     ProductModifyModal
   },
   methods: {
+    openDelModal(item) {
+      this.tempProduct = { ...item }
+      const delComponent = this.$refs.delModal
+      delComponent.openModal()
+    },
+    openModal(isNew, product) {
+      if (isNew) {
+        this.tempProduct = {}
+        this.isNew = true
+      } else {
+        this.tempProduct = { ...product }
+        this.isNew = false
+      }
+      const productComponent = this.$refs.productModal
+      productComponent.openModal()
+    },
     async getProducts(page = 1) {
       try {
         await this.$store.dispatch('Products/getProducts', page)
@@ -163,21 +179,10 @@ export default {
         this.$store.dispatch('fireToast', err)
       }
     },
-    openModal(isNew, product) {
-      if (isNew) {
-        this.tempProduct = {}
-        this.isNew = true
-      } else {
-        this.tempProduct = { ...product }
-        this.isNew = false
-      }
-      const productComponent = this.$refs.productModal
-      productComponent.openModal()
-    },
-    async updateProduct(product) {
+    async updateProduct({ product, isNew }) {
       const productComponent = this.$refs.productModal
       this.tempProduct = product
-
+      this.isNew = isNew
       try {
         let res = null
         if (!this.isNew) {
@@ -198,11 +203,7 @@ export default {
         this.$store.dispatch('fireToast', { res: err.response })
       }
     },
-    openDelModal(item) {
-      this.tempProduct = { ...item }
-      const delComponent = this.$refs.delModal
-      delComponent.openModal()
-    },
+
     async delProduct(title) {
       try {
         await this.$store.dispatch('Products/delProduct', this.tempProduct.id)

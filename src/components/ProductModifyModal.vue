@@ -214,7 +214,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('update-product', tempProduct)"
+            @click="$emit('update-product', { product: tempProduct, isNew })"
           >
             確認
           </button>

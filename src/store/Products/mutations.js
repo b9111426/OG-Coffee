@@ -1,6 +1,5 @@
 export default {
   handGetProducts(state, res) {
-    console.log(res.data)
     state.products = res.data.products
     state.pagination = res.data.pagination
   },
