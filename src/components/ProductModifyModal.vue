@@ -23,181 +23,196 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="mb-3">
-                <label for="imageUrl" class="form-label">輸入圖片網址</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="tempProduct.imageUrl"
-                  placeholder="請輸入圖片連結"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="customFile" class="form-label"
-                  >或 上傳圖片
-                  <div
-                    v-if="status.fileUploading"
-                    class="spinner-border spinner-border-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
+        <div class="modal-body px-5">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#home"
+                type="button"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+              >
+                圖片添加
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#profile"
+                type="button"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              >
+                基本資料
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
+            >
+              <!--圖片添加-->
+              <div class="mt-3">
+                <div class="row">
+                  <div class="col-6 border-end">
+                    <div class="mb-3">
+                      <label for="imageUrl" class="form-label"
+                        >輸入圖片網址</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="請輸入圖片連結"
+                        ref="fileUrl"
+                      />
+                    </div>
+                    <div class="mb-5">
+                      <label for="customFile" class="form-label"
+                        >或 上傳圖片
+                      </label>
+                      <input
+                        type="file"
+                        id="customFile"
+                        class="form-control"
+                        ref="fileInput"
+                        @change="uploadFile"
+                      />
+                    </div>
+
+                    <button
+                      class="btn btn-primary btn-sm d-block w-100"
+                      @click="addPic"
+                    >
+                      新增圖片
+                    </button>
                   </div>
-                </label>
-                <input
-                  type="file"
-                  id="customFile"
-                  class="form-control"
-                  ref="fileInput"
-                  @change="uploadFile"
-                />
-              </div>
-              <img
-                class="img-fluid"
-                :class="tempProduct.imageUrl.length ? 'img-thumbnail' : ''"
-                :src="tempProduct.imageUrl"
-                alt=""
-              />
-
-              <div class="mb-3">
-                <h3>多圖設置</h3>
-                <div v-if="Array.isArray(tempProduct.imageUrl)">
-                  <template
-                    v-for="(img, key) in tempProduct.imageUrl"
-                    :key="key + '21345'"
-                  >
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="tempProduct.imageUrl[key]"
-                      placeholder="請輸入圖片連結"
-                    />
-                    <img
-                      class="img-fluid"
-                      :class="tempProduct.imageUrl[key] ? 'img-thumbnail' : ''"
-                      :src="tempProduct.imageUrl[key]"
-                      alt=""
-                    />
-                  </template>
-
-                  <button
-                    v-if="
-                      !tempProduct.imageUrl.length ||
-                      tempProduct.imageUrl[tempProduct.imageUrl.length - 1]
-                    "
-                    class="btn btn-outline-primary btn-sm d-block w-100"
-                    @click="tempProduct.imageUrl.push('')"
-                  >
-                    新增圖片
-                  </button>
-                  <button
-                    v-else
-                    class="btn btn-outline-danger btn-sm d-block w-100"
-                    @click="tempProduct.imageUrl.pop()"
-                  >
-                    刪除最後一個圖片
-                  </button>
+                  <div class="col-6">
+                    <div
+                      class="mb-4"
+                      v-for="(item, key) in tempProduct.imageUrl"
+                      :key="key + '21345'"
+                    >
+                      <h5 class="mb-1">圖片{{ key + 1 }}</h5>
+                      <img class="img-fluid img-thumbnail" :src="item" alt="" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-8">
-              <div class="mb-3">
-                <label for="title" class="form-label">標題</label>
-                <input
-                  id="title"
-                  type="text"
-                  class="form-control"
-                  v-model="tempProduct.title"
-                  placeholder="請輸入標題"
-                />
-              </div>
-
-              <div class="row">
-                <div class="mb-3 col-md-6">
-                  <label for="category" class="form-label">分類</label>
+            <div
+              class="tab-pane fade"
+              id="profile"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <!--基本資料-->
+              <div class="mt-3">
+                <div class="mb-3">
+                  <label for="title" class="form-label">標題</label>
                   <input
-                    id="category"
+                    id="title"
                     type="text"
                     class="form-control"
-                    v-model="tempProduct.category"
-                    placeholder="請輸入分類"
+                    v-model="tempProduct.title"
+                    placeholder="請輸入標題"
                   />
                 </div>
-                <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">單位</label>
-                  <input
-                    id="unit"
+
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="category" class="form-label">分類</label>
+                    <input
+                      id="category"
+                      type="text"
+                      class="form-control"
+                      v-model="tempProduct.category"
+                      placeholder="請輸入分類"
+                    />
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="price" class="form-label">單位</label>
+                    <input
+                      id="unit"
+                      type="text"
+                      class="form-control"
+                      v-model="tempProduct.unit"
+                      placeholder="請輸入單位"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="origin_price" class="form-label">原價</label>
+                    <input
+                      id="origin_price"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      v-model.number="tempProduct.origin_price"
+                      placeholder="請輸入原價"
+                    />
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="price" class="form-label">售價</label>
+                    <input
+                      id="price"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      v-model.number="tempProduct.price"
+                      placeholder="請輸入售價"
+                    />
+                  </div>
+                </div>
+                <hr />
+
+                <div class="mb-3">
+                  <label for="description" class="form-label">產品描述</label>
+                  <textarea
+                    id="description"
                     type="text"
                     class="form-control"
-                    v-model="tempProduct.unit"
-                    placeholder="請輸入單位"
-                  />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="mb-3 col-md-6">
-                  <label for="origin_price" class="form-label">原價</label>
-                  <input
-                    id="origin_price"
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    v-model.number="tempProduct.origin_price"
-                    placeholder="請輸入原價"
-                  />
-                </div>
-                <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">售價</label>
-                  <input
-                    id="price"
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    v-model.number="tempProduct.price"
-                    placeholder="請輸入售價"
-                  />
-                </div>
-              </div>
-              <hr />
-
-              <div class="mb-3">
-                <label for="description" class="form-label">產品描述</label>
-                <textarea
-                  id="description"
-                  type="text"
-                  class="form-control"
-                  v-model="tempProduct.description"
-                  placeholder="請輸入產品描述"
-                >
-                </textarea>
-              </div>
-              <div class="mb-3">
-                <label for="content" class="form-label">說明內容</label>
-                <textarea
-                  id="description"
-                  type="text"
-                  class="form-control"
-                  v-model="tempProduct.content"
-                  placeholder="請輸入說明內容"
-                >
-                </textarea>
-              </div>
-              <div class="mb-3">
-                <div class="form-check">
-                  <input
-                    id="is_enabled"
-                    class="form-check-input"
-                    v-model="tempProduct.is_enabled"
-                    type="checkbox"
-                    :true-value="1"
-                    :false-value="0"
-                  />
-                  <label class="form-check-label" for="is_enabled"
-                    >是否啟用</label
+                    v-model="tempProduct.description"
+                    placeholder="請輸入產品描述"
                   >
+                  </textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="content" class="form-label">說明內容</label>
+                  <textarea
+                    id="description"
+                    type="text"
+                    class="form-control"
+                    v-model="tempProduct.content"
+                    placeholder="請輸入說明內容"
+                  >
+                  </textarea>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input
+                      id="is_enabled"
+                      class="form-check-input"
+                      v-model="tempProduct.is_enabled"
+                      type="checkbox"
+                      :true-value="1"
+                      :false-value="0"
+                    />
+                    <label class="form-check-label" for="is_enabled"
+                      >是否啟用</label
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -254,17 +269,23 @@ export default {
         const formData = new FormData()
         formData.append('file-to-upload', uploadedFile)
         const res = await this.$store.dispatch('Products/upLoadFile', formData)
-        this.status.fileUploading = false
         if (res.data.success) {
-          this.tempProduct.imageUrl = res.data.imageUrl
-          this.$refs.fileInput.value = ''
+          this.tempProduct.imageUrl.push(res.data.imageUrl)
+          this.$refs.fileInput.value = null
         } else {
-          this.$refs.fileInput.value = ''
+          this.$refs.fileInput.value = null
         }
       } catch (err) {
-        this.status.fileUploading = false
         this.$store.dispatch('fireToast', { res: err.response })
       }
+    },
+    addPic() {
+      const url = this.$refs.fileUrl.value
+      if (!url) {
+        return
+      }
+      this.tempProduct.imageUrl.push(url)
+      this.$refs.fileUrl.value = null
     }
   }
 }

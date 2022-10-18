@@ -32,7 +32,6 @@ export default {
           await apiCheckRequest(token)
           this.checkSuccess = true
         } catch (err) {
-          console.log('yes')
           this.$store.dispatch('fireToast', { title: '請重新登入' })
           this.$router.push('/login')
         }
