@@ -1,4 +1,4 @@
-import { signInRequest } from './signInRequest'
+import { signInRequest, signOutRequest } from './signInRequest'
 import {
   checkRequest,
   productPageRequest,
@@ -10,6 +10,7 @@ import {
 } from './adminRequest'
 
 export const apiSignInRequest = signInRequest
+export const apiSignOutRequest = signOutRequest
 export const apiCheckRequest = checkRequest
 export const apiProductPage = productPageRequest
 export const apiAllProduct = allProductRequest

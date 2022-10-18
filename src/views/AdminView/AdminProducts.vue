@@ -131,7 +131,6 @@ import DelModal from '@/components/DelModal.vue'
 import ProductModifyModal from '@/components/ProductModifyModal.vue'
 
 export default {
-  inject: ['emitter'],
   data() {
     return {
       isNew: false,

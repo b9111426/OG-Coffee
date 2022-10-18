@@ -34,36 +34,37 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/admin/cart">購物車</router-link>
           </li>
+          <li class="nav-item">
+            <a
+              href="#"
+              type="button"
+              class="btn btn-outline-secondary"
+              @click.prevent="logout"
+              >登出</a
+            >
+          </li>
         </ul>
       </div>
-      <a
-        href="#"
-        type="button"
-        class="btn btn-outline-secondary"
-        @click.prevent="logout"
-        >登出</a
-      >
     </div>
   </nav>
 </template>
 
 <script>
+import { apiSignInRequest } from '@/api'
 export default {
   inject: ['emitter'],
   methods: {
-    logout() {
-      const api = `${process.env.VUE_APP_API}/logout`
-      this.$http
-        .post(api)
-        .then((response) => {
-          this.$httpMessageState(response, '登出')
-          if (response.data.success) {
-            this.$router.push('/')
-          }
-        })
-        .catch((error) => {
-          this.$httpMessageState(error.response, '錯誤訊息')
-        })
+    async logout() {
+      try {
+        const res = await apiSignInRequest()
+        this.$store.dispatch('fireToast', { res })
+        //this.$httpMessageState(response, '登出')
+        if (res.data.success) {
+          this.$router.push('/')
+        }
+      } catch (err) {
+        throw new Error(err)
+      }
     }
   }
 }
