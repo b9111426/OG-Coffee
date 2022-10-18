@@ -10,21 +10,23 @@
         >
           <i
             class="bi bi-chevron-double-left fs-5"
-            :class="{ 'text-white': !pages.has_pre }"
+            :class="{
+              'text-white opacity-75': !pages.has_pre
+            }"
           ></i>
         </button>
       </li>
       <li
         class="page-item mx-1"
-        :class="{ active: i === pages.current_page }"
-        v-for="i in pages.total_pages"
-        :key="i + '452'"
+        :class="{ active: item === pages.current_page }"
+        v-for="item in pageAry"
+        :key="item + '452'"
       >
         <a
-          class="page-link rounded-circle"
+          class="page-link rounded-1"
           href="#"
-          @click.prevent="updatePage(i)"
-          >{{ i }}</a
+          @click.prevent="updatePage(item)"
+          >{{ item }}</a
         >
       </li>
       <li v-if="!pages.current_page" class="page-item disabled mx-1">
@@ -39,7 +41,9 @@
         >
           <i
             class="bi bi-chevron-double-right fs-5"
-            :class="{ 'text-white': !pages.has_next }"
+            :class="{
+              'text-white opacity-75': !pages.has_next
+            }"
           ></i>
         </button>
       </li>
@@ -50,9 +54,22 @@
 <script>
 export default {
   props: ['pages'],
+  data() {
+    return {}
+  },
   methods: {
     updatePage(page) {
       this.$emit('emitPages', page)
+    }
+  },
+  computed: {
+    pageAry() {
+      const startPage = (Math.ceil(this.pages.current_page / 9) - 1) * 9 + 1
+      const ary = []
+      for (let i = startPage; i < this.pages.total_pages + 1; i++) {
+        ary.push(i)
+      }
+      return ary
     }
   }
 }
