@@ -30,7 +30,7 @@
         >
       </li>
       <li v-if="!pages.current_page" class="page-item disabled mx-1">
-        <a href="#" class="bg-gray text-white page-link rounded-circle">1</a>
+        <a href="#" class="bg-gray text-white page-link rounded-1">1</a>
       </li>
       <li>
         <button
@@ -64,7 +64,9 @@ export default {
   },
   computed: {
     pageAry() {
-      const startPage = (Math.ceil(this.pages.current_page / 9) - 1) * 9 + 1
+      const startPage = Math.abs(
+        (Math.ceil(this.pages.current_page / 9) - 1) * 9 + 1
+      )
       const ary = []
       for (let i = startPage; i < this.pages.total_pages + 1; i++) {
         ary.push(i)
