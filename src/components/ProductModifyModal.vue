@@ -64,7 +64,7 @@
               <!--圖片添加-->
               <div class="mt-3">
                 <div class="row">
-                  <div class="col-lg-6 col-12 pb-3 pb-lg-0 aaa">
+                  <div class="col-lg-6 col-12 pb-3 pb-lg-0 border-set">
                     <div class="mb-3">
                       <label for="imageUrl" class="fw-bold form-label mb-2"
                         >輸入圖片網址</label
@@ -313,7 +313,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.aaa {
+.border-set {
   @media (max-width: 992px) {
     border-right: none;
     border-bottom: 1px solid #ddd;
