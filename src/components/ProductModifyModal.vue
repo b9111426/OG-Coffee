@@ -64,7 +64,7 @@
               <!--圖片添加-->
               <div class="mt-3">
                 <div class="row">
-                  <div class="col-6 border-end">
+                  <div class="col-lg-6 col-12 pb-3 pb-lg-0 aaa">
                     <div class="mb-3">
                       <label for="imageUrl" class="fw-bold form-label mb-2"
                         >輸入圖片網址</label
@@ -96,7 +96,7 @@
                       新增圖片
                     </button>
                   </div>
-                  <div class="col-6">
+                  <div class="col-lg-6 col-12 mt-3 mt-lg-0">
                     <div
                       class="mb-4"
                       v-for="(item, key) in tempProduct.imageUrl"
@@ -311,3 +311,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.aaa {
+  @media (max-width: 992px) {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+  border-right: 1px solid #ddd;
+}
+</style>

@@ -1,43 +1,50 @@
 <template>
   <h2>產品列表</h2>
   <div class="container text-start">
-    <div class="d-flex align-items-center mt-4 px-3">
-      <div class="bg-white p-2 rounded text-dark position-relative">
-        <strong>
-          產品總數
-          <span
-            class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
-            >{{ allProductNum }}
-          </span>
-        </strong>
+    <div class="row mt-4">
+      <div class="col-12 col-lg-6 d-flex align-items-center">
+        <div class="bg-white p-2 rounded text-dark position-relative">
+          <strong>
+            產品總數
+            <span
+              class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
+              >{{ allProductNum }}
+            </span>
+          </strong>
+        </div>
+        <div class="bg-white p-2 rounded text-dark position-relative ms-4">
+          <strong>
+            已啟用
+            <span
+              class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
+              >{{ allEnabled }}
+            </span>
+          </strong>
+        </div>
       </div>
-      <div class="bg-white p-2 rounded text-dark position-relative ms-4">
-        <strong>
-          已啟用
-          <span
-            class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
-            >{{ allEnabled }}
-          </span>
-        </strong>
+      <div class="col-12 col-lg-6 d-flex">
+        <button
+          class="ms-auto btn btn-primary"
+          type="button"
+          @click="openModal(true)"
+        >
+          建立新的產品
+        </button>
       </div>
-      <button
-        class="ms-auto btn btn-primary"
-        type="button"
-        @click="openModal(true)"
-      >
-        建立新的產品
-      </button>
     </div>
-    <div class="card mt-3 px-3">
+
+    <div class="card overflow-auto flex-nowrap mt-3 px-3">
       <table class="table mt-4 table-hover">
         <thead>
           <tr class="table-light">
             <th width="120">分類</th>
-            <th width="150" class="text-center">預覽</th>
+            <th width="150" class="text-center text-nowrap px-5">預覽</th>
             <th>產品名稱</th>
-            <th width="120" class="text-end">原價</th>
-            <th width="120" class="text-end">售價</th>
-            <th width="145" class="text-center">是否啟用</th>
+            <th width="120" class="text-end d-none d-lg-table-cell">原價</th>
+            <th width="120" class="text-end text-nowrap px-4">售價</th>
+            <th width="145" class="text-center d-none d-lg-table-cell">
+              是否啟用
+            </th>
             <th width="160" class="text-center">編輯</th>
           </tr>
         </thead>
@@ -52,9 +59,11 @@
               />
             </td>
             <td>{{ item.title }}</td>
-            <td class="text-end">{{ item.origin_price }}</td>
-            <td class="text-end">{{ item.price }}</td>
-            <td>
+            <td class="text-end d-none d-lg-table-cell">
+              {{ item.origin_price }}
+            </td>
+            <td class="text-lg-end text-center">{{ item.price }}</td>
+            <td class="d-none d-lg-table-cell">
               <div class="container ps-4">
                 <div class="form-check d-flex justify-content-start">
                   <input
@@ -80,17 +89,19 @@
               <div class="btn-group">
                 <button
                   type="button"
-                  class="btn btn-outline-primary btn-sm"
+                  class="btn btn-primary btn-sm"
                   @click="openModal(false, item)"
                 >
-                  編輯
+                  <span class="d-lg-block d-none">編輯</span>
+                  <i class="bi bi-pencil-square d-lg-none"></i>
                 </button>
                 <button
                   type="button"
-                  class="btn btn-outline-danger btn-sm"
+                  class="btn btn-danger btn-sm"
                   @click="openDelModal(item)"
                 >
-                  刪除
+                  <span class="d-lg-block d-none">刪除</span>
+                  <i class="bi bi-x-lg d-lg-none"></i>
                 </button>
               </div>
             </td>

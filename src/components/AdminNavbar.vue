@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container">
-      <router-link class="navbar-brand" to="/">回前台</router-link>
+      <router-link class="navbar-brand px-3 brand-hover" to="/"
+        >回前台</router-link
+      >
       <button
         class="navbar-toggler d-lg-none"
         type="button"
@@ -63,27 +65,27 @@
         <div class="offcanvas-body bg-dark">
           <ul class="navbar-nav d-flex mb-2 mb-lg-0">
             <li class="nav-item" data-bs-dismiss="offcanvas">
-              <router-link class="nav-link" to="/admin/product"
+              <router-link class="nav-link brand-hover" to="/admin/product"
                 >產品列表</router-link
               >
             </li>
             <li class="nav-item" data-bs-dismiss="offcanvas">
-              <router-link class="nav-link" to="/admin/order"
+              <router-link class="nav-link brand-hover" to="/admin/order"
                 >後台訂單</router-link
               >
             </li>
             <li class="nav-item" data-bs-dismiss="offcanvas">
-              <router-link class="nav-link" to="/admin/coupon"
+              <router-link class="nav-link brand-hover" to="/admin/coupon"
                 >優惠卷</router-link
               >
             </li>
             <li class="nav-item" data-bs-dismiss="offcanvas">
-              <router-link class="nav-link" to="/admin/article"
+              <router-link class="nav-link brand-hover" to="/admin/article"
                 >貼文</router-link
               >
             </li>
             <li class="nav-item" data-bs-dismiss="offcanvas">
-              <router-link class="nav-link" to="/admin/cart"
+              <router-link class="nav-link brand-hover" to="/admin/cart"
                 >購物車</router-link
               >
             </li>
@@ -119,3 +121,13 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.brand-hover {
+  transition: all 0.3s ease-in-out;
+}
+.brand-hover:hover {
+  background-color: var(--secondary);
+  border-radius: 5px;
+  color: black;
+}
+</style>
