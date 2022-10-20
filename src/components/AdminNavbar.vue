@@ -34,11 +34,6 @@
             >貼文</router-link
           >
         </li>
-        <li class="nav-item">
-          <router-link class="nav-link px-2" to="/admin/cart"
-            >購物車</router-link
-          >
-        </li>
       </ul>
       <a
         href="#"
@@ -82,11 +77,6 @@
             <li class="nav-item" data-bs-dismiss="offcanvas">
               <router-link class="nav-link brand-hover" to="/admin/article"
                 >貼文</router-link
-              >
-            </li>
-            <li class="nav-item" data-bs-dismiss="offcanvas">
-              <router-link class="nav-link brand-hover" to="/admin/cart"
-                >購物車</router-link
               >
             </li>
           </ul>

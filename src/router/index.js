@@ -15,11 +15,17 @@ const routes = [
       },
       {
         path: 'products',
-        component: () => import('../views/FrontView/ProductsView.vue')
-      },
-      {
-        path: 'product/:id',
-        component: () => import('../views/FrontView/ProductDetail.vue')
+        component: () => import('../views/FrontView/ProductsView.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('../views/FrontView/ProductAll.vue')
+          },
+          {
+            path: ':id',
+            component: () => import('../views/FrontView/ProductDetail.vue')
+          }
+        ]
       },
       {
         path: 'coupon',

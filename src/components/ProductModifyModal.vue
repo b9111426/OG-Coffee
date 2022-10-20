@@ -141,6 +141,19 @@
                   />
                 </div>
 
+                <div class="mb-3">
+                  <label for="subtitle" class="form-label fw-bold"
+                    >副標題</label
+                  >
+                  <input
+                    id="subtitle"
+                    type="text"
+                    class="form-control"
+                    v-model="tempProduct.subtitle"
+                    placeholder="請輸入副標題"
+                  />
+                </div>
+
                 <div class="row">
                   <div class="mb-3 col-md-6">
                     <label for="category" class="form-label fw-bold"
