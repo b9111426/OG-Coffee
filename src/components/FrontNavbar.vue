@@ -42,16 +42,6 @@
             <router-link
               type="button"
               class="btn btn-outline-primary btn-sm"
-              to="/quest"
-            >
-              <i class="bi bi-geo-alt-fill"></i>
-              門市查詢
-            </router-link>
-          </li>
-          <li class="nav-item mx-1">
-            <router-link
-              type="button"
-              class="btn btn-outline-primary btn-sm"
               to="/newer"
             >
               <i class="bi bi-search"></i>
@@ -81,7 +71,7 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link px-2" to="/about"
-              >關於橘子</router-link
+              >橘子專欄</router-link
             >
           </li>
           <li class="nav-item">
@@ -171,11 +161,6 @@
                 <router-link class="nav-link px-2" to="/about">
                   聯絡我們</router-link
                 >
-              </li>
-              <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/quest">
-                  門市查詢
-                </router-link>
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/newer">

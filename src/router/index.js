@@ -19,7 +19,7 @@ const routes = [
       },
       {
         path: 'product/:id',
-        component: () => import('../views/FrontView/ProductView.vue')
+        component: () => import('../views/FrontView/ProductDetail.vue')
       },
       {
         path: 'coupon',

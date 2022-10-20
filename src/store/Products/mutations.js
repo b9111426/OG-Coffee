@@ -1,5 +1,14 @@
 export default {
-  handGetProducts(state, res) {
+  handFrontProducts(state, res) {
+    state.products = res.data.products
+    state.pagination = res.data.pagination
+  },
+  handFrontAllProduct(state, res) {
+    state.allProducts = res.data.products
+  },
+
+  //admin
+  handProducts(state, res) {
     state.products = res.data.products
     state.pagination = res.data.pagination
   },

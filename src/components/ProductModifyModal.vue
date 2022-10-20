@@ -313,8 +313,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .border-set {
-  @media (max-width: 992px) {
+  @include pad() {
     border-right: none;
     border-bottom: 1px solid #ddd;
   }

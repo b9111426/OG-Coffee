@@ -1,5 +1,5 @@
 <template>
-  <div class="frontCarouse">
+  <div class="frontCarouse scale-up-ver-top">
     <div
       id="carouselExampleCaptions"
       class="carousel slide"

@@ -1,4 +1,7 @@
 import {
+  apiFrontProduct,
+  apiSingleProduct,
+  apiAllFrontProduct,
   apiProductPage,
   apiDelProduct,
   apiUpLoad,
@@ -8,9 +11,23 @@ import {
 } from '@/api'
 
 export default {
+  async getFrontProducts({ commit }, page) {
+    const res = await apiFrontProduct(page)
+    commit('handFrontProducts', res)
+  },
+  async getFrontAllProduct({ commit }) {
+    const res = await apiAllFrontProduct()
+    commit('handFrontAllProduct', res)
+  },
+  async getSingleProduct(context, id) {
+    const res = await apiSingleProduct(id)
+    return res
+  },
+
+  //admin
   async getProducts({ commit }, page) {
     const res = await apiProductPage(page)
-    commit('handGetProducts', res)
+    commit('handProducts', res)
   },
   async getAllProducts({ commit }) {
     const res = await apiAllProduct()

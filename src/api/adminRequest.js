@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-let authorize = null
-axios.defaults.headers.common.Authorization = authorize
-
 const adminApi = axios.create({
   baseURL: `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/`
 })

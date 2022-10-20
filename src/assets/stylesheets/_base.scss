@@ -75,6 +75,12 @@ tbody:last-child td:last-child{
 	animation: scale-in-center 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.scale-up-ver-top {
+	-webkit-animation: scale-up-ver-top .8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	animation: scale-up-ver-top .8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
 @include jello-effect;
 @include slide-in;
 @include scale-in-center;
+@include scale-up

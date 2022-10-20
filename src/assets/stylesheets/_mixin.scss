@@ -5,6 +5,13 @@
   white-space: nowrap;
 }
 
+@mixin pad {
+  @media (max-width: 992px){
+    @content;
+  }
+}
+
+
 //抖動效果
 @mixin jello-effect{
   @-webkit-keyframes jello-horizontal {
@@ -139,3 +146,34 @@
     }
   }
 } 
+//scale-up效果
+@mixin scale-up{
+  @-webkit-keyframes scale-up-ver-top {
+    0% {
+      -webkit-transform: scaleY(0.4);
+              transform: scaleY(0.4);
+      -webkit-transform-origin: 100% 0%;
+              transform-origin: 100% 0%;
+    }
+    100% {
+      -webkit-transform: scaleY(1);
+              transform: scaleY(1);
+      -webkit-transform-origin: 100% 0%;
+              transform-origin: 100% 0%;
+    }
+  }
+  @keyframes scale-up-ver-top {
+    0% {
+      -webkit-transform: scaleY(0.4);
+              transform: scaleY(0.4);
+      -webkit-transform-origin: 100% 0%;
+              transform-origin: 100% 0%;
+    }
+    100% {
+      -webkit-transform: scaleY(1);
+              transform: scaleY(1);
+      -webkit-transform-origin: 100% 0%;
+              transform-origin: 100% 0%;
+    }
+  }
+}
