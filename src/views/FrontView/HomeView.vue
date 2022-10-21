@@ -28,35 +28,39 @@
         ></button>
       </div>
       <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="2000">
+        <div
+          class="carousel-item overflow-hidden active"
+          data-bs-interval="6000"
+        >
+          <video autoplay muted loop preload="metadata">
+            <source
+              type="video/mp4"
+              src="https://joy.videvo.net/videvo_files/video/free/2020-03/large_watermarked/200312_pl_01_4k_020_preview.mp4"
+            />
+          </video>
+          <div class="carousel-caption">
+            <h5>Second slide label</h5>
+            <p>Some representative placeholder content for the second slide.</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
           <img
             src="https://picsum.photos/id/20/600/400"
             class="d-block"
             alt="..."
           />
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption">
             <h5>First slide label</h5>
             <p>Some representative placeholder content for the first slide.</p>
           </div>
         </div>
-        <div class="carousel-item" data-bs-interval="2000">
-          <img
-            src="https://picsum.photos/id/10/600/400"
-            class="d-block"
-            alt="..."
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
+        <div class="carousel-item" data-bs-interval="3000">
           <img
             src="https://picsum.photos/id/30/600/400"
             class="d-block"
             alt="..."
           />
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption">
             <h5>Third slide label</h5>
             <p>Some representative placeholder content for the third slide.</p>
           </div>
@@ -100,7 +104,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .frontCarouse {
   height: 70vh;
+  @include pad() {
+    height: 45vh;
+  }
+}
+video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 </style>
