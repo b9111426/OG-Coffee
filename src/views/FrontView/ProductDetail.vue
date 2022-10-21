@@ -25,38 +25,104 @@
         </div>
       </div>
       <div class="col">
-        <h3>{{ product.title }}</h3>
-        <h4 class="mb-5">{{ product.subtitle }}</h4>
+        <h3 class="text-start">{{ product.title }}</h3>
+        <h4 class="text-start mb-5">{{ product.subtitle }}</h4>
         <p class="text-start mb-5">{{ product.description }}</p>
-        <div class="row row-cols-2 g-3 mb-3">
-          <div class="col">
-            <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
-              <button class="btn btn-gray" type="button" id="button-addon1">
-                <i class="bi bi-dash-lg"></i>
-              </button>
-              <input
-                type="text"
-                value="1"
-                class="form-control text-center"
-                placeholder=""
-                aria-label="Example text with button addon"
-                aria-describedby="button-addon1"
-              />
-              <button class="btn btn-gray" type="button" id="button-addon1">
-                <i class="bi bi-plus-lg"></i>
-              </button>
+        <div v-if="isShow">
+          <!--價錢數量-->
+          <div class="row g-3 mb-3">
+            <div class="col-2 d-flex align-items-center">
+              <h6 class="text-center">
+                {{ unitAry[0] }}
+              </h6>
+            </div>
+            <div class="col-5 d-flex justify-content-around align-items-center">
+              <p class="text-decoration-line-through">NT${{ product.price }}</p>
+              <strong>NT${{ product.price * product.origin_price }}</strong>
+            </div>
+            <div class="col-5">
+              <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
+                <button class="btn btn-gray" type="button" id="button-addon1">
+                  <i class="bi bi-dash"></i>
+                </button>
+                <input
+                  type="text"
+                  value="0"
+                  class="form-control text-center"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                />
+                <button class="btn btn-gray" type="button" id="button-addon1">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <div class="col">
-            <select
-              class="form-select form-select-sm"
-              aria-label=".form-select-sm"
-            >
-              <option selected class="text-center" disabled>單位</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+          <!--價錢數量-->
+          <div v-if="product['big-price']" class="row g-3 mb-3">
+            <div class="col-2 d-flex align-items-center">
+              <h6 class="text-center">
+                {{ unitAry[1] }}
+              </h6>
+            </div>
+            <div class="col-5 d-flex justify-content-around align-items-center">
+              <p class="text-decoration-line-through">
+                NT${{ product['big-price'] }}
+              </p>
+              <strong
+                >NT${{ product['big-price'] * product.origin_price }}</strong
+              >
+            </div>
+            <div class="col-5">
+              <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
+                <button class="btn btn-gray" type="button" id="button-addon1">
+                  <i class="bi bi-dash"></i>
+                </button>
+                <input
+                  type="text"
+                  value="0"
+                  class="form-control text-center"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                />
+                <button class="btn btn-gray" type="button" id="button-addon1">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--價錢數量-->
+          <div v-if="product['tooBig-price']" class="row g-3 mb-3">
+            <div class="col-2 d-flex align-items-center">
+              <h6 class="text-center">
+                {{ unitAry[2] }}
+              </h6>
+            </div>
+            <div class="col-5 d-flex justify-content-around align-items-center">
+              <p class="text-decoration-line-through">
+                NT${{ product['tooBig-price'] }}
+              </p>
+              <strong
+                >NT${{ product['tooBig-price'] * product.origin_price }}</strong
+              >
+            </div>
+            <div class="col-5">
+              <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
+                <button class="btn btn-gray" type="button" id="button-addon1">
+                  <i class="bi bi-dash"></i>
+                </button>
+                <input
+                  type="text"
+                  value="0"
+                  class="form-control text-center"
+                  aria-label="Example text with button addon"
+                  aria-describedby="button-addon1"
+                />
+                <button class="btn btn-gray" type="button" id="button-addon1">
+                  <i class="bi bi-plus"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row row-cols-2 g-3 mb-3">
@@ -91,7 +157,8 @@ export default {
       product: {
         imageUrl: []
       },
-      isShow: false
+      isShow: false,
+      unitAry: []
     }
   },
   methods: {
@@ -100,7 +167,7 @@ export default {
         const { id } = this.$route.params
         const res = await this.$store.dispatch('Products/getSingleProduct', id)
         this.product = res.data.product
-
+        this.unitAry = this.product.unit.split('、')
         this.isShow = true
         this.$store.dispatch('Products/setLoading', false)
       } catch (err) {
