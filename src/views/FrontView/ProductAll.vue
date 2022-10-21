@@ -18,12 +18,6 @@
           <div class="card-body">
             <p class="text-start">{{ item.title }}</p>
             <p class="text-start">{{ item.subtitle }}</p>
-            <p class="d-flex justify-content-between">
-              <span class="text-danger text-decoration-line-through"
-                >NT{{ item.origin_price }}</span
-              >
-              <span class="fw-bold">NT{{ item.price }}</span>
-            </p>
           </div>
         </div>
       </div>
