@@ -37,11 +37,11 @@
       <table class="table mt-4 table-hover">
         <thead>
           <tr class="table-light">
-            <th width="120">分類</th>
+            <th width="120" class="text-nowrap">分類</th>
             <th width="150" class="text-center text-nowrap px-5">預覽</th>
-            <th>產品名稱</th>
+            <th class="text-center text-nowrap">產品名稱</th>
             <th width="120" class="text-end d-none d-lg-table-cell">原價</th>
-            <th width="120" class="text-end text-nowrap px-4">售價</th>
+            <th width="120" class="text-end text-nowrap">售價</th>
             <th width="145" class="text-center d-none d-lg-table-cell">
               是否啟用
             </th>
@@ -52,17 +52,25 @@
           <tr class="align-middle">
             <td>{{ item.category }}</td>
             <td class="text-center">
-              <img
-                class="pre-pic img-thumbnail"
-                :src="item.imageUrl[0]"
-                alt="縮圖"
-              />
+              <div class="position-relative d-inline-block overflow-hidden">
+                <div
+                  v-if="item.is_soldOut"
+                  class="position-absolute sellOutTag bg-danger"
+                ></div>
+                <img
+                  class="pre-pic img-thumbnail"
+                  :src="item.imageUrl[0]"
+                  alt="縮圖"
+                />
+              </div>
             </td>
-            <td>{{ item.title }}</td>
+            <td class="text-nowrap">{{ item.title }}</td>
             <td class="text-end d-none d-lg-table-cell">
-              {{ item.origin_price }}
+              {{ item.price }}
             </td>
-            <td class="text-lg-end text-center">{{ item.price }}</td>
+            <td class="text-lg-end text-center">
+              {{ item.price * item.origin_price }}
+            </td>
             <td class="d-none d-lg-table-cell">
               <div class="container ps-4">
                 <div class="form-check d-flex justify-content-start">
@@ -148,7 +156,8 @@ export default {
       tempProduct: {
         imagesUrl: []
       },
-      currentPage: 1
+      currentPage: 1,
+      switchPrice: 0
     }
   },
   components: {
@@ -260,5 +269,19 @@ export default {
   height: 100px;
   object-fit: cover;
   object-position: center center;
+}
+.sellOutTag {
+  width: 120px;
+  height: 25px;
+  top: 10%;
+  right: 10%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  transform: rotateZ(-45deg);
+  &::after {
+    content: '售完';
+    color: #fff;
+    letter-spacing: 0.3rem;
+  }
 }
 </style>

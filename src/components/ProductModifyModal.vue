@@ -315,7 +315,6 @@
       </div>
     </div>
   </div>
-  <pre>{{ product }}</pre>
 </template>
 
 <script>
