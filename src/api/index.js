@@ -2,7 +2,8 @@ import { signInRequest, signOutRequest } from './signInRequest'
 import {
   frontProductRequest,
   allFrontProductRequest,
-  singleProductRequest
+  singleProductRequest,
+  getCartRequest
 } from './frontRequest'
 import {
   checkRequest,
@@ -21,7 +22,7 @@ export const apiSignOutRequest = signOutRequest
 export const apiAllFrontProduct = allFrontProductRequest
 export const apiFrontProduct = frontProductRequest
 export const apiSingleProduct = singleProductRequest
-
+export const apiGetCart = getCartRequest
 //admin
 export const apiCheckRequest = checkRequest
 export const apiProductPage = productPageRequest

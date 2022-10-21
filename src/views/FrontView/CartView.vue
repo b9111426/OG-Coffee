@@ -68,6 +68,7 @@
       </tbody>
     </table>
   </div>
+  <pre>{{ catData }}</pre>
 </template>
 
 <script>
@@ -76,12 +77,14 @@ import emitter from '@/libs/emitter'
 export default {
   data() {
     return {
-      cartData: {},
       products: [],
       isLoadingItem: ''
     }
   },
   methods: {
+    getCart() {
+      this.$store.dispatch('Cart/getCart')
+    },
     getProducts() {
       this.$http
         .get(
@@ -113,6 +116,12 @@ export default {
   },
   mounted() {
     this.getProducts()
+    this.getCart()
+  },
+  computed: {
+    catData() {
+      return this.$store.getters['Cart/getCart']
+    }
   }
 }
 </script>
