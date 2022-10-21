@@ -159,50 +159,81 @@
                     <label for="category" class="form-label fw-bold"
                       >分類</label
                     >
-                    <input
+                    <select
                       id="category"
-                      type="text"
-                      class="form-control"
+                      class="form-select"
                       v-model="tempProduct.category"
-                      placeholder="請輸入分類"
-                    />
+                      @change="handTempProduct"
+                      aria-label="category select"
+                    >
+                      <option value="飲品">飲品</option>
+                      <option value="蛋糕">蛋糕</option>
+                      <option value="餐點">餐點</option>
+                    </select>
                   </div>
                   <div class="mb-3 col-md-6">
-                    <label for="price" class="form-label fw-bold">單位</label>
-                    <input
-                      id="unit"
-                      type="text"
-                      class="form-control"
-                      v-model="tempProduct.unit"
-                      placeholder="請輸入單位"
-                    />
+                    <label class="form-label fw-bold">單位</label>
+                    <p>{{ unitSet }}</p>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="mb-3 col-md-6">
-                    <label for="origin_price" class="form-label fw-bold"
-                      >原價</label
+                    <label for="discount" class="form-label fw-bold"
+                      >折扣</label
                     >
-                    <input
-                      id="origin_price"
-                      type="number"
-                      min="0"
-                      class="form-control"
+                    <select
+                      id="discount"
+                      class="form-select"
                       v-model.number="tempProduct.origin_price"
-                      placeholder="請輸入原價"
-                    />
+                      aria-label="category select"
+                    >
+                      <option value="1">原價</option>
+                      <option value="0.9">九折</option>
+                      <option value="0.8">八折</option>
+                      <option value="0.7">七折</option>
+                      <option value="0.6">六折</option>
+                    </select>
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="price" class="form-label fw-bold">售價</label>
-                    <input
-                      id="price"
-                      type="number"
-                      min="0"
-                      class="form-control"
-                      v-model.number="tempProduct.price"
-                      placeholder="請輸入售價"
-                    />
+                    <div v-if="tempProduct.category === '飲品'">
+                      <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">中杯</span>
+                        <input
+                          v-model.number="tempProduct.price"
+                          type="number"
+                          id="price"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">大杯</span>
+                        <input
+                          type="number"
+                          class="form-control"
+                          v-model.number="tempProduct['big-price']"
+                        />
+                      </div>
+                      <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">特大杯</span>
+                        <input
+                          type="number"
+                          class="form-control"
+                          v-model.number="tempProduct['tooBig-price']"
+                        />
+                      </div>
+                    </div>
+                    <div v-else>
+                      <input
+                        id="price"
+                        type="number"
+                        min="0"
+                        class="form-control"
+                        v-model.number="tempProduct.price"
+                        placeholder="請輸入售價"
+                      />
+                    </div>
                   </div>
                 </div>
                 <hr />
@@ -240,11 +271,24 @@
                       class="form-check-input"
                       v-model="tempProduct.is_enabled"
                       type="checkbox"
-                      :true-value="1"
-                      :false-value="0"
+                      :true-value="true"
+                      :false-value="false"
                     />
                     <label class="form-check-label fw-bold" for="is_enabled"
                       >是否啟用</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      id="is_enabled"
+                      class="form-check-input"
+                      v-model="tempProduct.is_soldOut"
+                      type="checkbox"
+                      :true-value="true"
+                      :false-value="false"
+                    />
+                    <label class="form-check-label fw-bold" for="is_enabled"
+                      >售完</label
                     >
                   </div>
                 </div>
@@ -271,12 +315,14 @@
       </div>
     </div>
   </div>
+  <pre>{{ product }}</pre>
 </template>
 
 <script>
 import modalMixin from '@/mixins/modalMixin'
 export default {
   props: ['product', 'isNew'],
+  emits: ['update-product'],
   data() {
     return {
       status: {},
@@ -285,9 +331,7 @@ export default {
       }
     }
   },
-  emits: ['update-product'],
   mixins: [modalMixin],
-  inject: ['emitter'],
   watch: {
     product() {
       this.tempProduct = this.product
@@ -320,6 +364,31 @@ export default {
     removePic(e) {
       const idx = e.target.getAttribute('data-idx')
       this.tempProduct.imageUrl.splice(idx, 1)
+    },
+    handTempProduct() {
+      if (this.tempProduct.category === '飲品') {
+        this.tempProduct.unit = this.unitSet
+      } else {
+        this.tempProduct['big-price'] = null
+        this.tempProduct['tooBig-price'] = null
+      }
+    }
+  },
+  computed: {
+    unitSet() {
+      let unit = null
+      switch (this.tempProduct.category) {
+        case '飲品':
+          unit = '中杯、大杯、特大杯'
+          break
+        case '蛋糕':
+          unit = '個'
+          break
+        case '餐點':
+          unit = '份'
+          break
+      }
+      return unit
     }
   }
 }

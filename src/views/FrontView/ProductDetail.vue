@@ -13,7 +13,7 @@
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row g-3">
           <div
             v-for="(i, idx) in product.imageUrl.splice(1)"
             :key="i + idx"
@@ -28,25 +28,57 @@
         <h3>{{ product.title }}</h3>
         <h4 class="mb-5">{{ product.subtitle }}</h4>
         <p class="text-start mb-5">{{ product.description }}</p>
-        <div v-if="isShow" class="input-group input-group-sm flex-nowrap mb-3">
-          <button class="btn btn-gray" type="button" id="button-addon1">
-            <i class="bi bi-dash-lg"></i>
-          </button>
-          <input
-            type="text"
-            value="1"
-            class="form-control text-center"
-            placeholder=""
-            aria-label="Example text with button addon"
-            aria-describedby="button-addon1"
-          />
-          <button class="btn btn-gray" type="button" id="button-addon1">
-            <i class="bi bi-plus-lg"></i>
-          </button>
+        <div class="row row-cols-2 g-3 mb-3">
+          <div class="col">
+            <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
+              <button class="btn btn-gray" type="button" id="button-addon1">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <input
+                type="text"
+                value="1"
+                class="form-control text-center"
+                placeholder=""
+                aria-label="Example text with button addon"
+                aria-describedby="button-addon1"
+              />
+              <button class="btn btn-gray" type="button" id="button-addon1">
+                <i class="bi bi-plus-lg"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col">
+            <select
+              class="form-select form-select-sm"
+              aria-label=".form-select-sm"
+            >
+              <option selected class="text-center" disabled>單位</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
         </div>
-        <button v-if="isShow" type="button" class="btn btn-primary btn-sm">
-          加入購物車
-        </button>
+        <div class="row row-cols-2 g-3 mb-3">
+          <div class="col">
+            <button
+              v-if="isShow"
+              type="button"
+              class="btn btn-primary btn-sm w-100"
+            >
+              加入購物車
+            </button>
+          </div>
+          <div class="col">
+            <button
+              v-if="isShow"
+              type="button"
+              class="btn btn-success btn-sm w-100"
+            >
+              立即購買
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
