@@ -33,9 +33,7 @@
 <script>
 export default {
   data() {
-    return {
-      isLoading: false
-    }
+    return {}
   },
   created() {
     this.$store.dispatch('handLoading', true)
@@ -43,6 +41,11 @@ export default {
   methods: {
     toggleLoading(boolean) {
       this.isLoading = boolean
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters['Products/loadingState']
     }
   }
 }

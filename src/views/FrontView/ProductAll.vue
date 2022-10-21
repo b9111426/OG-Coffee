@@ -4,7 +4,11 @@
       <div class="col-lg-3 col-6" v-for="item in products" :key="item.id">
         <div class="card h-100">
           <a class="card-link position-relative" @click="toNewRouter(item.id)">
-            <img :src="item.imageUrl" class="card-pic card-img-top" alt="..." />
+            <img
+              :src="item.imageUrl[0]"
+              class="card-pic card-img-top"
+              alt="..."
+            />
             <p
               class="position-absolute text-white top-50 start-50 translate-middle"
             >
@@ -39,6 +43,7 @@ export default {
       }
     },
     toNewRouter(id) {
+      this.$store.dispatch('Products/setLoading', true)
       this.$router.push({ path: `products/${id}` })
     }
   },

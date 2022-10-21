@@ -1,4 +1,7 @@
 export default {
+  handLoading(state, boolean) {
+    state.isLoading = boolean
+  },
   handFrontProducts(state, res) {
     state.products = res.data.products
     state.pagination = res.data.pagination

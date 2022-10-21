@@ -7,7 +7,8 @@ export default {
   state: {
     allProducts: [],
     products: [],
-    pagination: {}
+    pagination: {},
+    isLoading: false
   },
   actions,
   mutations,

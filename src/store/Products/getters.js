@@ -1,4 +1,7 @@
 export default {
+  loadingState(state) {
+    return state.isLoading
+  },
   productsData(state) {
     return state.products
   },

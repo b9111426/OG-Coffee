@@ -54,7 +54,7 @@
             <td class="text-center">
               <img
                 class="pre-pic img-thumbnail"
-                :src="item.imageUrl"
+                :src="item.imageUrl[0]"
                 alt="縮圖"
               />
             </td>

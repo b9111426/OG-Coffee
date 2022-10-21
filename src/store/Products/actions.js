@@ -11,6 +11,9 @@ import {
 } from '@/api'
 
 export default {
+  setLoading({ commit }, boolean) {
+    commit('handLoading', boolean)
+  },
   async getFrontProducts({ commit }, page) {
     const res = await apiFrontProduct(page)
     commit('handFrontProducts', res)
