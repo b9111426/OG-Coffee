@@ -73,6 +73,7 @@
                         type="text"
                         class="form-control"
                         placeholder="請輸入圖片連結"
+                        @change="btnShow"
                         ref="fileUrl"
                       />
                     </div>
@@ -90,6 +91,7 @@
                     </div>
 
                     <button
+                      v-if="isBtnShow"
                       class="btn btn-primary btn-sm d-block w-100"
                       @click="addPic"
                     >
@@ -327,7 +329,8 @@ export default {
       status: {},
       tempProduct: {
         imageUrl: []
-      }
+      },
+      isBtnShow: false
     }
   },
   mixins: [modalMixin],
@@ -340,6 +343,13 @@ export default {
     }
   },
   methods: {
+    btnShow() {
+      if (this.$refs.fileUrl.value) {
+        this.isBtnShow = true
+      } else {
+        this.isBtnShow = false
+      }
+    },
     async uploadFile() {
       try {
         const uploadedFile = this.$refs.fileInput.files[0]
@@ -347,6 +357,7 @@ export default {
         formData.append('file-to-upload', uploadedFile)
         const res = await this.$store.dispatch('Products/upLoadFile', formData)
         this.$refs.fileUrl.value = res.data.imageUrl
+        this.isBtnShow = true
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
@@ -365,9 +376,8 @@ export default {
       this.tempProduct.imageUrl.splice(idx, 1)
     },
     handTempProduct() {
-      if (this.tempProduct.category === '飲品') {
-        this.tempProduct.unit = this.unitSet
-      } else {
+      this.tempProduct.unit = this.unitSet
+      if (this.tempProduct.category !== '飲品') {
         this.tempProduct['big-price'] = null
         this.tempProduct['tooBig-price'] = null
       }
@@ -381,10 +391,10 @@ export default {
           unit = '中杯、大杯、特大杯'
           break
         case '蛋糕':
-          unit = '個'
+          unit = '一個'
           break
         case '餐點':
-          unit = '份'
+          unit = '一份'
           break
       }
       return unit
