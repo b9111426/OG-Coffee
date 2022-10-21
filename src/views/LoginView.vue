@@ -95,7 +95,6 @@ export default {
         this.$router.push('/admin')
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
-        throw new Error(err.message)
       }
     },
     saveCode() {

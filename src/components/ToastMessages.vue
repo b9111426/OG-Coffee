@@ -6,7 +6,7 @@
     <div
       v-for="(i, idx) in messages"
       :key="i.id"
-      class="toast show slide-in-blurred-right"
+      class="toast show fade"
       role="alert"
     >
       <div class="toast-header">
@@ -36,29 +36,16 @@
 </template>
 
 <script>
-import emitter from '@/libs/emitter'
 export default {
-  data() {
-    return {
-      messages: []
-    }
-  },
   methods: {
-    toastAutoClear() {
-      setTimeout(() => {
-        this.messages.shift()
-      }, 3000)
-    },
-    clearToast(index) {
-      this.messages.splice(index, 1)
+    clearToast(idx) {
+      this.$store.dispatch('spliceToast', idx)
     }
   },
-  mounted() {
-    emitter.on('push-message', (message) => {
-      const { style, title, content, id } = message
-      this.messages.push({ style, title, content, id })
-      this.toastAutoClear()
-    })
+  computed: {
+    messages() {
+      return this.$store.getters.toastState
+    }
   }
 }
 </script>
