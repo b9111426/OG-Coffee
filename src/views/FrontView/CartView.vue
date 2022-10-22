@@ -28,7 +28,7 @@
             </td>
             <td>優惠</td>
             <td class="text-center text-nowrap">
-              {{ i.product.price * i.product.origin_price }}
+              {{ Math.floor(i.product.price * i.product.origin_price) }}
             </td>
             <td class="text-center text-nowrap">
               {{ i.product.num }}
@@ -38,7 +38,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger btn-sm"
-                @click="openDelModal(i)"
+                @click="openDelModal(i.product.title, i.id)"
               >
                 <i class="bi bi-x"></i>
               </button>
@@ -48,96 +48,41 @@
         <tbody v-if="cartData.length === 0" class="text-center">
           <td colspan="7" class="fs-3 text-gray-dark py-4">
             購物車已空
-
             <div id="emptyCart" ref="emptyCart"></div>
           </td>
         </tbody>
-        <!--<tbody v-if="products.length === 0" class="text-center">
-          <td colspan="7" class="fs-3 text-gray py-4">產品列表已空</td>
-        </tbody>-->
       </table>
     </div>
-    <!--<table class="table align-middle">
-      <thead>
-        <tr>
-          <th>圖片</th>
-          <th>商品名稱</th>
-          <th>價格</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in products" :key="item.id">
-          <td style="width: 200px">
-            <div
-              :style="{ backgroundImage: `url(${item.imageUrl})` }"
-              style="
-                height: 100px;
-                background-size: cover;
-                background-position: center;
-              "
-            ></div>
-          </td>
-          <td>
-            {{ item.title }}
-          </td>
-          <td>
-            <div class="h5" v-if="item.price === item.origin_price">
-              {{ item.price }} 元
-            </div>
-            <div v-else>
-              <del class="h6">原價 {{ item.origin_price }} 元</del>
-              <div class="h5">現在只要 {{ item.price }} 元</div>
-            </div>
-          </td>
-          <td>
-            <div class="btn-group btn-group-sm">
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                @click="openProductModal(item.id)"
-                :disabled="isLoadingItem === item.id"
-              >
-                <div
-                  class="spinner-grow spinner-grow-sm"
-                  role="status"
-                  v-if="isLoadingItem === item.id"
-                ></div>
-                查看更多
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-danger"
-                @click="addToCart(item.id)"
-                :disabled="isLoadingItem === item.id"
-              >
-                <div
-                  class="spinner-grow spinner-grow-sm"
-                  role="status"
-                  v-if="isLoadingItem === item.id"
-                ></div>
-                加到購物車
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>-->
   </div>
-  <pre>{{ cartData }}</pre>
+  <!-- 刪除產品 -->
+  <DelModal
+    :item="tempProduct"
+    ref="delModal"
+    @del-item="delCartProduct"
+  ></DelModal>
 </template>
 
 <script>
 import emitter from '@/libs/emitter'
-
+import DelModal from '@/components/DelModal.vue'
 export default {
   data() {
     return {
       products: [],
-      isLoadingItem: ''
+      isLoadingItem: '',
+      tempProduct: {}
     }
   },
+  components: {
+    DelModal
+  },
   methods: {
+    openDelModal(title, id) {
+      this.tempProduct.title = title
+      this.tempProduct.id = id
+      const delComponent = this.$refs.delModal
+      delComponent.openModal()
+    },
     async getCart() {
       try {
         await this.$store.dispatch('Cart/getCart')
@@ -173,17 +118,34 @@ export default {
         .catch((err) => {
           throw new Error(err)
         })
+    },
+    async delCartProduct(title) {
+      try {
+        await this.$store.dispatch('Cart/deleteCart', this.tempProduct.id)
+
+        const delComponent = this.$refs.delModal
+        delComponent.hideModal()
+        this.$store.dispatch('fireToast', {
+          title: `${title}商品已刪除`,
+          style: 'success'
+        })
+        this.getCart()
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    },
+    createLottie() {
+      const anLottie = this.lottie.loadAnimation({
+        container: this.$refs.emptyCart,
+        animType: 'svg',
+        loop: true,
+        path: 'https://lottie.host/d6b9ff64-e007-4565-999e-ce83c26d82f9/LueoasihD3.json'
+      })
+      anLottie.setSpeed(1)
     }
   },
   mounted() {
     this.getCart()
-    const anLottie = this.lottie.loadAnimation({
-      container: this.$refs.emptyCart,
-      animType: 'svg',
-      loop: true,
-      path: 'https://lottie.host/d6b9ff64-e007-4565-999e-ce83c26d82f9/LueoasihD3.json'
-    })
-    anLottie.setSpeed(1)
   },
   created() {
     this.$store.dispatch('handLoading', true)
@@ -192,6 +154,13 @@ export default {
     cartData() {
       const cartData = this.$store.getters['Cart/getCart']
       return cartData
+    }
+  },
+  watch: {
+    cartData() {
+      if (this.cartData.length === 0) {
+        this.createLottie()
+      }
     }
   }
 }

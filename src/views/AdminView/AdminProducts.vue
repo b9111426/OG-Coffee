@@ -69,7 +69,7 @@
               {{ item.price }}
             </td>
             <td class="text-lg-end text-center">
-              {{ item.price * item.origin_price }}
+              {{ Math.floor(item.price * item.origin_price) }}
             </td>
             <td class="d-none d-lg-table-cell">
               <div class="container ps-4">

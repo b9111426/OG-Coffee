@@ -9,3 +9,4 @@ export const frontProductRequest = (page) =>
   frontApi.get(`/products/?page=${page}`)
 export const singleProductRequest = (id) => frontApi.get(`/product/${id}`)
 export const getCartRequest = () => frontApi.get('/cart')
+export const deleteCartRequest = (id) => frontApi.delete(`/cart/${id}`)

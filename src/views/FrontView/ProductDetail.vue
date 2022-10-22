@@ -38,7 +38,11 @@
             </div>
             <div class="col-5 d-flex justify-content-around align-items-center">
               <p class="text-decoration-line-through">NT${{ product.price }}</p>
-              <strong>NT${{ product.price * product.origin_price }}</strong>
+              <strong
+                >NT${{
+                  Math.floor(product.price * product.origin_price)
+                }}</strong
+              >
             </div>
             <div class="col-5">
               <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
