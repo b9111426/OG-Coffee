@@ -111,7 +111,7 @@ export default {
           emitter.emit('get-cart')
         })
         .catch((err) => {
-          alert(err)
+          throw new Error(err)
         })
     }
   },
@@ -125,7 +125,7 @@ export default {
   computed: {
     catData() {
       const cartData = this.$store.getters['Cart/getCart']
-      return cartData.carts
+      return cartData
     }
   }
 }

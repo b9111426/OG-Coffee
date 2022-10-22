@@ -177,11 +177,19 @@
 
 <script>
 export default {
+  methods: {
+    async getCart() {
+      await this.$store.dispatch('Cart/getCart')
+    }
+  },
   computed: {
     cartQty() {
       const cartData = this.$store.getters['Cart/getCart']
-      return cartData.carts.length
+      return cartData.length
     }
+  },
+  created() {
+    this.getCart()
   }
 }
 </script>
