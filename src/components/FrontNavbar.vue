@@ -24,7 +24,7 @@
               <span
                 class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
               >
-                0
+                {{ cartQty }}
               </span>
             </router-link>
           </li>
@@ -176,7 +176,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    cartQty() {
+      const cartData = this.$store.getters['Cart/getCart']
+      return cartData.carts.length
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -82,8 +82,9 @@ export default {
     }
   },
   methods: {
-    getCart() {
-      this.$store.dispatch('Cart/getCart')
+    async getCart() {
+      await this.$store.dispatch('Cart/getCart')
+      this.$store.dispatch('handLoading', false)
     },
     getProducts() {
       this.$http
@@ -118,9 +119,13 @@ export default {
     this.getProducts()
     this.getCart()
   },
+  created() {
+    this.$store.dispatch('handLoading', true)
+  },
   computed: {
     catData() {
-      return this.$store.getters['Cart/getCart']
+      const cartData = this.$store.getters['Cart/getCart']
+      return cartData.carts
     }
   }
 }

@@ -72,10 +72,6 @@ const routes = [
       {
         path: 'article',
         component: () => import('../views/AdminView/AdminArticle.vue')
-      },
-      {
-        path: 'cart',
-        component: () => import('../views/AdminView/AdminCart.vue')
       }
     ]
   },
