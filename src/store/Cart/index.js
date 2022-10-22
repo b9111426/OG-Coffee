@@ -5,7 +5,8 @@ import getters from './getters'
 export default {
   namespaced: true,
   state: {
-    cartData: []
+    cartData: [],
+    jello: false
   },
   actions,
   mutations,

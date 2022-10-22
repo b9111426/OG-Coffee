@@ -21,11 +21,13 @@
             >
               <i class="bi bi-cart-fill"></i>
               購物車
-              <span
+              <div
+                v-if="cartQty"
+                :class="{ jello: isJello }"
                 class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
               >
                 {{ cartQty }}
-              </span>
+              </div>
             </router-link>
           </li>
           <li class="nav-item mx-1">
@@ -186,6 +188,9 @@ export default {
     cartQty() {
       const cartData = this.$store.getters['Cart/getCart']
       return cartData.length
+    },
+    isJello() {
+      return this.$store.getters['Cart/isJello']
     }
   },
   created() {
@@ -214,10 +219,16 @@ export default {
   height: 48px;
   position: relative;
   @include hide-text;
-  &:active,
   &:hover {
     -webkit-animation: jello-horizontal 0.4s both ease-in-out;
     animation: jello-horizontal 0.4s both ease-in-out;
   }
+
+  &:active {
+    filter: opacity(50%);
+  }
+}
+.jello {
+  font-size: 6px;
 }
 </style>

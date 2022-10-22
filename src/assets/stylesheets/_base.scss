@@ -68,19 +68,15 @@ tbody:last-child td:last-child{
   object-position: 50% 50%;
 }
 
-.fade-out-top {
-	-webkit-animation: fade-out-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	animation: fade-out-top 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+.jello-horizontal {
+	-webkit-animation: jello-horizontal 0.9s both;
+	animation: jello-horizontal 0.9s both;
 }
 .scale-in-center {
 	-webkit-animation: scale-in-center 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	animation: scale-in-center 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-.scale-up-ver-top {
-	-webkit-animation: scale-up-ver-top .8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-	animation: scale-up-ver-top .8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-}
 
 @include jello-effect;
 @include scale-in-center;

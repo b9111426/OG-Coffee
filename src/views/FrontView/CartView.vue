@@ -31,7 +31,7 @@
               {{ Math.floor(i.product.price * i.product.origin_price) }}
             </td>
             <td class="text-center text-nowrap">
-              {{ i.product.num }}
+              {{ i.qty }}
             </td>
             <td class="text-center text-nowrap">{{ i.final_total }}</td>
             <td class="text-center">
@@ -60,10 +60,10 @@
     ref="delModal"
     @del-item="delCartProduct"
   ></DelModal>
+  <pre>{{ cartData }}</pre>
 </template>
 
 <script>
-import emitter from '@/libs/emitter'
 import DelModal from '@/components/DelModal.vue'
 export default {
   data() {
@@ -90,34 +90,6 @@ export default {
       } catch (err) {
         throw new Error(err)
       }
-    },
-    getProducts() {
-      this.$http
-        .get(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`
-        )
-        .then((res) => {
-          this.products = res.data.products
-        })
-    },
-    addToCart(id, qty = 1) {
-      this.isLoadingItem = id
-      const data = {
-        product_id: id,
-        qty
-      }
-      this.$http
-        .post(
-          `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`,
-          { data }
-        )
-        .then(() => {
-          this.isLoadingItem = ''
-          emitter.emit('get-cart')
-        })
-        .catch((err) => {
-          throw new Error(err)
-        })
     },
     async delCartProduct(title) {
       try {
