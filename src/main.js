@@ -9,6 +9,7 @@ import VueAxios from 'vue-axios'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import CKEditor from '@ckeditor/ckeditor5-vue'
+import lottie from 'lottie-web'
 
 import { date, currency } from './libs/filters'
 import $httpMessageState from './libs/pushMessageState'
@@ -19,6 +20,7 @@ app.config.globalProperties.$filters = {
   currency
 }
 app.config.globalProperties.$httpMessageState = $httpMessageState
+app.config.globalProperties.lottie = lottie
 
 app.use(router)
 app.use(store)
