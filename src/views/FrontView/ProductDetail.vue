@@ -63,7 +63,7 @@
               v-if="isShow"
               type="button"
               class="btn btn-primary w-100"
-              @click="addToCart(product.id, qty)"
+              @click="addToCart()"
             >
               加入購物車
             </button>
@@ -73,7 +73,7 @@
               v-if="isShow"
               type="button"
               class="btn btn-success w-100"
-              @click="goCartView"
+              @click="goCartView()"
             >
               立即購買
             </button>
@@ -113,10 +113,10 @@ export default {
     pushVal(val) {
       this.qty = val
     },
-    async addToCart(id, qty = 1) {
+    async addToCart() {
       const data = {
-        product_id: id,
-        qty
+        product_id: this.product.id,
+        qty: this.qty
       }
       try {
         await this.$store.dispatch('Cart/addCart', data)
@@ -146,6 +146,7 @@ export default {
       this.$refs.pic1.setAttribute('src', url2)
     },
     goCartView() {
+      this.addToCart()
       this.$router.push({ path: '/cart' })
     }
   },
