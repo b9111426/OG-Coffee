@@ -2,10 +2,10 @@ export default {
   handCartData(state, res) {
     state.cartData = res.data.data.carts
   },
-  handJello(state) {
-    state.jello = true
+  handShake(state) {
+    state.isShake = true
     setTimeout(() => {
-      state.jello = false
+      state.isShake = false
     }, 200)
   }
 }

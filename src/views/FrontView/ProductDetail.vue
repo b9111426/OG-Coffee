@@ -46,30 +46,7 @@
             </div>
             <div class="col-5">
               <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
-                <button
-                  class="btn btn-gray"
-                  type="button"
-                  id="button-addon1"
-                  @click="min"
-                >
-                  <i class="bi bi-dash"></i>
-                </button>
-                <input
-                  type="text"
-                  v-model="qty"
-                  @input="limitNum($event)"
-                  class="form-control text-center"
-                  aria-label="Example text with button addon"
-                  aria-describedby="button-addon1"
-                />
-                <button
-                  class="btn btn-gray"
-                  type="button"
-                  id="button-addon1"
-                  @click="qty++"
-                >
-                  <i class="bi bi-plus"></i>
-                </button>
+                <AddMinBtn v-model:val="qty" @add="add" @min="min"></AddMinBtn>
               </div>
             </div>
           </div>
@@ -99,11 +76,15 @@
       </div>
     </div>
   </div>
-  <pre>{{ product }}</pre>
+  <pre>{{ qty }}</pre>
 </template>
 
 <script>
+import AddMinBtn from '@/components/AddMinBtn.vue'
 export default {
+  components: {
+    AddMinBtn
+  },
   data() {
     return {
       product: {
@@ -115,14 +96,14 @@ export default {
     }
   },
   methods: {
+    add() {
+      this.qty++
+    },
     min() {
       this.qty--
       if (this.qty <= 1) {
         this.qty = 1
       }
-    },
-    limitNum(e) {
-      e.target.value = e.target.value.replace(/[^\d]/g, '')
     },
     async addToCart(id, qty = 1) {
       const data = {
@@ -132,7 +113,7 @@ export default {
       try {
         await this.$store.dispatch('Cart/addCart', data)
         this.$store.dispatch('Cart/getCart')
-        this.$store.dispatch('Cart/setJello')
+        this.$store.dispatch('Cart/setShake')
       } catch (err) {
         throw new Error(err)
       }

@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state: {
     cartData: [],
-    jello: false
+    isShake: false
   },
   actions,
   mutations,

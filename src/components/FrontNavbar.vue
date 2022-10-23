@@ -23,7 +23,7 @@
               購物車
               <div
                 v-if="cartQty"
-                :class="{ jello: isJello }"
+                :class="{ shake: isShake }"
                 class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
               >
                 {{ cartQty }}
@@ -189,8 +189,8 @@ export default {
       const cartData = this.$store.getters['Cart/getCart']
       return cartData.length
     },
-    isJello() {
-      return this.$store.getters['Cart/isJello']
+    isShake() {
+      return this.$store.getters['Cart/isShake']
     }
   },
   created() {
@@ -228,7 +228,7 @@ export default {
     filter: opacity(50%);
   }
 }
-.jello {
-  font-size: 6px;
+.shake {
+  top: -3px !important;
 }
 </style>

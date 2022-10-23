@@ -1,8 +1,8 @@
 import { apiGetCart, apiDeleteCart, apiAddCart } from '@/api'
 
 export default {
-  setJello({ commit }) {
-    commit('handJello')
+  setShake({ commit }) {
+    commit('handShake')
   },
   async getCart({ commit }) {
     const res = await apiGetCart()
