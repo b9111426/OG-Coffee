@@ -19,5 +19,20 @@ export default {
       return i.is_enabled === true
     })
     return ary.length
+  },
+  category(state) {
+    const ary = []
+    state.products.forEach((i) => {
+      if (ary.indexOf(i.category) === -1) {
+        ary.push(i.category)
+      }
+    })
+    const newAry = ary.map((j) => {
+      const filter = state.products.filter((x) => {
+        return (x.category = j)
+      })
+      return { category: j, num: filter.length }
+    })
+    return newAry
   }
 }

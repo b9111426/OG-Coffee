@@ -13,6 +13,13 @@
             <i class="bi bi-search"></i>
           </button>
         </div>
+        <p class="border-bottom py-2 border-gray-dark">分類</p>
+        <ul class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
+          <li class="d-flex justify-content-between">
+            <p>{{ i.category }}</p>
+            <p>{{ i.num }}</p>
+          </li>
+        </ul>
       </div>
       <div class="col-lg-9 col-12 py-2">
         <!--麵包屑-->
@@ -28,6 +35,7 @@
         </div>
 
         <div class="row row-cols-1 position-relative">
+          <!--loading icon-->
           <div
             v-if="isLoading"
             class="position-absolute top-50 start-50 translate-middle my-5"
@@ -48,19 +56,35 @@ export default {
     return {}
   },
   created() {
+    this.getProducts()
     this.$store.dispatch('handLoading', true)
   },
   methods: {
+    async getProducts(page = 1) {
+      try {
+        await this.$store.dispatch('Products/getFrontProducts', page)
+        this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        this.$store.dispatch('handLoading', false)
+        throw new Error(err)
+      }
+    },
     toggleLoading(boolean) {
       this.isLoading = boolean
     }
   },
   computed: {
+    allProduct() {
+      return this.$store.getters['Products/productsData']
+    },
     isLoading() {
       return this.$store.getters['Products/loadingState']
     },
     breadcrumb() {
       return this.$store.getters['Products/breadcrumb']
+    },
+    category() {
+      return this.$store.getters['Products/category']
     }
   }
 }

@@ -38,15 +38,6 @@
 <script>
 export default {
   methods: {
-    async getProducts(page = 1) {
-      try {
-        await this.$store.dispatch('Products/getFrontProducts', page)
-        this.$store.dispatch('handLoading', false)
-      } catch (err) {
-        this.$store.dispatch('handLoading', false)
-        throw new Error(err)
-      }
-    },
     toNewRouter(id, sellout) {
       if (sellout) {
         return
@@ -56,7 +47,6 @@ export default {
     }
   },
   mounted() {
-    this.getProducts()
     this.$store.dispatch('Products/setBreadcrumb', '')
   },
   computed: {

@@ -239,11 +239,9 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.getProducts()
     this.getAllProducts()
-  },
-  created() {
     this.$store.dispatch('handLoading', true)
   },
   computed: {

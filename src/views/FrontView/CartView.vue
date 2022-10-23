@@ -146,10 +146,10 @@ export default {
     }
   },
   mounted() {
-    this.getCart()
     this.createLottie()
   },
   created() {
+    this.getCart()
     this.$store.dispatch('handLoading', true)
   },
   computed: {

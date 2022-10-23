@@ -24,9 +24,12 @@
               <div
                 v-if="cartQty"
                 :class="{ shake: isShake }"
-                class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
+                class="cartBadge badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
               >
-                {{ cartQty }}
+                <span
+                  class="position-absolute top-50 start-50 translate-middle"
+                  >{{ cartQty }}</span
+                >
               </div>
             </router-link>
           </li>
@@ -187,7 +190,11 @@ export default {
   computed: {
     cartQty() {
       const cartData = this.$store.getters['Cart/getCart']
-      return cartData.length
+      let num = cartData.length
+      if (num > 9) {
+        num = '9+'
+      }
+      return num
     },
     isShake() {
       return this.$store.getters['Cart/isShake']
@@ -230,5 +237,9 @@ export default {
 }
 .shake {
   top: -3px !important;
+}
+.cartBadge {
+  height: 20px;
+  width: 20px;
 }
 </style>

@@ -149,7 +149,7 @@ export default {
       this.$router.push({ path: '/cart' })
     }
   },
-  mounted() {
+  created() {
     this.getProduct()
   }
 }
