@@ -66,10 +66,10 @@
             </td>
             <td class="text-nowrap">{{ item.title }}</td>
             <td class="text-end d-none d-lg-table-cell">
-              {{ item.price }}
+              {{ item.origin_price }}
             </td>
             <td class="text-lg-end text-center">
-              {{ Math.floor(item.price * item.origin_price) }}
+              {{ item.price }}
             </td>
             <td class="d-none d-lg-table-cell">
               <div class="container ps-4">

@@ -37,16 +37,19 @@
               </h6>
             </div>
             <div class="col-5 d-flex justify-content-around align-items-center">
-              <p class="text-decoration-line-through">NT${{ product.price }}</p>
-              <strong
-                >NT${{
-                  Math.floor(product.price * product.origin_price)
-                }}</strong
-              >
+              <p class="text-decoration-line-through">
+                NT${{ product.origin_price }}
+              </p>
+              <strong>NT${{ product.price }}</strong>
             </div>
             <div class="col-5">
               <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
-                <AddMinBtn v-model:val="qty" @add="add" @min="min"></AddMinBtn>
+                <AddMinBtn
+                  :val="qty"
+                  @add="add"
+                  @min="min"
+                  @push-val="pushVal"
+                ></AddMinBtn>
               </div>
             </div>
           </div>
@@ -76,7 +79,6 @@
       </div>
     </div>
   </div>
-  <pre>{{ qty }}</pre>
 </template>
 
 <script>
@@ -104,6 +106,9 @@ export default {
       if (this.qty <= 1) {
         this.qty = 1
       }
+    },
+    pushVal(val) {
+      this.qty = val
     },
     async addToCart(id, qty = 1) {
       const data = {

@@ -1,4 +1,4 @@
-import { apiGetCart, apiDeleteCart, apiAddCart } from '@/api'
+import { apiGetCart, apiDeleteCart, apiAddCart, apiModifyCart } from '@/api'
 
 export default {
   setShake({ commit }) {
@@ -13,5 +13,9 @@ export default {
   },
   async addCart(context, data) {
     await apiAddCart(data)
+  },
+  async modifyCart(context, obj) {
+    const { id, data } = obj
+    await apiModifyCart(id, { data })
   }
 }

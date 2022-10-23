@@ -181,13 +181,36 @@
 
                 <div class="row">
                   <div class="mb-3 col-md-6">
+                    <label for="origin_price" class="form-label fw-bold"
+                      >原價</label
+                    >
+                    <input
+                      id="price"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      @input="handTempProduct"
+                      v-model.number="tempProduct.origin_price"
+                      placeholder="請輸入售價"
+                    />
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="price" class="form-label fw-bold">售價</label>
+
+                    <p>{{ price || 0 }}</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="mb-3 col-md-6">
                     <label for="discount" class="form-label fw-bold"
                       >折扣</label
                     >
                     <select
                       id="discount"
                       class="form-select"
-                      v-model.number="tempProduct.origin_price"
+                      v-model.number="tempProduct.discount"
+                      @change="handTempProduct"
                       aria-label="category select"
                     >
                       <option value="1">原價</option>
@@ -197,49 +220,8 @@
                       <option value="0.6">六折</option>
                     </select>
                   </div>
-                  <div class="mb-3 col-md-6">
-                    <label for="price" class="form-label fw-bold">售價</label>
-                    <div v-if="tempProduct.category === '飲品'">
-                      <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">中杯</span>
-                        <input
-                          v-model.number="tempProduct.price"
-                          type="number"
-                          id="price"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">大杯</span>
-                        <input
-                          type="number"
-                          class="form-control"
-                          v-model.number="tempProduct['big-price']"
-                        />
-                      </div>
-                      <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">特大杯</span>
-                        <input
-                          type="number"
-                          class="form-control"
-                          v-model.number="tempProduct['tooBig-price']"
-                        />
-                      </div>
-                    </div>
-                    <div v-else>
-                      <input
-                        id="price"
-                        type="number"
-                        min="0"
-                        class="form-control"
-                        v-model.number="tempProduct.price"
-                        placeholder="請輸入售價"
-                      />
-                    </div>
-                  </div>
                 </div>
                 <hr />
-
                 <div class="mb-3">
                   <label for="description" class="form-label fw-bold"
                     >產品描述</label
@@ -377,10 +359,7 @@ export default {
     },
     handTempProduct() {
       this.tempProduct.unit = this.unitSet
-      if (this.tempProduct.category !== '飲品') {
-        this.tempProduct['big-price'] = null
-        this.tempProduct['tooBig-price'] = null
-      }
+      this.tempProduct.price = this.price
     }
   },
   computed: {
@@ -388,16 +367,21 @@ export default {
       let unit = null
       switch (this.tempProduct.category) {
         case '飲品':
-          unit = '中杯、大杯、特大杯'
+          unit = '杯'
           break
         case '蛋糕':
-          unit = '一個'
+          unit = '個'
           break
         case '餐點':
-          unit = '一份'
+          unit = '份'
           break
       }
       return unit
+    },
+    price() {
+      return Math.floor(
+        this.tempProduct.origin_price * this.tempProduct.discount
+      )
     }
   }
 }

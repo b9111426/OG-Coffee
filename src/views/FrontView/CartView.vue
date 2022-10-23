@@ -28,10 +28,15 @@
             </td>
             <td>優惠</td>
             <td class="text-center text-nowrap">
-              {{ Math.floor(i.product.price * i.product.origin_price) }}
+              {{ i.product.price }}
             </td>
             <td class="text-center text-nowrap">
-              {{ i.qty }}
+              <AddMinBtn
+                :val="i.qty"
+                @add="modify(i.id, i.product_id, i.qty, 'add')"
+                @min="modify(i.id, i.product_id, i.qty, 'min')"
+                @push-val="pushVal"
+              ></AddMinBtn>
             </td>
             <td class="text-center text-nowrap">{{ i.final_total }}</td>
             <td class="text-center">
@@ -65,18 +70,42 @@
 
 <script>
 import DelModal from '@/components/DelModal.vue'
+import AddMinBtn from '@/components/AddMinBtn.vue'
 export default {
   data() {
     return {
-      products: [],
       isLoadingItem: '',
-      tempProduct: {}
+      tempProduct: {},
+      qty: 1
     }
   },
   components: {
-    DelModal
+    DelModal,
+    AddMinBtn
   },
   methods: {
+    async modify(id, p_id, qty, str) {
+      str === 'add' ? qty++ : qty--
+      if (qty <= 1) {
+        qty = 1
+      }
+      const obj = {
+        id,
+        data: {
+          product_id: p_id,
+          qty
+        }
+      }
+      try {
+        await this.$store.dispatch('Cart/modifyCart', obj)
+        await this.$store.dispatch('Cart/getCart')
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    pushVal(val) {
+      this.qty = val
+    },
     openDelModal(title, id) {
       this.tempProduct.title = title
       this.tempProduct.id = id
@@ -98,7 +127,7 @@ export default {
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
         this.$store.dispatch('fireToast', {
-          title: `${title}商品已刪除`,
+          title: `${title}已刪除`,
           style: 'success'
         })
         this.getCart()
@@ -118,6 +147,7 @@ export default {
   },
   mounted() {
     this.getCart()
+    this.createLottie()
   },
   created() {
     this.$store.dispatch('handLoading', true)
@@ -126,13 +156,6 @@ export default {
     cartData() {
       const cartData = this.$store.getters['Cart/getCart']
       return cartData
-    }
-  },
-  watch: {
-    cartData() {
-      if (this.cartData.length === 0) {
-        this.createLottie()
-      }
     }
   }
 }

@@ -6,7 +6,7 @@
     <div
       v-for="(i, idx) in messages"
       :key="i.id"
-      class="toast show fade"
+      class="toast show slide-left"
       role="alert"
     >
       <div class="toast-header">
