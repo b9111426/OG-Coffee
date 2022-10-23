@@ -38,7 +38,9 @@
                 @push-val="pushVal"
               ></AddMinBtn>
             </td>
-            <td class="text-center text-nowrap">{{ i.final_total }}</td>
+            <td class="text-center text-nowrap">
+              <p v-price="i.final_total"></p>
+            </td>
             <td class="text-center">
               <button
                 type="button"

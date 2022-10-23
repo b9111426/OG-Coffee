@@ -22,6 +22,16 @@ app.config.globalProperties.$filters = {
 app.config.globalProperties.$httpMessageState = $httpMessageState
 app.config.globalProperties.lottie = lottie
 
+app.directive('price', {
+  mounted(el, binding) {
+    const p = currency(binding.value)
+    el.innerHTML = p
+  },
+  updated(el, binding) {
+    const p = currency(binding.value)
+    el.innerHTML = p
+  }
+})
 app.use(router)
 app.use(store)
 app.use(CKEditor)
