@@ -57,6 +57,7 @@ export default {
   },
   mounted() {
     this.getProducts()
+    this.$store.dispatch('Products/setBreadcrumb', '')
   },
   computed: {
     products() {

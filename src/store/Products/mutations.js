@@ -1,4 +1,7 @@
 export default {
+  handBreadcrumb(state, str) {
+    state.breadcrumb = str
+  },
   handLoading(state, boolean) {
     state.isLoading = boolean
   },

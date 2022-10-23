@@ -37,7 +37,10 @@
               </h6>
             </div>
             <div class="col-5 d-flex justify-content-around align-items-center">
-              <p class="text-decoration-line-through">
+              <p
+                class="text-decoration-line-through text-danger"
+                v-if="product.origin_price !== product.price"
+              >
                 NT${{ product.origin_price }}
               </p>
               <strong>NT${{ product.price }}</strong>
@@ -130,6 +133,7 @@ export default {
         this.product = res.data.product
         this.unitAry = this.product.unit.split('、')
         this.isShow = true
+        this.$store.dispatch('Products/setBreadcrumb', this.product.category)
         this.$store.dispatch('Products/setLoading', false)
       } catch (err) {
         throw new Error(err)

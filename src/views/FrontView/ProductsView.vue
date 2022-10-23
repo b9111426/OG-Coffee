@@ -1,7 +1,19 @@
 <template>
   <div class="container mt-4">
     <div class="row">
-      <div class="col-lg-3 col-12 bg-danger py-2"></div>
+      <div class="col-lg-3 col-12 py-2">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+          />
+          <button class="btn btn-primary" type="button" id="button-addon2">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
       <div class="col-lg-9 col-12 py-2">
         <!--麵包屑-->
         <div class="row row-cols-1 mb-3">
@@ -10,7 +22,7 @@
               <li class="breadcrumb-item">
                 <router-link to="/products">全部商品</router-link>
               </li>
-              <li class="breadcrumb-item"></li>
+              <li class="breadcrumb-item">{{ breadcrumb }}</li>
             </ol>
           </nav>
         </div>
@@ -46,6 +58,9 @@ export default {
   computed: {
     isLoading() {
       return this.$store.getters['Products/loadingState']
+    },
+    breadcrumb() {
+      return this.$store.getters['Products/breadcrumb']
     }
   }
 }

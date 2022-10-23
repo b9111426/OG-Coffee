@@ -50,7 +50,7 @@
             </td>
           </tr>
         </tbody>
-        <tbody v-if="cartData.length === 0" class="text-center">
+        <tbody v-show="cartData.length === 0" class="text-center">
           <td colspan="7" class="fs-3 text-gray-dark py-4">
             購物車已空
             <div id="emptyCart" ref="emptyCart"></div>
@@ -65,10 +65,10 @@
     ref="delModal"
     @del-item="delCartProduct"
   ></DelModal>
-  <pre>{{ cartData }}</pre>
 </template>
 
 <script>
+import lottie from 'lottie-web'
 import DelModal from '@/components/DelModal.vue'
 import AddMinBtn from '@/components/AddMinBtn.vue'
 export default {
@@ -136,7 +136,7 @@ export default {
       }
     },
     createLottie() {
-      const anLottie = this.lottie.loadAnimation({
+      const anLottie = lottie.loadAnimation({
         container: this.$refs.emptyCart,
         animType: 'svg',
         loop: true,

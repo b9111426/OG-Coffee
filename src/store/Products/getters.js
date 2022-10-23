@@ -1,4 +1,7 @@
 export default {
+  breadcrumb(state) {
+    return state.breadcrumb
+  },
   loadingState(state) {
     return state.isLoading
   },

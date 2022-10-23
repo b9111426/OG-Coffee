@@ -8,7 +8,8 @@ export default {
     allProducts: [],
     products: [],
     pagination: {},
-    isLoading: false
+    isLoading: false,
+    breadcrumb: ''
   },
   actions,
   mutations,

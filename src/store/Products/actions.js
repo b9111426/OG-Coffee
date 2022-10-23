@@ -11,6 +11,9 @@ import {
 } from '@/api'
 
 export default {
+  setBreadcrumb({ commit }, str) {
+    commit('handBreadcrumb', str)
+  },
   setLoading({ commit }, boolean) {
     commit('handLoading', boolean)
   },
