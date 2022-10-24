@@ -13,13 +13,15 @@
             <i class="bi bi-search"></i>
           </button>
         </div>
-        <p class="border-bottom py-2 border-gray-dark">分類</p>
-        <ul class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
-          <li class="d-flex justify-content-between">
-            <p>{{ i.category }}</p>
-            <p>{{ i.num }}</p>
-          </li>
-        </ul>
+        <div class="d-none d-lg-block">
+          <p class="border-bottom py-2 border-gray-dark">分類</p>
+          <ul class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
+            <li class="d-flex justify-content-between">
+              <p>{{ i.category }}</p>
+              <p>{{ i.num }}</p>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="col-lg-9 col-12 py-2">
         <!--麵包屑-->

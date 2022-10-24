@@ -2,7 +2,7 @@
   <h2>產品列表</h2>
   <div class="container text-start">
     <div class="row mt-4">
-      <div class="col-12 col-lg-6 d-flex align-items-center">
+      <div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
         <div class="bg-white p-2 rounded text-dark">
           <strong> 產品總數: {{ allProductNum }} </strong>
         </div>

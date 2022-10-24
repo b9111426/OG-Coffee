@@ -110,12 +110,11 @@
       >
         <div class="offcanvas-header position-relative">
           <router-link
-            class="navbar-brand frontNavbar-logo m-auto"
-            style="line-height: 1"
+            class="navbar-brand m-auto fw-bold"
             title="橘子咖啡"
             to="/"
             data-bs-dismiss="offcanvas"
-            >橘子咖啡</router-link
+            >OG Coffee</router-link
           >
           <button
             type="button"
