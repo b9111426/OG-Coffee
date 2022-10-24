@@ -69,11 +69,18 @@
                       <label for="imageUrl" class="fw-bold form-label mb-2"
                         >輸入圖片網址</label
                       >
+                      <div v-if="isLoading" class="ms-3 d-inline-block">
+                        <img
+                          class="loading02"
+                          src="@/assets/images/load02.gif"
+                          alt=""
+                        />
+                      </div>
                       <input
                         type="text"
                         class="form-control"
                         placeholder="請輸入圖片連結"
-                        @change="btnShow"
+                        @input="btnShow"
                         ref="fileUrl"
                       />
                     </div>
@@ -312,7 +319,8 @@ export default {
       tempProduct: {
         imageUrl: []
       },
-      isBtnShow: false
+      isBtnShow: false,
+      isLoading: false
     }
   },
   mixins: [modalMixin],
@@ -334,12 +342,14 @@ export default {
     },
     async uploadFile() {
       try {
+        this.isLoading = true
         const uploadedFile = this.$refs.fileInput.files[0]
         const formData = new FormData()
         formData.append('file-to-upload', uploadedFile)
         const res = await this.$store.dispatch('Products/upLoadFile', formData)
         this.$refs.fileUrl.value = res.data.imageUrl
         this.isBtnShow = true
+        this.isLoading = false
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
@@ -395,5 +405,9 @@ export default {
     border-bottom: 1px solid #ddd;
   }
   border-right: 1px solid #ddd;
+}
+.loading02 {
+  width: 30px;
+  height: 25px;
 }
 </style>

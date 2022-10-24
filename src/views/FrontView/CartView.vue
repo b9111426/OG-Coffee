@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <h2 class="my-5">購物車</h2>
-    <div class="card overflow-auto flex-nowrap mt-3 px-3">
+    <div v-if="isLoading">
+      <img class="loading02" src="@/assets/images/load02.gif" alt="" />
+    </div>
+
+    <div class="card overflow-auto flex-nowrap px-3">
       <table class="table mt-4 table-hover">
         <thead>
           <tr class="table-light">
@@ -28,7 +32,7 @@
             </td>
             <td>優惠</td>
             <td class="text-center text-nowrap">
-              {{ i.product.price }}
+              <p v-price="i.product.price"></p>
             </td>
             <td class="text-center text-nowrap">
               <AddMinBtn
@@ -70,7 +74,7 @@
 </template>
 
 <script>
-import lottie from 'lottie-web'
+import _ from 'lodash'
 import DelModal from '@/components/DelModal.vue'
 import AddMinBtn from '@/components/AddMinBtn.vue'
 export default {
@@ -78,7 +82,8 @@ export default {
     return {
       isLoadingItem: '',
       tempProduct: {},
-      qty: 1
+      qty: 1,
+      isLoading: false
     }
   },
   components: {
@@ -86,7 +91,8 @@ export default {
     AddMinBtn
   },
   methods: {
-    async modify(id, p_id, qty, str) {
+    modify: _.debounce(async function (id, p_id, qty, str) {
+      this.isLoading = true
       str === 'add' ? qty++ : qty--
       if (qty <= 1) {
         qty = 1
@@ -101,10 +107,11 @@ export default {
       try {
         await this.$store.dispatch('Cart/modifyCart', obj)
         await this.$store.dispatch('Cart/getCart')
+        this.isLoading = false
       } catch (err) {
         throw new Error(err)
       }
-    },
+    }, 500),
     pushVal(val) {
       this.qty = val
     },
@@ -122,7 +129,7 @@ export default {
         throw new Error(err)
       }
     },
-    async delCartProduct(title) {
+    delCartProduct: _.debounce(async function (title) {
       try {
         await this.$store.dispatch('Cart/deleteCart', this.tempProduct.id)
 
@@ -136,9 +143,9 @@ export default {
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
-    },
+    }, 500),
     createLottie() {
-      const anLottie = lottie.loadAnimation({
+      const anLottie = this.lottie.loadAnimation({
         container: this.$refs.emptyCart,
         animType: 'svg',
         loop: true,

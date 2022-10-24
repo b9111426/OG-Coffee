@@ -86,6 +86,8 @@
 
 <script>
 import AddMinBtn from '@/components/AddMinBtn.vue'
+import _ from 'lodash'
+
 export default {
   components: {
     AddMinBtn
@@ -113,7 +115,7 @@ export default {
     pushVal(val) {
       this.qty = val
     },
-    async addToCart() {
+    addToCart: _.debounce(async function () {
       const data = {
         product_id: this.product.id,
         qty: this.qty
@@ -125,7 +127,7 @@ export default {
       } catch (err) {
         throw new Error(err)
       }
-    },
+    }, 500),
     async getProduct() {
       try {
         const { id } = this.$route.params
@@ -145,10 +147,10 @@ export default {
       e.target.setAttribute('src', url1)
       this.$refs.pic1.setAttribute('src', url2)
     },
-    goCartView() {
+    goCartView: _.debounce(function () {
       this.addToCart()
       this.$router.push({ path: '/cart' })
-    }
+    }, 500)
   },
   created() {
     this.getProduct()

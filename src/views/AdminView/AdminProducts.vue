@@ -22,12 +22,11 @@
           </strong>
         </div>
       </div>
-      <div class="col-12 col-lg-6 d-flex">
-        <button
-          class="ms-auto btn btn-primary"
-          type="button"
-          @click="openModal(true)"
-        >
+      <div class="col-12 col-lg-6 d-flex justify-content-end">
+        <div v-if="isLoading" class="me-3">
+          <img class="loading02" src="@/assets/images/load02.gif" alt="" />
+        </div>
+        <button class="btn btn-primary" type="button" @click="openModal(true)">
           建立新的產品
         </button>
       </div>
@@ -148,6 +147,7 @@
 import Pagination from '@/components/Pagination.vue'
 import DelModal from '@/components/DelModal.vue'
 import ProductModifyModal from '@/components/ProductModifyModal.vue'
+import _ from 'lodash'
 
 export default {
   data() {
@@ -157,7 +157,8 @@ export default {
         imagesUrl: []
       },
       currentPage: 1,
-      switchPrice: 0
+      switchPrice: 0,
+      isLoading: false
     }
   },
   components: {
@@ -198,7 +199,8 @@ export default {
         throw new Error(err)
       }
     },
-    async updateProduct({ product, isNew }) {
+    updateProduct: _.debounce(async function ({ product, isNew }) {
+      this.isLoading = true
       const productComponent = this.$refs.productModal
       this.tempProduct = product
       this.isNew = isNew
@@ -218,13 +220,14 @@ export default {
         this.getAllProducts()
         this.$store.dispatch('fireToast', { res })
         this.getProducts(this.currentPage)
+        this.isLoading = false
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
-    },
-
-    async delProduct(title) {
+    }, 700),
+    delProduct: _.debounce(async function (title) {
       try {
+        this.isLoading = true
         await this.$store.dispatch('Products/delProduct', this.tempProduct.id)
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
@@ -234,10 +237,11 @@ export default {
         })
         this.getProducts(this.currentPage)
         this.getAllProducts()
+        this.isLoading = false
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
-    }
+    }, 500)
   },
   created() {
     this.getProducts()
