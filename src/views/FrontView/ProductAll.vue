@@ -1,7 +1,7 @@
 <template>
   <div class="contain-fluid">
     <div class="row">
-      <div class="col-lg-3 col-6" v-for="item in products" :key="item.id">
+      <div class="col-lg-3 col-6 g-3" v-for="item in products" :key="item.id">
         <div class="card h-100">
           <a
             class="position-relative"
@@ -14,7 +14,7 @@
                 class="position-absolute sellOutTag bg-danger start-50 top-50 translate-middle"
               ></div>
               <img
-                :src="item.imageUrl[0]"
+                :src="item?.imageUrl[0]"
                 class="card-pic card-img-top"
                 alt="..."
               />
@@ -33,10 +33,18 @@
         </div>
       </div>
     </div>
+    <!-- 分頁 -->
+    <Pagination
+      class="mt-3"
+      :pages="pagination"
+      @emit-pages="getProducts"
+    ></Pagination>
   </div>
 </template>
 <script>
+import Pagination from '@/components/Pagination.vue'
 export default {
+  components: { Pagination },
   methods: {
     toNewRouter(id, sellout) {
       if (sellout) {
@@ -44,6 +52,15 @@ export default {
       }
       this.$store.dispatch('Products/setLoading', true)
       this.$router.push({ path: `products/${id}` })
+    },
+    async getProducts(page = 1) {
+      try {
+        await this.$store.dispatch('Products/getFrontProducts', page)
+        this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        this.$store.dispatch('handLoading', false)
+        throw new Error(err)
+      }
     }
   },
   mounted() {
@@ -52,7 +69,13 @@ export default {
   computed: {
     products() {
       return this.$store.getters['Products/productsData']
+    },
+    pagination() {
+      return this.$store.getters['Products/productsPage']
     }
+  },
+  created() {
+    this.getProducts()
   }
 }
 </script>

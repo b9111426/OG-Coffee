@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="col">
-        <h3 class="text-start">{{ product.title }}</h3>
-        <h4 class="text-start mb-5">{{ product.subtitle }}</h4>
+        <h3 class="text-start text-break">{{ product.title }}</h3>
+        <h4 class="text-start text-break mb-5">{{ product.subtitle }}</h4>
         <p class="text-start mb-5">{{ product.description }}</p>
         <div v-if="isShow">
           <!--價錢數量-->
@@ -36,14 +36,16 @@
                 {{ unitAry[0] }}
               </h6>
             </div>
-            <div class="col-5 d-flex justify-content-around align-items-center">
+            <div
+              class="col-5 d-flex justify-content-around align-items-center flex-wrap"
+            >
               <p
-                class="text-decoration-line-through text-danger"
+                class="text-decoration-line-through text-danger text-break"
                 v-if="product.origin_price !== product.price"
               >
                 NT${{ product.origin_price }}
               </p>
-              <strong>NT${{ product.price }}</strong>
+              <strong class="text-break">NT${{ product.price }}</strong>
             </div>
             <div class="col-5">
               <div v-if="isShow" class="input-group input-group-sm flex-nowrap">

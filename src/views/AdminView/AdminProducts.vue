@@ -4,22 +4,10 @@
     <div class="row mt-4">
       <div class="col-12 col-lg-6 d-flex align-items-center">
         <div class="bg-white p-2 rounded text-dark position-relative">
-          <strong>
-            產品總數
-            <span
-              class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
-              >{{ allProductNum }}
-            </span>
-          </strong>
+          <strong> 產品總數: {{ allProductNum }} </strong>
         </div>
         <div class="bg-white p-2 rounded text-dark position-relative ms-4">
-          <strong>
-            已啟用
-            <span
-              class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle"
-              >{{ allEnabled }}
-            </span>
-          </strong>
+          <strong> 已啟用 : {{ allEnabled }} </strong>
         </div>
       </div>
       <div class="col-12 col-lg-6 d-flex justify-content-end">
@@ -36,12 +24,20 @@
       <table class="table mt-4 table-hover">
         <thead>
           <tr class="table-light">
-            <th width="120" class="text-nowrap">分類</th>
+            <th width="120" class="text-nowrap pe-3">分類</th>
             <th width="150" class="text-center text-nowrap px-5">預覽</th>
             <th class="text-center text-nowrap">產品名稱</th>
-            <th width="120" class="text-end d-none d-lg-table-cell">原價</th>
-            <th width="120" class="text-end text-nowrap">售價</th>
-            <th width="145" class="text-center d-none d-lg-table-cell">
+            <th
+              width="120"
+              class="text-end text-nowrap d-none d-lg-table-cell ps-5"
+            >
+              原價
+            </th>
+            <th width="120" class="text-end text-nowrap ps-5">售價</th>
+            <th
+              width="145"
+              class="text-center d-none d-lg-table-cell text-nowrap px-3"
+            >
               是否啟用
             </th>
             <th width="160" class="text-center">編輯</th>
@@ -63,11 +59,11 @@
                 />
               </div>
             </td>
-            <td class="text-nowrap">{{ item.title }}</td>
-            <td class="text-end d-none d-lg-table-cell">
+            <td class="text-nowrap text-break">{{ item.title }}</td>
+            <td class="text-end d-none d-lg-table-cell text-break">
               {{ item.origin_price }}
             </td>
-            <td class="text-lg-end text-center">
+            <td class="text-lg-end text-center text-break">
               {{ item.price }}
             </td>
             <td class="d-none d-lg-table-cell">
@@ -84,10 +80,14 @@
                     class="form-check-label"
                     :for="`flexSwitchCheckDefault${item.id}`"
                   >
-                    <span v-if="item.is_enabled" class="text-primary"
+                    <span
+                      v-if="item.is_enabled"
+                      class="text-primary text-nowrap"
                       >啟用</span
                     >
-                    <span v-else class="text-gray-dark">未啟用</span>
+                    <span v-else class="text-gray-dark text-nowrap"
+                      >未啟用</span
+                    >
                   </label>
                 </div>
               </div>
@@ -99,7 +99,7 @@
                   class="btn btn-primary btn-sm"
                   @click="openModal(false, item)"
                 >
-                  <span class="d-lg-block d-none">編輯</span>
+                  <span class="d-lg-block d-none text-nowrap">編輯</span>
                   <i class="bi bi-pencil-square d-lg-none"></i>
                 </button>
                 <button
@@ -107,7 +107,7 @@
                   class="btn btn-danger btn-sm"
                   @click="openDelModal(item)"
                 >
-                  <span class="d-lg-block d-none">刪除</span>
+                  <span class="d-lg-block d-none text-nowrap">刪除</span>
                   <i class="bi bi-x-lg d-lg-none"></i>
                 </button>
               </div>

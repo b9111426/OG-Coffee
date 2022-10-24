@@ -56,26 +56,26 @@ export default {
     return {}
   },
   created() {
-    this.getProducts()
+    this.getAllProducts()
     this.$store.dispatch('handLoading', true)
   },
   methods: {
-    async getProducts(page = 1) {
+    toggleLoading(boolean) {
+      this.isLoading = boolean
+    },
+    async getAllProducts() {
       try {
-        await this.$store.dispatch('Products/getFrontProducts', page)
+        await this.$store.dispatch('Products/getFrontAllProduct')
         this.$store.dispatch('handLoading', false)
       } catch (err) {
         this.$store.dispatch('handLoading', false)
         throw new Error(err)
       }
-    },
-    toggleLoading(boolean) {
-      this.isLoading = boolean
     }
   },
   computed: {
     allProduct() {
-      return this.$store.getters['Products/productsData']
+      return this.$store.getters['Products/allProductsData']
     },
     isLoading() {
       return this.$store.getters['Products/loadingState']

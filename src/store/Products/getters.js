@@ -11,6 +11,9 @@ export default {
   productsPage(state) {
     return state.pagination
   },
+  allProductsData(state) {
+    return state.allProducts
+  },
   allProductNum(state) {
     return state.allProducts.length
   },
@@ -22,14 +25,14 @@ export default {
   },
   category(state) {
     const ary = []
-    state.products.forEach((i) => {
+    state.allProducts.forEach((i) => {
       if (ary.indexOf(i.category) === -1) {
         ary.push(i.category)
       }
     })
     const newAry = ary.map((j) => {
-      const filter = state.products.filter((x) => {
-        return (x.category = j)
+      const filter = state.allProducts.filter((x) => {
+        return x.category === j
       })
       return { category: j, num: filter.length }
     })
