@@ -2,73 +2,61 @@
   <div class="container">
     <h2 class="my-5">購物車</h2>
     <div class="row">
-      <div class="col-12 d-flex align-items-center">
-        <div class="bg-white p-2 rounded text-dark">
-          <strong> 產品總數: ( {{ productNum }}件 ) </strong>
-        </div>
-        <div v-if="isLoading" class="ms-auto">
-          <img class="loading02" src="@/assets/images/load02.gif" alt="" />
-        </div>
-      </div>
       <div class="col-12">
-        <div class="card overflow-auto flex-nowrap mt-2 px-3">
-          <table class="table mt-4 table-hover">
-            <thead>
-              <tr class="table-light">
-                <th class="text-nowrap">商品資料</th>
-                <th class="text-center text-nowrap px-5">優惠</th>
-                <th width="160" class="text-center text-nowrap">單件價格</th>
-                <th width="220" class="text-center">數量</th>
-                <th width="160" class="text-center text-nowrap">小計</th>
-                <th width="80" class="text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="i in cartData" :key="i.id" class="align-middle">
-                <td class="text-start">
-                  <img
-                    class="pre-pic img-thumbnail"
-                    :src="i.product.imageUrl[0]"
-                    alt="縮圖"
-                  />
-                  <div class="d-inline-block ms-1">
-                    <p>{{ i.product.title }}</p>
-                    <p>{{ i.product.category }}</p>
-                  </div>
-                </td>
-                <td>優惠</td>
-                <td class="text-center text-nowrap">
-                  <p v-price="i.product.price"></p>
-                </td>
-                <td class="text-center text-nowrap">
-                  <AddMinBtn
-                    :val="i.qty"
-                    @add="modify(i.id, i.product_id, i.qty, 'add')"
-                    @min="modify(i.id, i.product_id, i.qty, 'min')"
-                    @push-val="pushVal"
-                  ></AddMinBtn>
-                </td>
-                <td class="text-center text-nowrap">
-                  <p v-price="i.final_total"></p>
-                </td>
-                <td class="text-center">
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger btn-sm"
-                    @click="openDelModal(i.product.title, i.id)"
-                  >
-                    <i class="bi bi-x"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-            <tbody v-show="cartData.length === 0" class="text-center">
-              <td colspan="7" class="fs-3 text-gray-dark py-4">
-                購物車已空
-                <div id="emptyCart" ref="emptyCart"></div>
-              </td>
-            </tbody>
-          </table>
+        <div class="card">
+          <div class="card-header d-flex py-3">
+            <h5>產品總數: ( {{ productNum }}件 )</h5>
+            <div v-if="isLoading" class="ms-auto">
+              <img class="loading02" src="@/assets/images/load02.gif" alt="" />
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row border-bottom">
+              <div class="col-3 text-nowrap py-2">商品資料</div>
+              <div class="col-2 text-nowrap py-2">優惠</div>
+              <div class="col-2 text-nowrap py-2">單件價格</div>
+              <div class="col-2 text-nowrap py-2">數量</div>
+              <div class="col-2 text-nowrap py-2">小計</div>
+              <div class="col-1 text-nowrap py-2"></div>
+            </div>
+            <div class="row border-bottom" v-for="i in cartData" :key="i.id">
+              <div class="col-3 d-flex py-2">
+                <img
+                  class="pre-pic img-thumbnail"
+                  :src="i.product.imageUrl[0]"
+                  alt="縮圖"
+                />
+                <div class="ms-1 text-start">
+                  <p class="text-break">{{ i.product.title }}</p>
+                  <p class="text-break">{{ i.product.category }}</p>
+                </div>
+              </div>
+              <div class="col-2 text-nowrap py-2"></div>
+              <div class="col-2 text-nowrap py-2">
+                <p v-price="i.product.price"></p>
+              </div>
+              <div class="col-2 text-nowrap py-2">
+                <AddMinBtn
+                  :val="i.qty"
+                  @add="modify(i.id, i.product_id, i.qty, 'add')"
+                  @min="modify(i.id, i.product_id, i.qty, 'min')"
+                  @push-val="pushVal"
+                ></AddMinBtn>
+              </div>
+              <div class="col-2 text-nowrap py-2">
+                <p v-price="i.final_total"></p>
+              </div>
+              <div class="col-1 text-nowrap py-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  @click="openDelModal(i.product.title, i.id)"
+                >
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
