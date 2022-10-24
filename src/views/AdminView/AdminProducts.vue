@@ -3,10 +3,10 @@
   <div class="container text-start">
     <div class="row mt-4">
       <div class="col-12 col-lg-6 d-flex align-items-center">
-        <div class="bg-white p-2 rounded text-dark position-relative">
+        <div class="bg-white p-2 rounded text-dark">
           <strong> 產品總數: {{ allProductNum }} </strong>
         </div>
-        <div class="bg-white p-2 rounded text-dark position-relative ms-4">
+        <div class="bg-white p-2 rounded text-dark ms-4">
           <strong> 已啟用 : {{ allEnabled }} </strong>
         </div>
       </div>
@@ -18,106 +18,107 @@
           建立新的產品
         </button>
       </div>
-    </div>
-
-    <div class="card overflow-auto flex-nowrap mt-3 px-3">
-      <table class="table mt-4 table-hover">
-        <thead>
-          <tr class="table-light">
-            <th width="120" class="text-nowrap pe-3">分類</th>
-            <th width="150" class="text-center text-nowrap px-5">預覽</th>
-            <th class="text-center text-nowrap">產品名稱</th>
-            <th
-              width="120"
-              class="text-end text-nowrap d-none d-lg-table-cell ps-5"
-            >
-              原價
-            </th>
-            <th width="120" class="text-end text-nowrap ps-5">售價</th>
-            <th
-              width="145"
-              class="text-center d-none d-lg-table-cell text-nowrap px-3"
-            >
-              是否啟用
-            </th>
-            <th width="160" class="text-center">編輯</th>
-          </tr>
-        </thead>
-        <tbody v-for="item in products" :key="item.id">
-          <tr class="align-middle">
-            <td>{{ item.category }}</td>
-            <td class="text-center">
-              <div class="position-relative d-inline-block overflow-hidden">
-                <div
-                  v-if="item.is_soldOut"
-                  class="position-absolute sellOutTag bg-danger"
-                ></div>
-                <img
-                  class="pre-pic img-thumbnail"
-                  :src="item.imageUrl[0]"
-                  alt="縮圖"
-                />
-              </div>
-            </td>
-            <td class="text-nowrap text-break">{{ item.title }}</td>
-            <td class="text-end d-none d-lg-table-cell text-break">
-              {{ item.origin_price }}
-            </td>
-            <td class="text-lg-end text-center text-break">
-              {{ item.price }}
-            </td>
-            <td class="d-none d-lg-table-cell">
-              <div class="container ps-4">
-                <div class="form-check d-flex justify-content-start">
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    :id="item.id"
-                    v-model="item.is_enabled"
-                    @change="updateProduct({ product: item, isNew: false })"
-                  />
-                  <label
-                    class="form-check-label"
-                    :for="`flexSwitchCheckDefault${item.id}`"
-                  >
-                    <span
-                      v-if="item.is_enabled"
-                      class="text-primary text-nowrap"
-                      >啟用</span
-                    >
-                    <span v-else class="text-gray-dark text-nowrap"
-                      >未啟用</span
-                    >
-                  </label>
-                </div>
-              </div>
-            </td>
-            <td class="text-center">
-              <div class="btn-group">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-sm"
-                  @click="openModal(false, item)"
+      <div class="col-12">
+        <div class="card overflow-auto flex-nowrap mt-2 px-3">
+          <table class="table mt-4 table-hover">
+            <thead>
+              <tr class="table-light">
+                <th width="120" class="text-nowrap pe-3">分類</th>
+                <th width="150" class="text-center text-nowrap px-5">預覽</th>
+                <th class="text-center text-nowrap">產品名稱</th>
+                <th
+                  width="120"
+                  class="text-end text-nowrap d-none d-lg-table-cell ps-5"
                 >
-                  <span class="d-lg-block d-none text-nowrap">編輯</span>
-                  <i class="bi bi-pencil-square d-lg-none"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger btn-sm"
-                  @click="openDelModal(item)"
+                  原價
+                </th>
+                <th width="120" class="text-end text-nowrap ps-5">售價</th>
+                <th
+                  width="145"
+                  class="text-center d-none d-lg-table-cell text-nowrap px-3"
                 >
-                  <span class="d-lg-block d-none text-nowrap">刪除</span>
-                  <i class="bi bi-x-lg d-lg-none"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-        <tbody v-if="products.length === 0" class="text-center">
-          <td colspan="7" class="fs-3 text-gray py-4">產品列表已空</td>
-        </tbody>
-      </table>
+                  是否啟用
+                </th>
+                <th width="160" class="text-center">編輯</th>
+              </tr>
+            </thead>
+            <tbody v-for="item in products" :key="item.id">
+              <tr class="align-middle">
+                <td>{{ item.category }}</td>
+                <td class="text-center">
+                  <div class="position-relative d-inline-block overflow-hidden">
+                    <div
+                      v-if="item.is_soldOut"
+                      class="position-absolute sellOutTag bg-danger"
+                    ></div>
+                    <img
+                      class="pre-pic img-thumbnail"
+                      :src="item.imageUrl[0]"
+                      alt="縮圖"
+                    />
+                  </div>
+                </td>
+                <td class="text-nowrap text-break">{{ item.title }}</td>
+                <td class="text-end d-none d-lg-table-cell text-break">
+                  {{ item.origin_price }}
+                </td>
+                <td class="text-lg-end text-center text-break">
+                  {{ item.price }}
+                </td>
+                <td class="d-none d-lg-table-cell">
+                  <div class="container ps-4">
+                    <div class="form-check d-flex justify-content-start">
+                      <input
+                        class="form-check-input me-2"
+                        type="checkbox"
+                        :id="item.id"
+                        v-model="item.is_enabled"
+                        @change="updateProduct({ product: item, isNew: false })"
+                      />
+                      <label
+                        class="form-check-label"
+                        :for="`flexSwitchCheckDefault${item.id}`"
+                      >
+                        <span
+                          v-if="item.is_enabled"
+                          class="text-primary text-nowrap"
+                          >啟用</span
+                        >
+                        <span v-else class="text-gray-dark text-nowrap"
+                          >未啟用</span
+                        >
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      @click="openModal(false, item)"
+                    >
+                      <span class="d-lg-block d-none text-nowrap">編輯</span>
+                      <i class="bi bi-pencil-square d-lg-none"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      @click="openDelModal(item)"
+                    >
+                      <span class="d-lg-block d-none text-nowrap">刪除</span>
+                      <i class="bi bi-x-lg d-lg-none"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody v-if="products.length === 0" class="text-center">
+              <td colspan="7" class="fs-3 text-gray py-4">產品列表已空</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <!-- 分頁 -->
