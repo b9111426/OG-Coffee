@@ -71,8 +71,8 @@
                       >
                       <div v-if="isLoading" class="ms-3 d-inline-block">
                         <img
-                          class="loading02"
-                          src="@/assets/images/load02.gif"
+                          class="loading"
+                          src="@/assets/images/load.gif"
                           alt=""
                         />
                       </div>
@@ -406,7 +406,7 @@ export default {
   }
   border-right: 1px solid #ddd;
 }
-.loading02 {
+.loading {
   width: 30px;
   height: 25px;
 }

@@ -32,16 +32,11 @@ html,.card{
   width: 50px;
   height: 50px;
 }
-.loading02{
-  width: 50px;
-  height: 40px;
-}
+
 thead th{
   background-color:lighten($primary,20%) !important;
 }
-thead th,tbody:last-child td{
-  border: none;
-}
+
 thead th:first-child{
   border-radius: 7px 0 0 0;
 }

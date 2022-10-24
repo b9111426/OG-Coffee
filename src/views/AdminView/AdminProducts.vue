@@ -1,6 +1,6 @@
 <template>
   <h2>產品列表</h2>
-  <div class="container text-start">
+  <div class="container">
     <div class="row mt-4">
       <div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
         <div class="bg-white p-2 rounded text-dark">
@@ -10,9 +10,11 @@
           <strong> 已啟用 : {{ allEnabled }} </strong>
         </div>
       </div>
-      <div class="col-12 col-lg-6 d-flex justify-content-end">
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-end align-items-center"
+      >
         <div v-if="isLoading" class="me-3">
-          <img class="loading02" src="@/assets/images/load02.gif" alt="" />
+          <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
         <button class="btn btn-primary" type="button" @click="openModal(true)">
           建立新的產品
@@ -39,7 +41,7 @@
                 >
                   是否啟用
                 </th>
-                <th width="160" class="text-center">編輯</th>
+                <th width="160" class="text-center text-nowrap">編輯</th>
               </tr>
             </thead>
             <tbody v-for="item in products" :key="item.id">
@@ -66,7 +68,7 @@
                   {{ item.price }}
                 </td>
                 <td class="d-none d-lg-table-cell">
-                  <div class="container ps-4">
+                  <div class="ps-4">
                     <div class="form-check d-flex justify-content-start">
                       <input
                         class="form-check-input me-2"
@@ -123,7 +125,7 @@
   </div>
   <!-- 分頁 -->
   <Pagination
-    class="mt-3"
+    class="mt-3 pb-5"
     :pages="pagination"
     @emit-pages="getProducts"
   ></Pagination>
@@ -225,7 +227,7 @@ export default {
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
-    }, 700),
+    }, 1000),
     delProduct: _.debounce(async function (title) {
       try {
         this.isLoading = true
@@ -286,5 +288,8 @@ export default {
     color: #fff;
     letter-spacing: 0.3rem;
   }
+}
+.loading {
+  height: 32px;
 }
 </style>

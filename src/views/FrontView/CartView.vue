@@ -5,9 +5,9 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header d-flex py-3">
-            <h5>產品總數: ( {{ productNum }}件 )</h5>
+            <h4>產品總數: ( {{ productNum }}件 )</h4>
             <div v-if="isLoading" class="ms-auto">
-              <img class="loading02" src="@/assets/images/load02.gif" alt="" />
+              <img class="loading" src="@/assets/images/load.gif" alt="" />
             </div>
           </div>
           <div class="card-body">
@@ -206,5 +206,8 @@ export default {
   height: 100px;
   object-fit: cover;
   object-position: center center;
+}
+.loading {
+  height: 32px;
 }
 </style>

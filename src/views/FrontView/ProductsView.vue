@@ -92,4 +92,9 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.loading {
+  width: 90px;
+  height: 80px;
+}
+</style>
