@@ -11,7 +11,7 @@
       <div class="modal-content border-0">
         <div class="modal-header bg-danger text-white">
           <h5 id="delProductModalLabel" class="modal-title">
-            <span>刪除產品</span>
+            <span>刪除{{ title }}</span>
           </h5>
           <button
             type="button"
@@ -24,7 +24,7 @@
         <div class="modal-body">
           是否刪除
           <strong class="text-danger">{{ item.title }}</strong>
-          商品(刪除後將無法恢復)。
+          {{ title }}(刪除後將無法恢復)。
         </div>
         <div class="modal-footer">
           <button
@@ -52,7 +52,8 @@ import modalMixin from '@/mixins/modalMixin'
 
 export default {
   props: {
-    item: Object
+    item: Object,
+    title: String
   },
   mixins: [modalMixin],
   emits: ['del-item']

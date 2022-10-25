@@ -144,23 +144,16 @@ import modalMixin from '@/mixins/modalMixin'
 export default {
   props: {
     order: {
-      type: Object,
-      default() {
-        return {}
-      }
+      type: Object
     }
   },
   data() {
     return {
-      status: {},
-      modal: '',
-      tempOrder: {},
-      isPaid: false
+      tempOrder: {}
     }
   },
   emits: ['update-paid'],
   mixins: [modalMixin],
-  inject: ['emitter'],
   watch: {
     order() {
       this.tempOrder = this.order

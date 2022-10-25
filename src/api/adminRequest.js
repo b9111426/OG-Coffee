@@ -24,7 +24,10 @@ export const addProductRequest = (product) =>
 
 //後台訂單
 export const getOrdersRequest = (page) => adminApi.get(`/orders?page=${page}`)
+export const modifyOrdersRequest = (id, order) =>
+  adminApi.put(`/order/${id}`, { data: order })
 
+export const deleteOrderRequest = (id) => adminApi.delete(`/order/${id}`)
 //上傳圖片
 export const upLoadRequest = (formData) =>
   adminApi.post('/upload', formData, {

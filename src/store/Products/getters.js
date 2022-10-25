@@ -14,9 +14,6 @@ export default {
   allProductsData(state) {
     return state.allProducts
   },
-  allProductNum(state) {
-    return state.allProducts.length
-  },
   allEnabled(state) {
     const ary = state.allProducts.filter((i) => {
       return i.is_enabled === true

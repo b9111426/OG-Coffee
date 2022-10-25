@@ -2,8 +2,14 @@
   <h2>後台訂單</h2>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-12 d-flex">
-        <div class="ms-auto">
+      <div class="col-12 d-flex align-items-center mb-2 mb-lg-0">
+        <div class="bg-white p-2 rounded text-dark">
+          <strong> 訂單總數: {{ orders.length }} </strong>
+        </div>
+        <div class="bg-white p-2 rounded text-dark ms-4">
+          <strong> 已付款 : {{ paidNum }} </strong>
+        </div>
+        <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
       </div>
@@ -21,76 +27,78 @@
               </tr>
             </thead>
             <tbody>
-              <template v-for="(item, key) in orders" :key="key">
-                <tr
-                  v-if="orders.length"
-                  :class="{ 'text-secondary': !item.is_paid }"
-                >
-                  <td>{{ $filters.date(item.create_at) }}</td>
-                  <td>
-                    <span v-text="item.user.email" v-if="item.user"></span>
-                  </td>
-                  <td>
-                    <ul class="list-unstyled">
-                      <li
-                        class="text-nowrap"
-                        v-for="(product, i) in item.products"
-                        :key="i"
+              <tr
+                v-for="(item, key) in orders"
+                :key="key"
+                :class="{ 'text-secondary': !item.is_paid }"
+              >
+                <td>{{ $filters.date(item.create_at) }}</td>
+                <td>
+                  <span v-text="item.user.email" v-if="item.user"></span>
+                </td>
+                <td>
+                  <ul class="list-unstyled">
+                    <li
+                      class="text-nowrap"
+                      v-for="(product, i) in item.products"
+                      :key="i"
+                    >
+                      {{ product.product.title }} 數量：{{ product.qty }}
+                      {{ product.product.unit }}
+                    </li>
+                  </ul>
+                </td>
+                <td class="text-right">{{ item.total }}</td>
+                <td class="d-none d-lg-table-cell">
+                  <div class="d-flex justify-content-center">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input me-2"
+                        type="checkbox"
+                        :id="`paidSwitch${item.id}`"
+                        v-model="item.is_paid"
+                        @change="updatePaid(item)"
+                      />
+                      <label
+                        class="form-check-label"
+                        :for="`paidSwitch${item.id}`"
                       >
-                        {{ product.product.title }} 數量：{{ product.qty }}
-                        {{ product.product.unit }}
-                      </li>
-                    </ul>
-                  </td>
-                  <td class="text-right">{{ item.total }}</td>
-                  <td class="d-none d-lg-table-cell">
-                    <div class="d-flex justify-content-center">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input me-2"
-                          type="checkbox"
-                          :id="`paidSwitch${item.id}`"
-                          v-model="item.is_paid"
-                          @change="updatePaid(item)"
-                        />
-                        <label
-                          class="form-check-label"
-                          :for="`paidSwitch${item.id}`"
+                        <span
+                          v-if="item.is_paid"
+                          class="text-primary text-nowrap"
+                          >已付款</span
                         >
-                          <span
-                            v-if="item.is_paid"
-                            class="text-primary text-nowrap"
-                            >已付款</span
-                          >
-                          <span v-else class="text-gray-dark text-nowrap"
-                            >未付款</span
-                          >
-                        </label>
-                      </div>
+                        <span v-else class="text-gray-dark text-nowrap"
+                          >未付款</span
+                        >
+                      </label>
                     </div>
-                  </td>
-                  <td>
-                    <div class="btn-group">
-                      <button
-                        class="btn btn-primary btn-sm"
-                        type="button"
-                        @click="openModal(item)"
-                      >
-                        <span class="d-lg-block d-none text-nowrap">編輯</span>
-                        <i class="bi bi-pencil-square d-lg-none"></i>
-                      </button>
-                      <button
-                        class="btn btn-danger btn-sm"
-                        type="button"
-                        @click="openDelOrderModal(item)"
-                      >
-                        <span class="d-lg-block d-none text-nowrap">刪除</span>
-                        <i class="bi bi-x-lg d-lg-none"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </template>
+                  </div>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      type="button"
+                      @click="openModal(item)"
+                    >
+                      <span class="d-lg-block d-none text-nowrap">編輯</span>
+                      <i class="bi bi-pencil-square d-lg-none"></i>
+                    </button>
+                    <button
+                      class="btn btn-danger btn-sm"
+                      type="button"
+                      @click="openDelOrderModal(item)"
+                    >
+                      <span class="d-lg-block d-none text-nowrap">刪除</span>
+                      <i class="bi bi-x-lg d-lg-none"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody v-if="orders.length === 0" class="text-center">
+              <td colspan="7" class="fs-3 text-gray py-4">訂單列表已空</td>
             </tbody>
           </table>
         </div>
@@ -103,7 +111,12 @@
     ref="orderModal"
     @update-paid="updatePaid"
   ></OrderModal>
-  <DelModal :item="tempOrder" ref="delModal" @del-item="delOrder"></DelModal>
+  <DelModal
+    :item="tempOrder"
+    :title="title"
+    ref="delModal"
+    @del-item="delOrder"
+  ></DelModal>
   <Pagination
     :pages="pagination"
     @emitPages="getOrders"
@@ -114,14 +127,15 @@
 import DelModal from '@/components/DelModal.vue'
 import Pagination from '@/components/Pagination.vue'
 import OrderModal from '@/components/OrderModal.vue'
+import _ from 'lodash'
 
 export default {
-  //inject: ['emitter'],
   data() {
     return {
-      isNew: false,
       tempOrder: {},
-      currentPage: 1
+      currentPage: 1,
+      isLoading: false,
+      title: '訂單'
     }
   },
   components: {
@@ -141,7 +155,6 @@ export default {
     },
     openModal(item) {
       this.tempOrder = { ...item }
-      this.isNew = false
       const orderComponent = this.$refs.orderModal
       orderComponent.openModal()
     },
@@ -150,39 +163,37 @@ export default {
       const delComponent = this.$refs.delModal
       delComponent.openModal()
     },
-    updatePaid(item) {
-      this.emitter.emit('loading')
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`
-      const paid = {
-        is_paid: item.is_paid
+    updatePaid: _.debounce(async function (item) {
+      this.isLoading = true
+      const data = {
+        id: item.id,
+        order: item
       }
-      this.$http
-        .put(api, { data: paid })
-        .then((res) => {
-          const orderComponent = this.$refs.orderModal
-          orderComponent.hideModal()
-          this.getOrders(this.currentPage)
-          this.$httpMessageState(res, res.data.message)
+      try {
+        const res = await this.$store.dispatch('Orders/modifyOrder', data)
+        this.$store.dispatch('fireToast', { res })
+        this.isLoading = false
+        const orderComponent = this.$refs.orderModal
+        orderComponent.hideModal()
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }, 1000),
+    delOrder: _.debounce(async function () {
+      try {
+        await this.$store.dispatch('Orders/deleteOrder', this.tempOrder.id)
+        const delComponent = this.$refs.delModal
+        delComponent.hideModal()
+        this.getOrders(this.currentPage)
+        this.$store.dispatch('fireToast', {
+          title: '訂單已刪除',
+          style: 'success'
         })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
-    },
-    delOrder() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.tempOrder.id}`
-      this.$http
-        .delete(url)
-        .then((res) => {
-          this.emitter.emit('loading')
-          const delComponent = this.$refs.delModal
-          delComponent.hideModal()
-          this.getOrders(this.currentPage)
-          this.$httpMessageState(res, '刪除')
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
-    }
+      } catch (err) {
+        console.log('yes')
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }, 500)
   },
   mounted() {
     this.getOrders()
@@ -196,6 +207,9 @@ export default {
     },
     pagination() {
       return this.$store.getters['Orders/ordersPage']
+    },
+    paidNum() {
+      return this.$store.getters['Orders/paidNum']
     }
   }
 }

@@ -4,7 +4,7 @@
     <div class="row mt-4">
       <div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
         <div class="bg-white p-2 rounded text-dark">
-          <strong> 產品總數: {{ allProductNum }} </strong>
+          <strong> 產品總數: {{ allProduct.length }} </strong>
         </div>
         <div class="bg-white p-2 rounded text-dark ms-4">
           <strong> 已啟用 : {{ allEnabled }} </strong>
@@ -44,8 +44,13 @@
                 <th width="160" class="text-center text-nowrap">編輯</th>
               </tr>
             </thead>
-            <tbody v-for="item in products" :key="item.id">
-              <tr class="align-middle">
+            <tbody>
+              <tr
+                v-for="item in products"
+                :key="item.id"
+                class="align-middle"
+                :class="{ 'text-secondary': !item.is_enabled }"
+              >
                 <td>{{ item.category }}</td>
                 <td class="text-center">
                   <div class="position-relative d-inline-block overflow-hidden">
@@ -133,6 +138,7 @@
   <!-- 刪除產品 -->
   <DelModal
     :item="tempProduct"
+    :title="title"
     ref="delModal"
     @del-item="delProduct"
   ></DelModal>
@@ -160,7 +166,8 @@ export default {
         imagesUrl: []
       },
       currentPage: 1,
-      isLoading: false
+      isLoading: false,
+      title: '產品'
     }
   },
   components: {
@@ -204,18 +211,13 @@ export default {
     updateProduct: _.debounce(async function ({ product, isNew }) {
       this.isLoading = true
       const productComponent = this.$refs.productModal
-      this.tempProduct = product
-      this.isNew = isNew
       try {
         let res = null
-        if (!this.isNew) {
-          const data = { id: this.tempProduct.id, product: this.tempProduct }
+        if (!isNew) {
+          const data = { id: product.id, product: product }
           res = await this.$store.dispatch('Products/modifyProduct', data)
         } else {
-          res = await this.$store.dispatch(
-            'Products/addProduct',
-            this.tempProduct
-          )
+          res = await this.$store.dispatch('Products/addProduct', product)
         }
 
         productComponent.hideModal()
@@ -257,8 +259,8 @@ export default {
     pagination() {
       return this.$store.getters['Products/productsPage']
     },
-    allProductNum() {
-      return this.$store.getters['Products/allProductNum']
+    allProduct() {
+      return this.$store.getters['Products/allProductsData']
     },
     allEnabled() {
       return this.$store.getters['Products/allEnabled']
