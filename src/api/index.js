@@ -15,7 +15,8 @@ import {
   delProductRequest,
   upLoadRequest,
   modifyProductRequest,
-  addProductRequest
+  addProductRequest,
+  getOrdersRequest
 } from './adminRequest'
 
 export const apiSignInRequest = signInRequest
@@ -38,3 +39,4 @@ export const apiDelProduct = delProductRequest
 export const apiUpLoad = upLoadRequest
 export const apiModifyProduct = modifyProductRequest
 export const apiAddProduct = addProductRequest
+export const apiGetOrder = getOrdersRequest

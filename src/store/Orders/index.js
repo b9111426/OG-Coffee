@@ -4,7 +4,11 @@ import getters from './getters'
 
 export default {
   namespaced: true,
-  state: {},
+  state: {
+    orders: {},
+    pagination: {},
+    tempOrder: {}
+  },
   actions,
   mutations,
   getters

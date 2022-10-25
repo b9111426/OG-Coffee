@@ -116,12 +116,10 @@ import Pagination from '@/components/Pagination.vue'
 import OrderModal from '@/components/OrderModal.vue'
 
 export default {
-  inject: ['emitter'],
+  //inject: ['emitter'],
   data() {
     return {
-      orders: {},
       isNew: false,
-      pagination: {},
       tempOrder: {},
       currentPage: 1
     }
@@ -132,20 +130,14 @@ export default {
     OrderModal
   },
   methods: {
-    getOrders(currentPage = 1) {
+    async getOrders(currentPage = 1) {
       this.currentPage = currentPage
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${currentPage}`
-      this.isLoading = true
-      this.$http
-        .get(url, this.tempProduct)
-        .then((response) => {
-          this.orders = response.data.orders
-          this.pagination = response.data.pagination
-          this.$store.dispatch('handLoading', false)
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
+      try {
+        await this.$store.dispatch('Orders/getOrders', currentPage)
+        this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        throw new Error(err)
+      }
     },
     openModal(item) {
       this.tempOrder = { ...item }
@@ -193,11 +185,18 @@ export default {
     }
   },
   mounted() {
-    this.emitter.emit('loading')
     this.getOrders()
   },
   created() {
     this.$store.dispatch('handLoading', true)
+  },
+  computed: {
+    orders() {
+      return this.$store.getters['Orders/ordersData']
+    },
+    pagination() {
+      return this.$store.getters['Orders/ordersPage']
+    }
   }
 }
 </script>
