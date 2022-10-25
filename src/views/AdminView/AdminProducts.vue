@@ -289,7 +289,4 @@ export default {
     letter-spacing: 0.3rem;
   }
 }
-.loading {
-  height: 32px;
-}
 </style>

@@ -1,53 +1,63 @@
 <template>
   <h2>貼文</h2>
   <div class="container">
-    <div class="text-end mt-4">
-      <button class="btn btn-primary" type="button" @click="openModal(true)">
-        建立新的頁面
-      </button>
+    <div class="row mt-4">
+      <div class="col-12 d-flex">
+        <div class="ms-auto">
+          <img class="loading" src="@/assets/images/load.gif" alt="" />
+        </div>
+        <button class="btn btn-primary" type="button" @click="openModal(true)">
+          建立新的頁面
+        </button>
+      </div>
+      <div class="col-12">
+        <div class="card overflow-auto flex-nowrap mt-2 px-3">
+          <table class="table mt-4 table-hover">
+            <thead>
+              <tr class="table-light">
+                <th width="200">標題</th>
+                <th width="200">作者</th>
+                <th>描述</th>
+                <th width="100">建立時間</th>
+                <th width="100">是否公開</th>
+                <th width="120">編輯</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="article in articles" :key="article.id">
+                <td>{{ article.title }}</td>
+                <td>{{ article.author }}</td>
+                <td>{{ article.description }}</td>
+                <td>{{ $filters.date(article.create_at) }}</td>
+                <td>
+                  <span v-if="article.isPublic">已上架</span>
+                  <span v-else>未上架</span>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-outline-primary btn-sm"
+                      type="button"
+                      @click="getArticle(article.id)"
+                    >
+                      編輯
+                    </button>
+                    <button
+                      class="btn btn-outline-danger btn-sm"
+                      type="button"
+                      @click="openDelArticleModal(article)"
+                    >
+                      刪除
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <table class="table mt-4">
-      <thead>
-        <tr class="table-light">
-          <th style="width: 200px">標題</th>
-          <th style="width: 200px">作者</th>
-          <th>描述</th>
-          <th style="width: 100px">建立時間</th>
-          <th style="width: 100px">是否公開</th>
-          <th style="width: 120px">編輯</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="article in articles" :key="article.id">
-          <td>{{ article.title }}</td>
-          <td>{{ article.author }}</td>
-          <td>{{ article.description }}</td>
-          <td>{{ $filters.date(article.create_at) }}</td>
-          <td>
-            <span v-if="article.isPublic">已上架</span>
-            <span v-else>未上架</span>
-          </td>
-          <td>
-            <div class="btn-group">
-              <button
-                class="btn btn-outline-primary btn-sm"
-                type="button"
-                @click="getArticle(article.id)"
-              >
-                編輯
-              </button>
-              <button
-                class="btn btn-outline-danger btn-sm"
-                type="button"
-                @click="openDelArticleModal(article)"
-              >
-                刪除
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
     <ArticleModal
       ref="articleModal"
       :article="tempArticle"
