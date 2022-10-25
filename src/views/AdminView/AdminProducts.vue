@@ -160,7 +160,6 @@ export default {
         imagesUrl: []
       },
       currentPage: 1,
-      switchPrice: 0,
       isLoading: false
     }
   },
