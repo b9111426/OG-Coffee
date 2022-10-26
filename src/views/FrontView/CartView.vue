@@ -85,6 +85,10 @@
             <li class="list-group-item">A second item</li>
             <li class="list-group-item">A third item</li>
           </ul>
+          <router-link class="btn btn-success" to="/checkout"
+            >前往結帳</router-link
+          >
+          <!--<button class="btn btn-success" @click="goCheckout">前往結帳</button>-->
         </div>
       </div>
     </div>
