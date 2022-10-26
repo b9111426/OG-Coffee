@@ -1,76 +1,140 @@
 <template>
   <div class="container mt-5">
     <div class="row row-cols-3 justify-content-center">
-      <div class="col mb-5">
-        <form @submit="onSubmit">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              class="form-control"
-              placeholder="請輸入 Email"
-            />
-            <span class="invalid-feedback"></span>
-          </div>
+      <div class="col-lg-8 col-12 mb-5">
+        <div class="card mb-3">
+          <div class="card-header">選擇付款類型</div>
+          <div class="card-body"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">填寫外送資料</div>
+          <div class="card-body">
+            <form @submit="onSubmit">
+              <div class="mb-3">
+                <label for="email" class="form-label h6">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="請輸入 Email"
+                />
+                <span class="invalid-feedback"></span>
+              </div>
 
-          <div class="mb-3">
-            <label for="name" class="form-label">姓名</label>
-            <input
-              id="name"
-              name="姓名"
-              type="text"
-              class="form-control"
-              placeholder="請輸入姓名"
-            />
-            <span class="invalid-feedback"></span>
-          </div>
+              <div class="mb-3">
+                <label for="name" class="form-label h6">取件人姓名</label>
+                <input
+                  id="name"
+                  name="姓名"
+                  type="text"
+                  class="form-control"
+                  placeholder="請輸入姓名"
+                />
+                <span class="invalid-feedback"></span>
+              </div>
 
-          <div class="mb-3">
-            <label for="phone" class="form-label">電話</label>
-            <input
-              id="phone"
-              name="電話"
-              type="text"
-              class="form-control"
-              placeholder="請輸入電話"
-            />
-            <span class="invalid-feedback"></span>
-          </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label h6">取件人電話</label>
+                <input
+                  id="phone"
+                  name="電話"
+                  type="text"
+                  class="form-control"
+                  placeholder="請輸入電話"
+                />
+                <span class="invalid-feedback"></span>
+              </div>
 
-          <div class="mb-3">
-            <label for="region" class="form-label">地區</label>
-            <select id="region" name="地區" class="form-control">
-              <option value="">請選擇地區</option>
-              <option value="台北市">台北市</option>
-              <option value="高雄市">高雄市</option>
-            </select>
-            <span class="invalid-feedback"></span>
-          </div>
+              <div class="mb-3">
+                <label for="region" class="form-label h6">外送地區</label>
+                <select id="region" name="地區" class="form-control">
+                  <option value="" disabled selected class="text-primary">
+                    請選擇外送地區
+                  </option>
+                  <option value="台北市">台北市</option>
+                  <option value="高雄市">新北市</option>
+                  <option value="高雄市">桃園市</option>
+                </select>
+                <span class="invalid-feedback"></span>
+              </div>
 
-          <div class="mb-3">
-            <label for="address" class="form-label">地址</label>
-            <input
-              id="address"
-              name="地址"
-              type="text"
-              class="form-control"
-              placeholder="請輸入地址"
-            />
-            <span class="invalid-feedback"></span>
-          </div>
+              <div class="mb-3">
+                <label for="address" class="form-label h6">外送地址</label>
+                <input
+                  id="address"
+                  name="地址"
+                  type="text"
+                  class="form-control"
+                  placeholder="請輸入地址"
+                />
+                <span class="invalid-feedback"></span>
+              </div>
 
-          <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
+              <div class="mb-3">
+                <label for="address" class="form-label h6">訂單備註</label>
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
       <div class="col-lg-4 col-12">
         <div class="card">
-          <div class="card-body"></div>
-          <div class="card-body d-flex">
-            <router-link class="btn btn-success w-50 ms-auto" to="/paid"
-              >提交訂單</router-link
-            >
+          <div class="card-header">訂單資訊</div>
+          <div class="card-body border-bottom">
+            <div class="d-flex">
+              <span class="me-auto">送餐至:</span> <span>地址</span>
+            </div>
+          </div>
+          <div class="card-body border-bottom">
+            <div class="d-flex flex-column align-items-start">
+              <p class="me-auto text-nowrap">預計送達時間：</p>
+              <span class="text-break" style="font-size: 1rem"
+                >2022/10/26 23:50 - 2022/10/27 00:00</span
+              >
+            </div>
+          </div>
+          <div class="card-body border-bottom">
+            <div class="d-flex flex-column">
+              <p class="me-auto">優惠代碼:</p>
+              <div class="d-block">
+                <div class="input-group input-group-sm mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    id="button-addon2"
+                  >
+                    使用
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-bottom">
+            <div class="my-2 d-flex">
+              <span class="me-auto">小結:</span> <span>NT$999</span>
+            </div>
+            <div class="mb-2 d-flex">
+              <span class="me-auto">外送費:</span> <span>NT$999</span>
+            </div>
+            <div class="mb-4 d-flex align-item-center">
+              <strong class="me-auto">總計:</strong>
+              <strong class="h4">NT$999</strong>
+            </div>
+            <button class="btn btn-success w-100" to="/checkout">
+              提交訂單
+            </button>
           </div>
         </div>
       </div>

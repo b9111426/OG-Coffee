@@ -45,11 +45,17 @@ const routes = [
       },
       {
         path: 'cart',
-        component: () => import('../views/FrontView/CartView.vue')
-      },
-      {
-        path: 'checkout',
-        component: () => import('../views/FrontView/Checkout.vue')
+        component: () => import('../views/FrontView/CartView.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('../views/FrontView/CartDetail.vue')
+          },
+          {
+            path: 'checkout',
+            component: () => import('../views/FrontView/Checkout.vue')
+          }
+        ]
       }
     ]
   },
