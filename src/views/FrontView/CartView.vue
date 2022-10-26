@@ -1,6 +1,15 @@
 <template>
   <div class="container">
-    <h2 class="my-5">購物車</h2>
+    <div class="row">
+      <div class="progressBox mt-3">
+        <ul id="progressbar">
+          <li class="active">購物車</li>
+          <li>填寫資料</li>
+          <li>結帳</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="row mb-3">
       <div class="col-12">
         <div class="card">
@@ -20,7 +29,7 @@
               <div class="col-1 fw-bold text-nowrap py-2"></div>
             </div>
             <div
-              class="row border-bottom px-2 py-3"
+              class="row border-bottom px-2 py-3 product-item"
               v-for="i in cartData"
               :key="i.id"
             >
@@ -62,33 +71,68 @@
                 </button>
               </div>
             </div>
+            <div class="d-flex mt-2">
+              <router-link to="/products" class="ms-auto"
+                ><i class="bi bi-chevron-double-right me-1"></i>
+                繼續購物</router-link
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-8 col-12 mb-3">
+        <div class="card mb-3">
+          <div class="card-header">用餐選項</div>
+          <div class="card-body">
+            <div class="form-check d-inline-block">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+              />
+              <label class="form-check-label" for="flexRadioDefault1">
+                內用
+              </label>
+            </div>
+            <div class="form-check d-inline-block ms-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+                checked
+              />
+              <label class="form-check-label" for="flexRadioDefault2">
+                外送
+              </label>
+            </div>
+          </div>
+        </div>
         <div class="card">
-          <div class="card-header">選擇送貨及付款方式</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-          </ul>
+          <div class="card-header">加購及購物袋</div>
         </div>
       </div>
       <div class="col-lg-4 col-12">
         <div class="card">
           <div class="card-header">訂單資訊</div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-          </ul>
-          <router-link class="btn btn-success" to="/checkout"
-            >前往結帳</router-link
-          >
-          <!--<button class="btn btn-success" @click="goCheckout">前往結帳</button>-->
+          <div class="card-body">
+            <div class="mb-2 d-flex">
+              <span class="me-auto">小結:</span> <span>NT$999</span>
+            </div>
+            <div class="mb-2 d-flex">
+              <span class="me-auto">外送費:</span> <span>NT$999</span>
+            </div>
+            <div class="mb-4 d-flex align-item-center">
+              <strong class="me-auto">總計:</strong>
+              <strong class="h4">NT$999</strong>
+            </div>
+            <router-link class="btn btn-success w-100" to="/checkout"
+              >前往結帳</router-link
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -202,6 +246,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 #emptyCart {
   height: 300px;
 }
@@ -213,5 +258,72 @@ export default {
 }
 .loading {
   height: 32px;
+}
+.product-item:hover {
+  background-color: #eee;
+}
+
+#progressbar {
+  overflow: hidden;
+  counter-reset: step;
+}
+
+#progressbar li {
+  list-style-type: none;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  width: 33.33333%;
+  float: left;
+
+  position: relative;
+}
+
+#progressbar li:before {
+  content: counter(step);
+  counter-increment: step;
+  width: 20px;
+  line-height: 20px;
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  background: #fff;
+  border-radius: 3px;
+  padding: 10px 30px 10px 20px;
+  margin: 0 auto 5px auto;
+  @include pad() {
+    line-height: 10px;
+    padding: 10px 20px 10px 10px;
+  }
+}
+
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  left: -50%;
+  top: 25%;
+  z-index: -1;
+}
+
+#progressbar li:first-child:after {
+  content: none;
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: var(--primary);
+  color: white;
+}
+
+.progressBox {
+  padding: 20px;
+  margin: 0 auto;
+  width: 50%;
+  @include pad() {
+    width: 100%;
+  }
 }
 </style>

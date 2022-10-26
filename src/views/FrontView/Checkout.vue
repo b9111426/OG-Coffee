@@ -64,7 +64,7 @@
           <button class="btn btn-primary" type="submit">Submit</button>
         </form>
       </div>
-      <div class="col-12">
+      <div class="col-lg-4 col-12">
         <div class="card">
           <div class="card-body"></div>
           <div class="card-body d-flex">
