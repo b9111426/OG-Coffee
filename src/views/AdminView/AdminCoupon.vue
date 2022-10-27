@@ -135,7 +135,8 @@ export default {
       },
       isNew: false,
       isLoading: false,
-      currentPage: 1
+      currentPage: 1,
+      title: '優惠卷'
     }
   },
   methods: {
@@ -183,22 +184,23 @@ export default {
         this.$store.dispatch('fireToast', { res: err.response })
       }
     }, 1000),
-
-    delCoupon() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
-      this.$http
-        .delete(url)
-        .then((res) => {
-          this.emitter.emit('loading')
-          const delComponent = this.$refs.delModal
-          delComponent.hideModal()
-          this.$httpMessageState(res, res.data.message)
-          this.getCoupons()
+    delCoupon: _.debounce(async function (title) {
+      try {
+        this.isLoading = true
+        await this.$store.dispatch('Coupon/deleteCoupon', this.tempCoupon.id)
+        const delModal = this.$refs.delModal
+        delModal.hideModal()
+        this.getCoupons(this.currentPage)
+        this.isLoading = false
+        this.$store.dispatch('fireToast', {
+          title: `${title}優惠卷已刪除`,
+          style: 'success'
         })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
-    }
+        this.isLoading = false
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }, 500)
   },
   created() {
     this.$store.dispatch('handLoading', true)

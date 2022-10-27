@@ -21,7 +21,8 @@ import {
   deleteOrderRequest,
   getCouponsRequest,
   addCouponsRequest,
-  modifyCouponsRequest
+  modifyCouponsRequest,
+  deleteCouponRequest
 } from './adminRequest'
 
 export const apiSignInRequest = signInRequest
@@ -49,3 +50,4 @@ export const apiModifyOrder = modifyOrdersRequest
 export const apiGetCoupons = getCouponsRequest
 export const apiAddCoupons = addCouponsRequest
 export const apiModifyCoupons = modifyCouponsRequest
+export const apiDeleteCoupon = deleteCouponRequest
