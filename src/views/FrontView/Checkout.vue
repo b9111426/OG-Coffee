@@ -4,7 +4,61 @@
       <div class="col-lg-8 col-12 mb-5">
         <div class="card mb-3">
           <div class="card-header">選擇付款類型</div>
-          <div class="card-body"></div>
+          <div class="card-body d-flex flex-column">
+            <div class="form-check clearfix py-2 border-bottom">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="creditCard"
+                id="creditCard"
+              />
+              <label class="form-check-label float-start" for="creditCard">
+                信用卡
+              </label>
+            </div>
+            <div class="form-check clearfix py-2 border-bottom">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="linePay"
+                id="linePay"
+                checked
+              />
+              <label class="form-check-label float-start" for="linePay">
+                LINE Pay
+              </label>
+            </div>
+            <div class="form-check clearfix pt-2 pb-4">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="googlePay"
+                id="googlePay"
+                checked
+              />
+              <label class="form-check-label float-start" for="googlePay">
+                Google Pay
+              </label>
+            </div>
+
+            <div class="form-check clearfix">
+              <input type="checkbox" class="form-check-input" id="bill" />
+              <label class="form-check-label float-start" for="bill"
+                >發票</label
+              >
+            </div>
+
+            <div class="d-flex align-items-end">
+              <label for="uniform-numbers" class="form-label text-nowrap me-2"
+                >統一編號:</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="uniform-numbers"
+              />
+            </div>
+          </div>
         </div>
         <div class="card">
           <div class="card-header">填寫外送資料</div>
@@ -88,7 +142,8 @@
           <div class="card-header">訂單資訊</div>
           <div class="card-body border-bottom">
             <div class="d-flex">
-              <span class="me-auto">送餐至:</span> <span>地址</span>
+              <span class="me-auto text-nowrap">送餐至:</span>
+              <span class="text-break">新北市中和區圓通路305巷29弄12號</span>
             </div>
           </div>
           <div class="card-body border-bottom">
