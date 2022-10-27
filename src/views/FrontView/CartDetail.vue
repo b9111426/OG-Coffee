@@ -79,24 +79,68 @@
             <input
               class="form-check-input"
               type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
+              name="forHere"
+              id="forHere"
             />
-            <label class="form-check-label" for="flexRadioDefault1">
-              內用
-            </label>
+            <label class="form-check-label" for="forHere"> 內用 </label>
           </div>
           <div class="form-check d-inline-block ms-3">
             <input
               class="form-check-input"
               type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
+              name="toGo"
+              id="toGo"
               checked
             />
-            <label class="form-check-label" for="flexRadioDefault2">
-              外送
+            <label class="form-check-label" for="toGo"> 外送 </label>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">外送時間</div>
+        <div class="card-body d-flex flex-column">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="orderNow"
+              id="orderNow"
+            />
+            <label class="form-check-label float-start" for="orderNow">
+              現在訂餐
             </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="orderLater"
+              id="orderLater"
+              checked
+            />
+            <label class="form-check-label float-start" for="orderLater">
+              預約訂餐 (請於指定送達時間至少2個小時前至7天內訂餐)
+            </label>
+          </div>
+          <div class="d-flex align-items-baseline">
+            <label class="form-label text-nowrap me-2" for="orderDate">
+              日期：
+            </label>
+            <select class="form-select mb-3" id="orderDate">
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="d-flex align-items-baseline">
+            <label class="form-label text-nowrap me-2" for="orderTime">
+              時間：
+            </label>
+            <select class="form-select" id="orderTime">
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
           </div>
         </div>
       </div>

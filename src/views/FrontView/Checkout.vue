@@ -48,7 +48,7 @@
               >
             </div>
 
-            <div class="d-flex align-items-end">
+            <div class="d-flex align-items-baseline">
               <label for="uniform-numbers" class="form-label text-nowrap me-2"
                 >統一編號:</label
               >
