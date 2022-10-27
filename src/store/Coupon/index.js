@@ -6,7 +6,9 @@ export default {
   namespaced: true,
   state: {
     coupons: [],
-    pagination: {}
+    pagination: {},
+    total_pages: null,
+    allCouponsNum: 0
   },
   actions,
   mutations,

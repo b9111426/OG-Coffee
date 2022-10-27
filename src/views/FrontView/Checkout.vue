@@ -9,7 +9,7 @@
               <input
                 class="form-check-input"
                 type="radio"
-                name="creditCard"
+                name="payOption"
                 id="creditCard"
               />
               <label class="form-check-label float-start" for="creditCard">
@@ -20,7 +20,7 @@
               <input
                 class="form-check-input"
                 type="radio"
-                name="linePay"
+                name="payOption"
                 id="linePay"
                 checked
               />
@@ -32,7 +32,7 @@
               <input
                 class="form-check-input"
                 type="radio"
-                name="googlePay"
+                name="payOption"
                 id="googlePay"
                 checked
               />

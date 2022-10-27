@@ -2,22 +2,17 @@
   <h2>後台優惠卷</h2>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
-        <div class="bg-white p-2 rounded text-dark">
-          <strong> 產品總數: {{}} </strong>
-        </div>
-        <div class="bg-white p-2 rounded text-dark ms-4">
-          <strong> 已啟用 : {{}} </strong>
-        </div>
-      </div>
       <div
-        class="col-12 col-lg-6 d-flex justify-content-end align-items-center"
+        class="col-12 d-flex align-items-center justify-content-between mb-2 mb-lg-0"
       >
-        <div v-if="isLoading" class="ms-auto">
+        <div class="bg-white p-2 rounded text-dark">
+          <strong> 產品總數: {{ allCouponsNum }} </strong>
+        </div>
+        <div v-if="isLoading" class="me-3 ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
         <button
-          class="btn btn-primary ms-2"
+          class="btn btn-primary"
           type="button"
           @click="openCouponModal(true)"
         >
@@ -42,7 +37,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in coupons" :key="item.id">
+              <tr
+                v-for="item in coupons"
+                :key="item.id"
+                :class="{ 'text-secondary': !item.is_enabled }"
+              >
                 <td>{{ item.title }}</td>
                 <td>{{ item.percent }}%</td>
                 <td>{{ $filters.date(item.due_date) }}</td>
@@ -127,12 +126,7 @@ export default {
   },
   data() {
     return {
-      tempCoupon: {
-        title: '',
-        is_enabled: 0,
-        percent: 100,
-        code: ''
-      },
+      tempCoupon: {},
       isNew: false,
       isLoading: false,
       currentPage: 1,
@@ -159,7 +153,15 @@ export default {
     async getCoupons(page = 1) {
       try {
         await this.$store.dispatch('Coupon/getCoupons', page)
+        this.getAllCoupons()
         this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    async getAllCoupons() {
+      try {
+        await this.$store.dispatch('Coupon/getAllCoupons')
       } catch (err) {
         throw new Error(err)
       }
@@ -212,6 +214,9 @@ export default {
     },
     pagination() {
       return this.$store.getters['Coupon/couponPage']
+    },
+    allCouponsNum() {
+      return this.$store.getters['Coupon/allCouponsNum']
     }
   }
 }

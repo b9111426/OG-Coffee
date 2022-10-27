@@ -79,7 +79,7 @@
             <input
               class="form-check-input"
               type="radio"
-              name="forHere"
+              name="eatOption"
               id="forHere"
             />
             <label class="form-check-label" for="forHere"> 內用 </label>
@@ -88,7 +88,7 @@
             <input
               class="form-check-input"
               type="radio"
-              name="toGo"
+              name="eatOption"
               id="toGo"
               checked
             />
@@ -103,7 +103,7 @@
             <input
               class="form-check-input"
               type="radio"
-              name="orderNow"
+              name="orderTime"
               id="orderNow"
             />
             <label class="form-check-label float-start" for="orderNow">
@@ -114,7 +114,7 @@
             <input
               class="form-check-input"
               type="radio"
-              name="orderLater"
+              name="orderTime"
               id="orderLater"
               checked
             />

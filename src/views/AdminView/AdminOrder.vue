@@ -6,9 +6,6 @@
         <div class="bg-white p-2 rounded text-dark">
           <strong> 訂單總數: {{ orders.length }} </strong>
         </div>
-        <div class="bg-white p-2 rounded text-dark ms-4">
-          <strong> 已付款 : {{ paidNum }} </strong>
-        </div>
         <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>

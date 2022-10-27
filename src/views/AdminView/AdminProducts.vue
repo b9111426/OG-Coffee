@@ -2,18 +2,13 @@
   <h2>產品列表</h2>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
+      <div
+        class="col-12 d-flex align-items-center justify-content-between mb-2 mb-lg-0"
+      >
         <div class="bg-white p-2 rounded text-dark">
           <strong> 產品總數: {{ allProduct.length }} </strong>
         </div>
-        <div class="bg-white p-2 rounded text-dark ms-4">
-          <strong> 已啟用 : {{ allEnabled }} </strong>
-        </div>
-      </div>
-      <div
-        class="col-12 col-lg-6 d-flex justify-content-end align-items-center"
-      >
-        <div v-if="isLoading" class="me-3">
+        <div v-if="isLoading" class="me-3 ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
         <button class="btn btn-primary" type="button" @click="openModal(true)">
@@ -27,7 +22,7 @@
               <tr class="table-light">
                 <th width="120" class="text-nowrap pe-3">分類</th>
                 <th width="150" class="text-center text-nowrap px-5">預覽</th>
-                <th class="text-center text-nowrap">產品名稱</th>
+                <th class="text-center text-nowrap px-3">產品名稱</th>
                 <th
                   width="120"
                   class="text-end text-nowrap d-none d-lg-table-cell ps-5"
@@ -65,7 +60,7 @@
                     />
                   </div>
                 </td>
-                <td class="text-nowrap text-break">{{ item.title }}</td>
+                <td class="text-break text-break">{{ item.title }}</td>
                 <td class="text-end d-none d-lg-table-cell text-break">
                   {{ item.origin_price }}
                 </td>
@@ -262,9 +257,6 @@ export default {
     },
     allProduct() {
       return this.$store.getters['Products/allProductsData']
-    },
-    allEnabled() {
-      return this.$store.getters['Products/allEnabled']
     }
   }
 }

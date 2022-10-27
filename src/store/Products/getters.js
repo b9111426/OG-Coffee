@@ -14,12 +14,6 @@ export default {
   allProductsData(state) {
     return state.allProducts
   },
-  allEnabled(state) {
-    const ary = state.allProducts.filter((i) => {
-      return i.is_enabled === true
-    })
-    return ary.length
-  },
   category(state) {
     const ary = []
     state.allProducts.forEach((i) => {

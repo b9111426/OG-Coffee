@@ -4,5 +4,8 @@ export default {
   },
   couponPage(state) {
     return state.pagination
+  },
+  allCouponsNum(state) {
+    return state.allCouponsNum
   }
 }
