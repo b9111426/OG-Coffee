@@ -2,8 +2,18 @@
   <h2>後台優惠卷</h2>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-12 d-flex">
-        <div class="ms-auto">
+      <div class="col-12 col-lg-6 d-flex align-items-center mb-2 mb-lg-0">
+        <div class="bg-white p-2 rounded text-dark">
+          <strong> 產品總數: {{}} </strong>
+        </div>
+        <div class="bg-white p-2 rounded text-dark ms-4">
+          <strong> 已啟用 : {{}} </strong>
+        </div>
+      </div>
+      <div
+        class="col-12 col-lg-6 d-flex justify-content-end align-items-center"
+      >
+        <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
         <button
@@ -46,7 +56,7 @@
                         v-model="item.is_enabled"
                         :true-value="1"
                         :false-value="0"
-                        @change="updateCoupon(item, item.id)"
+                        @change="updateCoupon({ coupon: item, isNew: false })"
                       />
                       <label
                         class="form-check-label ms-2"
@@ -98,27 +108,34 @@
     @update-coupon="updateCoupon"
   ></CouponModal>
   <DelModal :item="tempCoupon" ref="delModal" @del-item="delCoupon"></DelModal>
+  <Pagination
+    :pages="pagination"
+    @emitPages="getCoupons"
+    class="mt-3 pb-5"
+  ></Pagination>
 </template>
 
 <script>
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
+import Pagination from '@/components/Pagination.vue'
+import _ from 'lodash'
 export default {
-  inject: ['emitter'],
-  components: { CouponModal, DelModal },
+  components: { CouponModal, DelModal, Pagination },
   props: {
     config: Object
   },
   data() {
     return {
-      coupons: {},
       tempCoupon: {
         title: '',
         is_enabled: 0,
         percent: 100,
         code: ''
       },
-      isNew: false
+      isNew: false,
+      isLoading: false,
+      currentPage: 1
     }
   },
   methods: {
@@ -138,37 +155,35 @@ export default {
       const delComponent = this.$refs.delModal
       delComponent.openModal()
     },
-    getCoupons() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons`
-      this.$http
-        .get(url, this.tempProduct)
-        .then((response) => {
-          this.coupons = response.data.coupons
-          this.$store.dispatch('handLoading', false)
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
-    },
-    updateCoupon(item) {
-      this.emitter.emit('loading')
-      let url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`
-      let httpMeths = 'post'
-      this.tempCoupon = item
-      if (!this.isNew) {
-        url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
-        httpMeths = 'put'
+    async getCoupons(page = 1) {
+      try {
+        await this.$store.dispatch('Coupon/getCoupons', page)
+        this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        throw new Error(err)
       }
-      this.$http[httpMeths](url, { data: this.tempCoupon })
-        .then((res) => {
-          this.getCoupons()
-          this.$refs.couponModal.hideModal()
-          this.$httpMessageState(res, '更新付款狀態')
-        })
-        .catch((err) => {
-          this.$httpMessageState(err.response, '錯誤訊息')
-        })
     },
+    updateCoupon: _.debounce(async function ({ coupon, isNew }) {
+      this.isLoading = true
+      const couponModal = this.$refs.couponModal
+      try {
+        let res = null
+        if (!isNew) {
+          const data = { id: coupon.id, coupon }
+          res = await this.$store.dispatch('Coupon/modifyCoupon', data)
+        } else {
+          res = await this.$store.dispatch('Coupon/addCoupon', coupon)
+        }
+        couponModal.hideModal()
+        this.$store.dispatch('fireToast', { res })
+        this.getCoupons(this.currentPage)
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }, 1000),
+
     delCoupon() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
       this.$http
@@ -187,8 +202,15 @@ export default {
   },
   created() {
     this.$store.dispatch('handLoading', true)
-    this.emitter.emit('loading')
     this.getCoupons()
+  },
+  computed: {
+    coupons() {
+      return this.$store.getters['Coupon/couponsData']
+    },
+    pagination() {
+      return this.$store.getters['Coupon/couponPage']
+    }
   }
 }
 </script>

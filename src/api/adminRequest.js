@@ -22,6 +22,14 @@ export const modifyProductRequest = (id, product) =>
 export const addProductRequest = (product) =>
   adminApi.post('/product', { data: product })
 
+//後台優惠卷
+
+export const getCouponsRequest = (page) => adminApi.get(`/coupons?page=${page}`)
+export const addCouponsRequest = (coupon) =>
+  adminApi.post('/coupon', { data: coupon })
+export const modifyCouponsRequest = (id, coupon) =>
+  adminApi.put(`/coupon/${id}`, { data: coupon })
+
 //後台訂單
 export const getOrdersRequest = (page) => adminApi.get(`/orders?page=${page}`)
 export const modifyOrdersRequest = (id, order) =>

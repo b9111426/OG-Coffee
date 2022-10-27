@@ -18,7 +18,10 @@ import {
   addProductRequest,
   getOrdersRequest,
   modifyOrdersRequest,
-  deleteOrderRequest
+  deleteOrderRequest,
+  getCouponsRequest,
+  addCouponsRequest,
+  modifyCouponsRequest
 } from './adminRequest'
 
 export const apiSignInRequest = signInRequest
@@ -43,3 +46,6 @@ export const apiModifyProduct = modifyProductRequest
 export const apiAddProduct = addProductRequest
 export const apiGetOrder = getOrdersRequest
 export const apiModifyOrder = modifyOrdersRequest
+export const apiGetCoupons = getCouponsRequest
+export const apiAddCoupons = addCouponsRequest
+export const apiModifyCoupons = modifyCouponsRequest

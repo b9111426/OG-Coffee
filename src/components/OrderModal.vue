@@ -144,7 +144,10 @@ import modalMixin from '@/mixins/modalMixin'
 export default {
   props: {
     order: {
-      type: Object
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   data() {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal fade"
+    class="modal scale-in-center"
     id="couponModal"
     tabindex="-1"
     role="dialog"
@@ -8,16 +8,16 @@
     aria-hidden="true"
     ref="modal"
   >
-    <div class="modal-dialog text-start" role="document">
+    <div class="modal-dialog modal-dialog-centered text-start" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header bg-dark text-white">
           <h5 class="modal-title" id="exampleModalLabel">
             <span v-if="isNew">新增優惠卷</span>
             <span v-else>編輯優惠卷</span>
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close bg-gray me-1"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
@@ -82,15 +82,15 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
-            Close
+            取消
           </button>
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('update-coupon', tempCoupon)"
+            @click="$emit('update-coupon', { coupon: tempCoupon, isNew })"
           >
             {{ isNew ? '新增優惠卷' : '更新優惠券' }}
           </button>

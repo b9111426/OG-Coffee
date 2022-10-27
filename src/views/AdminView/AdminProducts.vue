@@ -210,22 +210,23 @@ export default {
     },
     updateProduct: _.debounce(async function ({ product, isNew }) {
       this.isLoading = true
-      const productComponent = this.$refs.productModal
+      const productModal = this.$refs.productModal
       try {
         let res = null
         if (!isNew) {
-          const data = { id: product.id, product: product }
+          const data = { id: product.id, product }
           res = await this.$store.dispatch('Products/modifyProduct', data)
         } else {
           res = await this.$store.dispatch('Products/addProduct', product)
         }
 
-        productComponent.hideModal()
+        productModal.hideModal()
         this.getAllProducts()
         this.$store.dispatch('fireToast', { res })
         this.getProducts(this.currentPage)
         this.isLoading = false
       } catch (err) {
+        this.isLoading = false
         this.$store.dispatch('fireToast', { res: err.response })
       }
     }, 1000),

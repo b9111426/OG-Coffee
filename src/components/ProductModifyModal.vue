@@ -300,7 +300,7 @@
             class="btn btn-primary"
             @click="$emit('update-product', { product: tempProduct, isNew })"
           >
-            確認
+            {{ isNew ? '新增產品' : '更新產品' }}
           </button>
         </div>
       </div>
