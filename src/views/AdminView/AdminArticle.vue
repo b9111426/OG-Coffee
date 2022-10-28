@@ -1,5 +1,5 @@
 <template>
-  <h2>貼文</h2>
+  <h2>文章</h2>
   <div class="container">
     <div class="row mt-4">
       <div
@@ -66,12 +66,12 @@
       </div>
     </div>
   </div>
-  <!--<ArticleModal
-      ref="articleModal"
-      :article="tempArticle"
-      :is-new="isNew"
-      @update-article="updateArticle"
-    ></ArticleModal>-->
+  <ArticleModal
+    ref="articleModal"
+    :article="tempArticle"
+    :is-new="isNew"
+    @update-article="updateArticle"
+  ></ArticleModal>
   <DelModal
     :item="tempArticle"
     ref="delModal"
@@ -79,13 +79,13 @@
   ></DelModal>
   <Pagination
     :pages="pagination"
-    @emitPages="getCoupons"
+    @emitPages="getArticle"
     class="mt-3 pb-5"
   ></Pagination>
 </template>
 
 <script>
-//import ArticleModal from '@/components/ArticleModal.vue'
+import ArticleModal from '@/components/ArticleModal.vue'
 import DelModal from '@/components/DelModal.vue'
 import Pagination from '@/components/Pagination.vue'
 export default {
@@ -98,7 +98,7 @@ export default {
     }
   },
   components: {
-    //ArticleModal,
+    ArticleModal,
     DelModal,
     Pagination
   },

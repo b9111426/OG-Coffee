@@ -44,7 +44,7 @@
                 class="nav-link"
                 id="profile-tab"
                 data-bs-toggle="tab"
-                data-bs-target="#profile"
+                data-bs-target="#addPic"
                 type="button"
                 role="tab"
                 aria-controls="profile"
@@ -62,70 +62,64 @@
               aria-labelledby="home-tab"
             >
               <!--圖片添加-->
-              <div class="mt-3">
-                <div class="row">
-                  <div class="col-lg-6 col-12 pb-3 pb-lg-0 border-set">
-                    <div class="mb-3">
-                      <label for="imageUrl" class="fw-bold form-label mb-2"
-                        >輸入圖片網址</label
-                      >
-                      <div v-if="isLoading" class="ms-3 d-inline-block">
-                        <img
-                          class="loading"
-                          src="@/assets/images/load.gif"
-                          alt=""
-                        />
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="請輸入圖片連結"
-                        @input="btnShow"
-                        ref="fileUrl"
-                      />
-                    </div>
-                    <div class="mb-5">
-                      <label for="customFile" class="fw-bold form-label mb-2"
-                        >或上傳圖片取得圖片連結
-                      </label>
-                      <input
-                        type="file"
-                        id="customFile"
-                        class="form-control"
-                        ref="fileInput"
-                        @change="uploadFile"
-                      />
-                    </div>
-
-                    <button
-                      v-if="isBtnShow"
-                      class="btn btn-primary btn-sm d-block w-100"
-                      @click="addPic"
+              <div class="row mt-3">
+                <div class="col-lg-6 col-12 pb-3 pb-lg-0 border-set">
+                  <div class="mb-3">
+                    <label for="imageUrl" class="fw-bold form-label mb-2"
+                      >輸入圖片網址</label
                     >
-                      新增圖片
-                    </button>
+                    <div v-if="isLoading" class="ms-3 d-inline-block">
+                      <img
+                        class="loading"
+                        src="@/assets/images/load.gif"
+                        alt=""
+                      />
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="請輸入圖片連結"
+                      @input="btnShow"
+                      ref="fileUrl"
+                    />
                   </div>
-                  <div class="col-lg-6 col-12 mt-3 mt-lg-0">
-                    <div
-                      class="mb-4"
-                      v-for="(item, key) in tempProduct.imageUrl"
-                      :key="key + '21345'"
-                    >
-                      <h6 class="mb-1">圖片{{ key + 1 }}</h6>
-                      <div class="position-relative">
-                        <img
-                          class="img-fluid img-thumbnail"
-                          :src="item"
-                          alt=""
-                        />
-                        <button
-                          type="button"
-                          :data-idx="key"
-                          class="btn-close bg-white p-2 position-absolute top-0 start-0 mt-3 ms-3"
-                          aria-label="Close"
-                          @click="removePic($event)"
-                        ></button>
-                      </div>
+                  <div class="mb-5">
+                    <label for="customFile" class="fw-bold form-label mb-2"
+                      >或上傳圖片取得圖片連結
+                    </label>
+                    <input
+                      type="file"
+                      id="customFile"
+                      class="form-control"
+                      ref="fileInput"
+                      @change="uploadFile"
+                    />
+                  </div>
+
+                  <button
+                    v-if="isBtnShow"
+                    class="btn btn-primary btn-sm d-block w-100"
+                    @click="addPic"
+                  >
+                    新增圖片
+                  </button>
+                </div>
+                <div class="col-lg-6 col-12 mt-3 mt-lg-0">
+                  <div
+                    class="mb-4"
+                    v-for="(item, key) in tempProduct.imageUrl"
+                    :key="key + '21345'"
+                  >
+                    <h6 class="mb-1">圖片{{ key + 1 }}</h6>
+                    <div class="position-relative">
+                      <img class="img-fluid img-thumbnail" :src="item" alt="" />
+                      <button
+                        type="button"
+                        :data-idx="key"
+                        class="btn-close bg-white p-2 position-absolute top-0 start-0 mt-3 ms-3"
+                        aria-label="Close"
+                        @click="removePic($event)"
+                      ></button>
                     </div>
                   </div>
                 </div>
@@ -133,7 +127,7 @@
             </div>
             <div
               class="tab-pane fade"
-              id="profile"
+              id="addPic"
               role="tabpanel"
               aria-labelledby="profile-tab"
             >

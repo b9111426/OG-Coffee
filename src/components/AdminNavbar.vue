@@ -31,7 +31,7 @@
         </li>
         <li class="nav-item">
           <router-link class="nav-link px-2" to="/admin/article"
-            >貼文</router-link
+            >文章</router-link
           >
         </li>
       </ul>
