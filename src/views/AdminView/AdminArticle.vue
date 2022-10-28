@@ -2,8 +2,13 @@
   <h2>貼文</h2>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-12 d-flex">
-        <div class="ms-auto">
+      <div
+        class="col-12 d-flex align-items-center justify-content-between mb-2 mb-lg-0"
+      >
+        <div class="bg-white p-2 rounded text-dark">
+          <strong> 文章總數: {{}} </strong>
+        </div>
+        <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
         <button class="btn btn-primary" type="button" @click="openModal(true)">
@@ -24,13 +29,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="article in articles" :key="article.id">
-                <td>{{ article.title }}</td>
-                <td>{{ article.author }}</td>
-                <td>{{ article.description }}</td>
-                <td>{{ $filters.date(article.create_at) }}</td>
+              <tr v-for="item in articles" :key="item.id">
+                <td>{{ item.title }}</td>
+                <td>{{ item.author }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ $filters.date(item.create_at) }}</td>
                 <td>
-                  <span v-if="article.isPublic">已上架</span>
+                  <span v-if="item.isPublic">已上架</span>
                   <span v-else>未上架</span>
                 </td>
                 <td>
@@ -38,14 +43,14 @@
                     <button
                       class="btn btn-outline-primary btn-sm"
                       type="button"
-                      @click="getArticle(article.id)"
+                      @click="getArticle(item.id)"
                     >
                       編輯
                     </button>
                     <button
                       class="btn btn-outline-danger btn-sm"
                       type="button"
-                      @click="openDelArticleModal(article)"
+                      @click="openDelArticleModal(item)"
                     >
                       刪除
                     </button>
@@ -53,33 +58,39 @@
                 </td>
               </tr>
             </tbody>
+            <tbody v-if="articles.length === 0" class="text-center">
+              <td colspan="6" class="fs-3 text-gray py-4">文章列表已空</td>
+            </tbody>
           </table>
         </div>
       </div>
     </div>
-
-    <ArticleModal
+  </div>
+  <!--<ArticleModal
       ref="articleModal"
       :article="tempArticle"
       :is-new="isNew"
       @update-article="updateArticle"
-    ></ArticleModal>
-    <DelModal
-      :item="tempArticle"
-      ref="delModal"
-      @del-item="delArticle"
-    ></DelModal>
-  </div>
+    ></ArticleModal>-->
+  <DelModal
+    :item="tempArticle"
+    ref="delModal"
+    @del-item="delArticle"
+  ></DelModal>
+  <Pagination
+    :pages="pagination"
+    @emitPages="getCoupons"
+    class="mt-3 pb-5"
+  ></Pagination>
 </template>
 
 <script>
-import ArticleModal from '@/components/ArticleModal.vue'
+//import ArticleModal from '@/components/ArticleModal.vue'
 import DelModal from '@/components/DelModal.vue'
+import Pagination from '@/components/Pagination.vue'
 export default {
-  inject: ['emitter'],
   data() {
     return {
-      articles: [],
       isLoading: false,
       isNew: false,
       tempArticle: {},
@@ -87,24 +98,19 @@ export default {
     }
   },
   components: {
-    ArticleModal,
-    DelModal
+    //ArticleModal,
+    DelModal,
+    Pagination
   },
   methods: {
-    getArticles(page = 1) {
+    async getArticles(page = 1) {
       this.currentPage = page
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`
-      this.$http
-        .get(api)
-        .then((res) => {
-          if (res.data.success) {
-            this.articles = res.data.articles
-            this.pagination = res.data.pagination
-          }
-        })
-        .catch((err) => {
-          alert(err)
-        })
+      try {
+        await this.$store.dispatch('Articles/getArticles', page)
+        this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        throw new Error(err)
+      }
     },
     getArticle(id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${id}`
@@ -174,8 +180,16 @@ export default {
         })
     }
   },
-  mounted() {
-    this.emitter.emit('loading')
+  computed: {
+    articles() {
+      return this.$store.getters['Articles/articlesData']
+    },
+    pagination() {
+      return this.$store.getters['Articles/articlesPage']
+    }
+  },
+  created() {
+    this.$store.dispatch('handLoading', true)
     this.getArticles()
   }
 }

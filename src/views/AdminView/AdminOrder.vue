@@ -95,7 +95,7 @@
               </tr>
             </tbody>
             <tbody v-if="orders.length === 0" class="text-center">
-              <td colspan="7" class="fs-3 text-gray py-4">訂單列表已空</td>
+              <td colspan="6" class="fs-3 text-gray py-4">訂單列表已空</td>
             </tbody>
           </table>
         </div>
@@ -141,10 +141,10 @@ export default {
     OrderModal
   },
   methods: {
-    async getOrders(currentPage = 1) {
-      this.currentPage = currentPage
+    async getOrders(page = 1) {
+      this.currentPage = page
       try {
-        await this.$store.dispatch('Orders/getOrders', currentPage)
+        await this.$store.dispatch('Orders/getOrders', page)
         this.$store.dispatch('handLoading', false)
       } catch (err) {
         throw new Error(err)

@@ -36,6 +36,12 @@ export const modifyOrdersRequest = (id, order) =>
   adminApi.put(`/order/${id}`, { data: order })
 
 export const deleteOrderRequest = (id) => adminApi.delete(`/order/${id}`)
+
+//後台文章
+
+export const getArticlesRequest = (page) =>
+  adminApi.get(`/articles?page=${page}`)
+
 //上傳圖片
 export const upLoadRequest = (formData) =>
   adminApi.post('/upload', formData, {

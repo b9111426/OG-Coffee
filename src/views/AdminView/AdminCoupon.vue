@@ -95,6 +95,9 @@
                 </td>
               </tr>
             </tbody>
+            <tbody v-if="coupons.length === 0" class="text-center">
+              <td colspan="5" class="fs-3 text-gray py-4">文章列表已空</td>
+            </tbody>
           </table>
         </div>
       </div>
