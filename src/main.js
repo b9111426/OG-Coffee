@@ -32,9 +32,9 @@ app.directive('price', {
     el.innerHTML = p
   }
 })
+app.use(CKEditor)
 app.use(router)
 app.use(store)
-app.use(CKEditor)
 app.use(VueAxios, axios)
 app.component('Loading', Loading)
 app.mount('#app')

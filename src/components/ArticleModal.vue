@@ -168,11 +168,7 @@
                   ></textarea>
                 </div>
                 <div class="mb-3">
-                  <ckeditor
-                    :editor="editor"
-                    :config="editorConfig"
-                    v-model="tempArticle.content"
-                  ></ckeditor>
+                  <ckeditor :editor="editor"></ckeditor>
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
@@ -230,15 +226,14 @@ export default {
   data() {
     return {
       status: {},
-      modal: '',
       tempArticle: {
         tag: ['']
       },
       create_at: 0,
-      editor: ClassicEditor,
-      editorConfig: {
-        toolbar: ['heading', 'typing', 'bold', 'italic', '|', 'link']
-      }
+      editor: ClassicEditor
+      //editorConfig: {
+      //  toolbar: ['heading', 'typing', 'bold', 'italic', '|', 'link']
+      //}
     }
   },
   mixins: [modalMixin],

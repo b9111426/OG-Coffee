@@ -305,7 +305,18 @@
 <script>
 import modalMixin from '@/mixins/modalMixin'
 export default {
-  props: ['product', 'isNew'],
+  props: {
+    product: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    isNew: {
+      type: Boolean,
+      default: true
+    }
+  },
   emits: ['update-product'],
   data() {
     return {
