@@ -216,6 +216,8 @@
 import modalMixin from '@/mixins/modalMixin'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import '@ckeditor/ckeditor5-build-classic/build/translations/zh'
+import { MyCustomUploadAdapterPlugin } from '@/libs/uploadAdapter'
+
 export default {
   props: {
     article: {
@@ -241,8 +243,9 @@ export default {
       editorConfig: {
         toolbar: {
           shouldNotGroupWhenFull: true
-        }
-        //language: 'zh'
+        },
+        extraPlugins: [MyCustomUploadAdapterPlugin],
+        language: 'zh'
       }
     }
   },

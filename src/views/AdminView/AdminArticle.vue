@@ -35,8 +35,8 @@
                 <td>{{ item.description }}</td>
                 <td>{{ $filters.date(item.create_at) }}</td>
                 <td>
-                  <span v-if="item.isPublic">已上架</span>
-                  <span v-else>未上架</span>
+                  <span v-if="item.isPublic">已公開</span>
+                  <span v-else>未公開</span>
                 </td>
                 <td>
                   <div class="btn-group">
