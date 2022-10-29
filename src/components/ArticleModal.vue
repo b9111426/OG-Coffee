@@ -168,7 +168,11 @@
                   ></textarea>
                 </div>
                 <div class="mb-3">
-                  <ckeditor :editor="editor"></ckeditor>
+                  <ckeditor
+                    :editor="editor"
+                    :config="editorConfig"
+                    v-model="tempArticle.content"
+                  ></ckeditor>
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
@@ -206,10 +210,12 @@
       </div>
     </div>
   </div>
+  <pre>{{ tempArticle }}</pre>
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh'
 export default {
   props: {
     article: {
@@ -223,6 +229,7 @@ export default {
       default: true
     }
   },
+  emits: ['update-article'],
   data() {
     return {
       status: {},
@@ -230,10 +237,13 @@ export default {
         tag: ['']
       },
       create_at: 0,
-      editor: ClassicEditor
-      //editorConfig: {
-      //  toolbar: ['heading', 'typing', 'bold', 'italic', '|', 'link']
-      //}
+      editor: ClassicEditor,
+      editorConfig: {
+        toolbar: {
+          shouldNotGroupWhenFull: true
+        }
+        //language: 'zh'
+      }
     }
   },
   mixins: [modalMixin],
@@ -259,5 +269,25 @@ export default {
 <style>
 .ck-editor__editable_inline {
   min-height: 300px;
+}
+
+.ck-content .table {
+  width: auto;
+}
+
+.ck.ck-content ul,
+.ck.ck-content ul li {
+  list-style-type: inherit;
+}
+
+.ck.ck-content ul,
+.ck.ck-content ol {
+  /* Default user agent stylesheet, you can change it to your needs. */
+  padding-left: 40px !important;
+}
+
+.ck.ck-content ol,
+.ck.ck-content ol li {
+  list-style: decimal;
 }
 </style>

@@ -7,7 +7,10 @@ body{
 :root{
   --primary:#a2997f;
   --secondary: #cfdedf;
+  --ck-z-default: 10555 !important;
+  --ck-z-modal: calc(var(--ck-z-default) + 999) !important;
 }
+
 html,.card{
   & ::-webkit-scrollbar{
     width: 10px;
