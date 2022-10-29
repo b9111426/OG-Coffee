@@ -214,9 +214,35 @@
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import '@ckeditor/ckeditor5-build-classic/build/translations/zh'
-import { MyCustomUploadAdapterPlugin } from '@/libs/uploadAdapter'
+import {
+  MyCustomUploadAdapterPlugin,
+  SpecialCharactersEmoji
+} from '@/libs/CK_plugin'
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
+import '@ckeditor/ckeditor5-build-classic/build/translations/zh'
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials'
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
+import Link from '@ckeditor/ckeditor5-link/src/link'
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph'
+import Heading from '@ckeditor/ckeditor5-heading/src/heading'
+import List from '@ckeditor/ckeditor5-list/src/list'
+import Indent from '@ckeditor/ckeditor5-indent/src/indent'
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock'
+import Image from '@ckeditor/ckeditor5-image/src/image'
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar'
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption'
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle'
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
+import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert'
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
+import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote'
+import Font from '@ckeditor/ckeditor5-font/src/font'
+import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
+import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters'
+import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials'
+import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline'
 
 export default {
   props: {
@@ -241,8 +267,77 @@ export default {
       create_at: 0,
       editor: ClassicEditor,
       editorConfig: {
+        plugins: [
+          Essentials,
+          Bold,
+          Italic,
+          Link,
+          Paragraph,
+          Heading,
+          List,
+          Indent,
+          IndentBlock,
+          Image,
+          ImageToolbar,
+          ImageCaption,
+          ImageStyle,
+          ImageResize,
+          ImageInsert,
+          Alignment,
+          BlockQuote,
+          Font,
+          MediaEmbed,
+          SpecialCharacters,
+          SpecialCharactersEssentials,
+          SpecialCharactersEmoji,
+          HorizontalLine
+        ],
         toolbar: {
+          items: [
+            'heading',
+            '|',
+            'fontSize',
+            'fontFamily',
+            'fontColor',
+            'fontBackgroundColor',
+            '|',
+            'bold',
+            'italic',
+            'link',
+            'bulletedList',
+            'numberedList',
+            'alignment',
+            '|',
+            'outdent',
+            'indent',
+            'blockQuote',
+            'horizontalLine',
+            '|',
+            'specialCharacters',
+            '|',
+            'insertImage',
+            '|',
+            'mediaEmbed',
+            '|',
+            'undo',
+            'redo'
+          ],
           shouldNotGroupWhenFull: true
+        },
+        image: {
+          toolbar: [
+            'imageStyle:alignLeft',
+            'imageStyle:alignRight',
+            'imageStyle:alignCenter',
+            'imageStyle:inline',
+            'imageStyle:block',
+            'imageStyle:alignBlockLeft',
+            'imageStyle:alignBlockRight',
+            'imageStyle:side',
+            'toggleImageCaption',
+            'resizeImage',
+            'imageTextAlternative'
+          ]
         },
         extraPlugins: [MyCustomUploadAdapterPlugin],
         language: 'zh'
@@ -269,7 +364,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .ck-editor__editable_inline {
   min-height: 300px;
 }

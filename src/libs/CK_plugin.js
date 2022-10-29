@@ -21,3 +21,13 @@ export function MyCustomUploadAdapterPlugin(editor) {
   editor.plugins.get('FileRepository').createUploadAdapter = (loader) =>
     new MyUploadAdapter(loader)
 }
+
+export function SpecialCharactersEmoji(editor) {
+  editor.plugins.get('SpecialCharacters').addItems('Emoji', [
+    { title: 'smiley face', character: '😊' },
+    { title: 'coffee', character: '☕' },
+    { title: 'tropical drink', character: '🍹' },
+    { title: 'sparkles', character: '✨' },
+    { title: 'heart', character: '❤️' }
+  ])
+}
