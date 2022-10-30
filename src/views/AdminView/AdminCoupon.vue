@@ -49,20 +49,18 @@
                   <div class="ps-4">
                     <div class="form-check d-flex justify-content-start">
                       <input
-                        class="form-check-input"
+                        class="form-check-input me-2"
                         type="checkbox"
-                        :id="item.id"
+                        :id="`couponSwitch${item.id}`"
                         v-model="item.is_enabled"
-                        :true-value="1"
-                        :false-value="0"
                         @change="updateCoupon({ coupon: item, isNew: false })"
                       />
                       <label
-                        class="form-check-label ms-2"
+                        class="form-check-label"
                         :for="`couponSwitch${item.id}`"
                       >
                         <span
-                          v-if="item.is_enabled === 1"
+                          v-if="item.is_enabled"
                           class="text-primary text-nowrap"
                           >啟用</span
                         >
@@ -109,7 +107,12 @@
     ref="couponModal"
     @update-coupon="updateCoupon"
   ></CouponModal>
-  <DelModal :item="tempCoupon" ref="delModal" @del-item="delCoupon"></DelModal>
+  <DelModal
+    :item="tempCoupon"
+    :title="title"
+    ref="delModal"
+    @del-item="delCoupon"
+  ></DelModal>
   <Pagination
     :pages="pagination"
     @emitPages="getCoupons"

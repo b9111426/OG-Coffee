@@ -179,6 +179,8 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
+                      :true-value="true"
+                      :false-value="false"
                       v-model="tempArticle.isPublic"
                       id="isPublic"
                     />
@@ -202,22 +204,17 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('update-article', tempArticle)"
+            @click="$emit('update-article', { article: tempArticle, isNew })"
           >
-            確認
+            {{ isNew ? '新增文章' : '更新文章' }}
           </button>
         </div>
       </div>
     </div>
   </div>
-  <pre>{{ tempArticle }}</pre>
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'
-//import CK_plugin, {
-//  MyCustomUploadAdapterPlugin,
-//  SpecialCharactersEmoji
-//} from '@/libs/CK_plugin'
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
 import CK_plugin from '@/libs/CK_plugin'
 
@@ -231,7 +228,7 @@ export default {
     },
     isNew: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   emits: ['update-article'],

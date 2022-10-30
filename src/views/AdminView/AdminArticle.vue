@@ -11,7 +11,11 @@
         <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
         </div>
-        <button class="btn btn-primary" type="button" @click="openModal(true)">
+        <button
+          class="btn btn-primary"
+          type="button"
+          @click="openArticleModal(true)"
+        >
           建立新的頁面
         </button>
       </div>
@@ -20,12 +24,17 @@
           <table class="table mt-4 table-hover">
             <thead>
               <tr class="table-light">
-                <th width="200">標題</th>
-                <th width="200">作者</th>
-                <th>描述</th>
-                <th width="100">建立時間</th>
-                <th width="100">是否公開</th>
-                <th width="120">編輯</th>
+                <th class="text-nowrap" width="200">標題</th>
+                <th class="text-nowrap" width="200">作者</th>
+                <th class="text-nowrap">描述</th>
+                <th class="text-nowrap" width="100">建立時間</th>
+                <th
+                  class="text-center d-none d-lg-table-cell text-nowrap px-3"
+                  width="145"
+                >
+                  是否公開
+                </th>
+                <th class="text-nowrap" width="120">編輯</th>
               </tr>
             </thead>
             <tbody>
@@ -34,25 +43,49 @@
                 <td>{{ item.author }}</td>
                 <td>{{ item.description }}</td>
                 <td>{{ $filters.date(item.create_at) }}</td>
-                <td>
-                  <span v-if="item.isPublic">已公開</span>
-                  <span v-else>未公開</span>
+                <td class="d-none d-lg-table-cell">
+                  <div class="ps-4">
+                    <div class="form-check d-flex justify-content-start">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        :id="`articleSwitch${item.id}`"
+                        v-model="item.isPublic"
+                        @change="switchPublic(item.id, item.isPublic, false)"
+                      />
+                      <label
+                        class="form-check-label ms-2"
+                        :for="`articleSwitch${item.id}`"
+                      >
+                        <span
+                          v-if="item.isPublic"
+                          class="text-primary text-nowrap"
+                          >公開</span
+                        >
+                        <span v-else class="text-gray-dark text-nowrap"
+                          >未公開</span
+                        >
+                      </label>
+                    </div>
+                  </div>
                 </td>
                 <td>
                   <div class="btn-group">
                     <button
-                      class="btn btn-outline-primary btn-sm"
                       type="button"
-                      @click="getArticle(item.id)"
+                      class="btn btn-primary btn-sm"
+                      @click="openArticleModal(false, item.id)"
                     >
-                      編輯
+                      <span class="d-lg-block d-none text-nowrap">編輯</span>
+                      <i class="bi bi-pencil-square d-lg-none"></i>
                     </button>
                     <button
-                      class="btn btn-outline-danger btn-sm"
                       type="button"
+                      class="btn btn-danger btn-sm"
                       @click="openDelArticleModal(item)"
                     >
-                      刪除
+                      <span class="d-lg-block d-none text-nowrap">刪除</span>
+                      <i class="bi bi-x-lg d-lg-none"></i>
                     </button>
                   </div>
                 </td>
@@ -74,27 +107,32 @@
   ></ArticleModal>
   <DelModal
     :item="tempArticle"
+    :title="title"
     ref="delModal"
     @del-item="delArticle"
   ></DelModal>
   <Pagination
     :pages="pagination"
-    @emitPages="getArticle"
+    @emitPages="getArticles"
     class="mt-3 pb-5"
   ></Pagination>
+  <pre>{{ articles }}</pre>
 </template>
 
 <script>
 import ArticleModal from '@/components/ArticleModal.vue'
 import DelModal from '@/components/DelModal.vue'
 import Pagination from '@/components/Pagination.vue'
+import _ from 'lodash'
+
 export default {
   data() {
     return {
       isLoading: false,
       isNew: false,
       tempArticle: {},
-      currentPage: 1
+      currentPage: 1,
+      title: '文章'
     }
   },
   components: {
@@ -112,21 +150,8 @@ export default {
         throw new Error(err)
       }
     },
-    getArticle(id) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${id}`
-      this.$http
-        .get(api)
-        .then((res) => {
-          if (res.data.success) {
-            this.openModal(false, res.data.article)
-            this.isNew = false
-          }
-        })
-        .catch((err) => {
-          alert(err)
-        })
-    },
-    openModal(isNew, item) {
+
+    async openArticleModal(isNew, id) {
       if (isNew) {
         this.tempArticle = {
           isPublic: false,
@@ -135,50 +160,70 @@ export default {
         }
         this.isNew = true
       } else {
-        this.tempArticle = { ...item }
+        try {
+          const res = await this.$store.dispatch('Articles/getArticle', id)
+          this.tempArticle = { ...res.data.article }
+        } catch (err) {
+          throw new Error(err)
+        }
       }
       this.$refs.articleModal.openModal()
-    },
-    updateArticle(item) {
-      this.tempArticle = item
-      let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article`
-      let httpMethod = 'post'
-      this.isLoading = true
-      if (!this.isNew) {
-        api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`
-        httpMethod = 'put'
-      }
-      const articleComponent = this.$refs.articleModal
-      this.$http[httpMethod](api, { data: this.tempArticle })
-        .then((response) => {
-          this.$httpMessageState(response, status)
-          articleComponent.hideModal()
-          this.getArticles(this.currentPage)
-        })
-        .catch((err) => {
-          alert(err)
-          console.log(err)
-        })
     },
     openDelArticleModal(item) {
       this.tempArticle = { ...item }
       const delComponent = this.$refs.delModal
       delComponent.openModal()
     },
-    delArticle() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${this.tempArticle.id}`
+    switchPublic: _.debounce(async function (id, isPublic, isNew) {
+      try {
+        const res = await this.$store.dispatch('Articles/getArticle', id)
+        const data = res.data.article
+        data.isPublic = isPublic
+        this.updateArticle({ article: data, isNew })
+      } catch (err) {
+        throw new Error(err)
+      }
+    }, 300),
+    updateArticle: _.debounce(async function ({ article, isNew }) {
       this.isLoading = true
-      this.$http
-        .delete(url)
-        .then(() => {
-          const delComponent = this.$refs.delModal
-          delComponent.hideModal()
-          this.getArticles(this.currentPage)
+      const articleModal = this.$refs.articleModal
+      try {
+        let res = null
+        if (!isNew) {
+          const data = { id: article.id, article }
+          res = await this.$store.dispatch('Articles/modifyArticle', data)
+        } else {
+          res = await this.$store.dispatch('Articles/addArticle', article)
+        }
+        articleModal.hideModal()
+        this.$store.dispatch('fireToast', { res })
+        this.getArticles(this.currentPage)
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }, 500),
+    delArticle: _.debounce(async function (title) {
+      try {
+        this.isLoading = true
+        await this.$store.dispatch(
+          'Articles/deleteArticle',
+          this.tempArticle.id
+        )
+        const delModal = this.$refs.delModal
+        delModal.hideModal()
+        this.getArticles(this.currentPage)
+        this.isLoading = false
+        this.$store.dispatch('fireToast', {
+          title: `${title}文章已刪除`,
+          style: 'success'
         })
-        .catch((err) => {
-          alert(err)
-        })
-    }
+        this.isLoading = false
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }, 500)
   },
   computed: {
     articles() {

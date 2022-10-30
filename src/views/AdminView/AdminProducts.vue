@@ -73,13 +73,13 @@
                       <input
                         class="form-check-input me-2"
                         type="checkbox"
-                        :id="item.id"
+                        :id="`productSwitch${item.id}`"
                         v-model="item.is_enabled"
                         @change="updateProduct({ product: item, isNew: false })"
                       />
                       <label
                         class="form-check-label"
-                        :for="`flexSwitchCheckDefault${item.id}`"
+                        :for="`productSwitch${item.id}`"
                       >
                         <span
                           v-if="item.is_enabled"

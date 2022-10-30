@@ -41,6 +41,12 @@ export const deleteOrderRequest = (id) => adminApi.delete(`/order/${id}`)
 
 export const getArticlesRequest = (page) =>
   adminApi.get(`/articles?page=${page}`)
+export const modifyArticleRequest = (id, order) =>
+  adminApi.put(`/article/${id}`, { data: order })
+export const getArticleRequest = (id) => adminApi.get(`/article/${id}`)
+export const deleteArticleRequest = (id) => adminApi.delete(`/article/${id}`)
+export const addArticleRequest = (article) =>
+  adminApi.post('/article', { data: article })
 
 //上傳圖片
 export const upLoadRequest = (formData) =>
