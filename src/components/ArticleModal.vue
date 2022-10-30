@@ -72,20 +72,8 @@
                     placeholder="請輸入標題"
                   />
                 </div>
-                <div class="mb-3">
-                  <label for="image" class="form-label fw-bold"
-                    >輸入圖片網址</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="image"
-                    v-model="tempArticle.imageUrl"
-                    placeholder="請輸入圖片連結"
-                  />
-                </div>
                 <div class="row">
-                  <div class="mb-3 col-md-6">
+                  <div class="mb-3 col-md-6 col-12">
                     <label for="author" class="form-label fw-bold">作者</label>
                     <input
                       type="text"
@@ -95,7 +83,7 @@
                       placeholder="請輸入標題"
                     />
                   </div>
-                  <div class="mb-3 col-md-6">
+                  <div class="mb-3 col-md-6 col-12">
                     <label for="create_at" class="form-label fw-bold"
                       >文章建立日期</label
                     >
@@ -105,6 +93,58 @@
                       id="create_at"
                       v-model="create_at"
                     />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 col-md-6 col-12">
+                    <label for="image" class="form-label fw-bold"
+                      >輸入圖片網址</label
+                    >
+                    <input
+                      type="text"
+                      ref="fileUrl"
+                      class="form-control"
+                      id="image"
+                      v-model="tempArticle.imageUrl"
+                      placeholder="請輸入圖片連結"
+                    />
+                    <div class="mt-3">
+                      <label for="customFile" class="fw-bold form-label mb-2"
+                        >或上傳圖片取得圖片連結
+                      </label>
+                      <div v-if="isLoading" class="ms-3 d-inline-block">
+                        <img
+                          class="loading"
+                          src="@/assets/images/load.gif"
+                          alt=""
+                        />
+                      </div>
+
+                      <input
+                        type="file"
+                        id="customFile"
+                        class="form-control"
+                        ref="fileInput"
+                        @change="uploadFile"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div v-if="tempArticle.imageUrl" class="mb-4">
+                      <div class="position-relative">
+                        <img
+                          class="img-fluid img-thumbnail"
+                          :src="tempArticle.imageUrl"
+                          alt=""
+                        />
+                        <button
+                          type="button"
+                          class="btn-close bg-white p-2 position-absolute top-0 start-0 mt-3 ms-3"
+                          aria-label="Close"
+                          @click="removePic"
+                        ></button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -212,6 +252,7 @@
       </div>
     </div>
   </div>
+  <pre>{{ tempArticle }}</pre>
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'
@@ -238,6 +279,7 @@ export default {
       tempArticle: {
         tag: ['']
       },
+      isLoading: false,
       create_at: 0,
       editor: ClassicEditor,
       editorConfig: CK_plugin
@@ -259,7 +301,27 @@ export default {
       this.tempArticle.create_at = Math.floor(new Date(this.create_at) / 1000)
     }
   },
-  methods: {}
+  methods: {
+    removePic() {
+      this.tempArticle.imageUrl = ''
+      this.$refs.fileUrl.value = ''
+      this.$refs.fileInput.value = null
+    },
+    async uploadFile() {
+      try {
+        this.isLoading = true
+        const uploadedFile = this.$refs.fileInput.files[0]
+        const formData = new FormData()
+        formData.append('file-to-upload', uploadedFile)
+        const res = await this.$store.dispatch('Products/upLoadFile', formData)
+        this.$refs.fileUrl.value = res.data.imageUrl
+        this.tempArticle.imageUrl = res.data.imageUrl
+        this.isLoading = false
+      } catch (err) {
+        this.$store.dispatch('fireToast', { res: err.response })
+      }
+    }
+  }
 }
 </script>
 
