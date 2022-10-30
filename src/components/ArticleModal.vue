@@ -61,7 +61,7 @@
               role="tabpanel"
               aria-labelledby="home-tab"
             >
-              <div class="mt-3">
+              <div class="container mt-3">
                 <div class="mb-3">
                   <label for="title" class="form-label fw-bold">標題</label>
                   <input
@@ -155,7 +155,7 @@
               role="tabpanel"
               aria-labelledby="profile-tab"
             >
-              <div class="mt-3">
+              <div class="container mt-3">
                 <label for="tag" class="form-label fw-bold">標籤</label>
                 <div class="row gx-1 mb-3">
                   <div
@@ -252,7 +252,6 @@
       </div>
     </div>
   </div>
-  <pre>{{ tempArticle }}</pre>
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'
