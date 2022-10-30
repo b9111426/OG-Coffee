@@ -6,7 +6,7 @@
         class="col-12 d-flex align-items-center justify-content-between mb-2 mb-lg-0"
       >
         <div class="bg-white p-2 rounded text-dark">
-          <strong> 文章總數: {{}} </strong>
+          <strong> 文章總數: {{ allArticlesNum }} </strong>
         </div>
         <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
@@ -116,7 +116,6 @@
     @emitPages="getArticles"
     class="mt-3 pb-5"
   ></Pagination>
-  <pre>{{ articles }}</pre>
 </template>
 
 <script>
@@ -145,12 +144,19 @@ export default {
       this.currentPage = page
       try {
         await this.$store.dispatch('Articles/getArticles', page)
+        this.getAllArticles()
         this.$store.dispatch('handLoading', false)
       } catch (err) {
         throw new Error(err)
       }
     },
-
+    async getAllArticles() {
+      try {
+        await this.$store.dispatch('Articles/getAllArticles')
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
     async openArticleModal(isNew, id) {
       if (isNew) {
         this.tempArticle = {
@@ -231,6 +237,9 @@ export default {
     },
     pagination() {
       return this.$store.getters['Articles/articlesPage']
+    },
+    allArticlesNum() {
+      return this.$store.getters['Articles/allArticlesNum']
     }
   },
   created() {

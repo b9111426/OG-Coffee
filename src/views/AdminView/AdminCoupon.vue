@@ -51,6 +51,8 @@
                       <input
                         class="form-check-input me-2"
                         type="checkbox"
+                        :true-value="1"
+                        :false-value="0"
                         :id="`couponSwitch${item.id}`"
                         v-model="item.is_enabled"
                         @change="updateCoupon({ coupon: item, isNew: false })"

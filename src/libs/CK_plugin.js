@@ -6,7 +6,7 @@ import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
 import Link from '@ckeditor/ckeditor5-link/src/link'
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph'
 import Heading from '@ckeditor/ckeditor5-heading/src/heading'
-import List from '@ckeditor/ckeditor5-list/src/list'
+import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties'
 import Indent from '@ckeditor/ckeditor5-indent/src/indent'
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock'
 import Image from '@ckeditor/ckeditor5-image/src/image'
@@ -22,6 +22,10 @@ import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters'
 import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials'
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline'
+import Table from '@ckeditor/ckeditor5-table/src/table'
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar'
+import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties'
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties'
 class MyUploadAdapter {
   constructor(loader) {
     // 上傳使用的文件加載器實例
@@ -63,7 +67,7 @@ export default {
     Link,
     Paragraph,
     Heading,
-    List,
+    ListProperties,
     Indent,
     IndentBlock,
     Image,
@@ -79,7 +83,11 @@ export default {
     SpecialCharacters,
     SpecialCharactersEssentials,
     SpecialCharactersEmoji,
-    HorizontalLine
+    HorizontalLine,
+    Table,
+    TableToolbar,
+    TableProperties,
+    TableCellProperties
   ],
   toolbar: {
     items: [
@@ -108,6 +116,8 @@ export default {
       '|',
       'mediaEmbed',
       '|',
+      'insertTable',
+      '|',
       'undo',
       'redo'
     ],
@@ -126,6 +136,22 @@ export default {
       'toggleImageCaption',
       'resizeImage',
       'imageTextAlternative'
+    ]
+  },
+  list: {
+    properties: {
+      styles: true,
+      startIndex: true,
+      reversed: true
+    }
+  },
+  table: {
+    contentToolbar: [
+      'tableColumn',
+      'tableRow',
+      'mergeTableCells',
+      'tableProperties',
+      'tableCellProperties'
     ]
   },
   extraPlugins: [MyCustomUploadAdapterPlugin],

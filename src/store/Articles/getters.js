@@ -4,5 +4,8 @@ export default {
   },
   articlesPage(state) {
     return state.pagination
+  },
+  allArticlesNum(state) {
+    return state.allArticlesNum
   }
 }

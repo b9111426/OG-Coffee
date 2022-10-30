@@ -7,7 +7,6 @@ export default {
   state: {
     coupons: [],
     pagination: {},
-    total_pages: null,
     allCouponsNum: 0
   },
   actions,

@@ -282,9 +282,4 @@ export default {
   /* Default user agent stylesheet, you can change it to your needs. */
   padding-left: 40px !important;
 }
-
-.ck.ck-content ol,
-.ck.ck-content ol li {
-  list-style: decimal;
-}
 </style>

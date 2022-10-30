@@ -11,6 +11,15 @@ export default {
     const res = await apiGetArticles(page)
     commit('handArticles', res)
   },
+  async getAllArticles(context) {
+    let num = 0
+    const pages = context.state.pagination.total_pages
+    for (let idx = 1; idx <= pages; idx++) {
+      const res = await apiGetArticles(idx)
+      num += res.data.articles.length
+    }
+    context.commit('handAllArticles', num)
+  },
   async getArticle(context, id) {
     const res = await apiGetArticle(id)
     return res

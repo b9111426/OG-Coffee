@@ -26,6 +26,7 @@
     "@ckeditor/ckeditor5-media-embed": "^35.2.1",
     "@ckeditor/ckeditor5-paragraph": "^35.2.1",
     "@ckeditor/ckeditor5-special-characters": "^35.2.1",
+    "@ckeditor/ckeditor5-table": "^35.2.1",
     "@ckeditor/ckeditor5-theme-lark": "^35.2.1",
     "@ckeditor/ckeditor5-vue": "^4.0.1",
     "@popperjs/core": "^2.11.2",

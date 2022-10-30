@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state: {
     articles: [],
-    pagination: {}
+    pagination: {},
+    allArticlesNum: 0
   },
   actions,
   mutations,
