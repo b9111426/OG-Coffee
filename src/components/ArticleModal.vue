@@ -277,6 +277,9 @@ export default {
     return {
       status: {},
       tempArticle: {
+        isPublic: false,
+        imageUrl: '',
+        create_at: 0,
         tag: ['']
       },
       isLoading: false,
@@ -320,6 +323,12 @@ export default {
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
+    },
+    commit() {
+      this.$emit('update-article', {
+        article: this.tempArticle,
+        isNew: this.isNew
+      })
     }
   }
 }

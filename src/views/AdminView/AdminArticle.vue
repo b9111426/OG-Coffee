@@ -129,7 +129,12 @@ export default {
     return {
       isLoading: false,
       isNew: false,
-      tempArticle: {},
+      tempArticle: {
+        isPublic: false,
+        imageUrl: '',
+        create_at: 0,
+        tag: ['']
+      },
       currentPage: 1,
       title: '文章'
     }
