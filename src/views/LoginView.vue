@@ -70,6 +70,8 @@
 
 <script>
 import { apiSignInRequest } from '@/api'
+import _ from 'lodash'
+
 export default {
   data() {
     return {
@@ -82,7 +84,7 @@ export default {
     }
   },
   methods: {
-    async signIn() {
+    signIn: _.debounce(async function () {
       if (this.user.username === '' || this.user.password === '') {
         this.$store.dispatch('fireToast', { title: '請先填入資料' })
         return
@@ -96,7 +98,7 @@ export default {
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
-    },
+    }, 500),
     saveCode() {
       this.isSave = !this.isSave
       localStorage.setItem('isSave', JSON.stringify(this.isSave))

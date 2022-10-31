@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <div class="row row-cols-2">
+    <div class="row row-cols-lg-2 row-cols-1">
       <div class="col">
         <div class="row mb-2">
           <div class="col">
@@ -24,61 +24,67 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col mt-4 mt-lg-0">
         <h3 class="text-start text-break">{{ product.title }}</h3>
-        <h4 class="text-start text-break mb-5">{{ product.subtitle }}</h4>
-        <p class="text-start mb-5">{{ product.description }}</p>
+        <h4 class="text-start text-break mb-lg-5 mb-3">
+          {{ product.subtitle }}
+        </h4>
+        <p class="text-start mb-lg-5 mb-3">{{ product.description }}</p>
         <div v-if="isShow">
           <!--價錢數量-->
-          <div class="row g-3 mb-3">
-            <div class="col-2 d-flex align-items-center">
-              <h6 class="text-center">
-                {{ unitAry[0] }}
-              </h6>
-            </div>
-            <div
-              class="col-5 d-flex justify-content-around align-items-center flex-wrap"
-            >
-              <p
-                class="text-decoration-line-through text-danger text-break"
+
+          <div class="col-12 d-flex align-items-center mb-3">
+            <p class="text-center fs-5 me-auto">單位({{ unitAry[0] }})</p>
+
+            <p class="ms-auto text-break fs-4">
+              <span
+                class="text-decoration-line-through text-danger text-break me-2"
                 v-if="product.origin_price !== product.price"
               >
                 NT${{ product.origin_price }}
-              </p>
-              <strong class="text-break">NT${{ product.price }}</strong>
-            </div>
-            <div class="col-5">
-              <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
-                <AddMinBtn
-                  :val="qty"
-                  @add="add"
-                  @min="min"
-                  @push-val="pushVal"
-                ></AddMinBtn>
-              </div>
+              </span>
+
+              NT${{ product.price }}
+            </p>
+          </div>
+          <div class="col-12 mb-4">
+            <div v-if="isShow" class="input-group input-group-sm flex-nowrap">
+              <AddMinBtn
+                :val="qty"
+                @add="add"
+                @min="min"
+                @push-val="pushVal"
+              ></AddMinBtn>
             </div>
           </div>
-        </div>
-        <div class="row row-cols-2 g-3 mb-3">
-          <div class="col">
-            <button
-              v-if="isShow"
-              type="button"
-              class="btn btn-primary w-100"
-              @click="addToCart()"
-            >
-              加入購物車
-            </button>
-          </div>
-          <div class="col">
-            <button
-              v-if="isShow"
-              type="button"
-              class="btn btn-success w-100"
-              @click="goCartView()"
-            >
-              立即購買
-            </button>
+
+          <div class="d-flex">
+            <div class="col pe-1">
+              <button
+                v-if="isShow"
+                type="button"
+                class="btn btn-primary w-100 position-relative"
+                @click="addToCart()"
+              >
+                <div
+                  v-if="isLoading"
+                  class="position-absolute top-50 end-0 translate-middle"
+                >
+                  <img class="loading" src="@/assets/images/load.gif" alt="" />
+                </div>
+                加入購物車
+              </button>
+            </div>
+            <div class="col ps-1">
+              <button
+                v-if="isShow"
+                type="button"
+                class="btn btn-success w-100"
+                @click="goCartView()"
+              >
+                立即購買
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -100,6 +106,7 @@ export default {
         imageUrl: []
       },
       isShow: false,
+      isLoading: false,
       unitAry: [],
       qty: 1
     }
@@ -118,6 +125,7 @@ export default {
       this.qty = val
     },
     addToCart: _.debounce(async function () {
+      this.isLoading = true
       const data = {
         product_id: this.product.id,
         qty: this.qty
@@ -126,6 +134,7 @@ export default {
         await this.$store.dispatch('Cart/addCart', data)
         this.$store.dispatch('Cart/getCart')
         this.$store.dispatch('Cart/setShake')
+        this.isLoading = false
       } catch (err) {
         throw new Error(err)
       }

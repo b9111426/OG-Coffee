@@ -15,18 +15,29 @@ export default {
     return state.allProducts
   },
   category(state) {
-    const ary = []
+    const categoryAry = []
+    const classObj = {}
+    //const subcategoryAry = []
     state.allProducts.forEach((i) => {
-      if (ary.indexOf(i.category) === -1) {
-        ary.push(i.category)
+      if (categoryAry.indexOf(i.category) === -1) {
+        categoryAry.push(i.category)
       }
     })
-    const newAry = ary.map((j) => {
-      const filter = state.allProducts.filter((x) => {
+
+    const newAry = categoryAry.map((j, idx) => {
+      const filterAry = state.allProducts.filter((x) => {
         return x.category === j
       })
-      return { category: j, num: filter.length }
+      const ary = []
+      classObj[idx] = filterAry
+      filterAry.forEach((x) => {
+        if (ary.indexOf(x.sub_category) === -1) {
+          ary.push(x.sub_category)
+        }
+      })
+      return { category: j, num: filterAry.length, sub_category: ary }
     })
+    console.log(newAry)
     return newAry
   }
 }

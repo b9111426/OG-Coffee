@@ -8,16 +8,14 @@
             :class="{ 'card-link': !item.is_soldOut }"
             @click="toNewRouter(item.id, item.is_soldOut)"
           >
-            <div class="position-relative d-inline-block overflow-hidden">
+            <div
+              class="card-pic position-relative d-inline-block overflow-hidden"
+            >
               <div
                 v-if="item.is_soldOut"
                 class="position-absolute sellOutTag bg-danger start-50 top-50 translate-middle"
               ></div>
-              <img
-                :src="item?.imageUrl[0]"
-                class="card-pic card-img-top"
-                alt="..."
-              />
+              <img :src="item?.imageUrl[0]" class="card-img-top" alt="..." />
             </div>
             <p
               v-if="!item.is_soldOut"
@@ -83,6 +81,10 @@ export default {
 <style lang="scss" scoped>
 .card-link {
   cursor: pointer;
+}
+.card-pic {
+  object-fit: cover;
+  object-position: center;
 }
 .card-link > p {
   opacity: 0;

@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar navbar-light bg-light fixed-top">
-    <div class="container pt-4 position-relative">
+  <nav class="navbar navbar-light bg-light fixed-top border-bottom border-gray">
+    <div class="container pt-lg-4 position-relative">
       <div class="navTop d-block flex-0 position-absolute top-0 end-0 mt-1">
         <ul class="navbar-nav d-lg-flex d-none flex-row mb-lg-0">
           <li class="nav-item mx-1">
@@ -39,7 +39,7 @@
               class="btn btn-outline-primary btn-sm"
               to="/about"
             >
-              <i class="bi bi-chat-fill"></i>
+              <i class="bi bi-chat-text-fill"></i>
               聯絡我們</router-link
             >
           </li>
@@ -103,7 +103,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-        class="offcanvas offcanvas-end"
+        class="offcanvas offcanvas-end bg-primary"
         tabindex="-1"
         id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel"
@@ -153,21 +153,25 @@
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/admin">
+                  <i class="bi bi-person"></i>
                   登入後台</router-link
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/cart">
+                  <i class="bi bi-cart2"></i>
                   購物車
                 </router-link>
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/about">
+                  <i class="bi bi-chat-text"></i>
                   聯絡我們</router-link
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/newer">
+                  <i class="bi bi-search"></i>
                   找產品</router-link
                 >
               </li>

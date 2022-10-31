@@ -17,7 +17,7 @@
           <p class="border-bottom py-2 border-gray-dark">分類</p>
           <div class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
             <a
-              class="collapsed"
+              class="collapsed link-dark-gray fw-bold"
               data-bs-toggle="collapse"
               :href="`#collapse${idx}`"
             >
@@ -27,8 +27,13 @@
                 <i class="bi bi-caret-left-fill"></i>
               </div>
             </a>
-            <div class="collapse" :id="`collapse${idx}`">
-              <div>aaaaaa</div>
+            <div
+              v-for="x in i.sub_category"
+              :key="x"
+              class="collapse text-start text-primary"
+              :id="`collapse${idx}`"
+            >
+              <div>{{ x }}</div>
             </div>
           </div>
         </div>
@@ -60,6 +65,7 @@
       </div>
     </div>
   </div>
+  <pre>{{ category }}</pre>
 </template>
 
 <script>

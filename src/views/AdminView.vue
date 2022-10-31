@@ -1,6 +1,6 @@
 <template>
   <AdminNavbar></AdminNavbar>
-  <div class="container-fluid mt-3 position-relative">
+  <div class="box">
     <router-view v-if="checkSuccess"></router-view>
   </div>
 </template>
@@ -43,3 +43,9 @@ export default {
   }
 }
 </script>
+<style long="scss" scoped>
+.box {
+  height: calc(100vh - 59px);
+  overflow: auto;
+}
+</style>

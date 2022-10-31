@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-dark bg-tertiary fixed-top">
     <div class="container">
       <router-link class="navbar-brand px-3 brand-hover" to="/"
         >回前台</router-link
@@ -49,7 +49,9 @@
         aria-labelledby="offcanvasNavbarLabel"
       >
         <div class="offcanvas-header bg-dark">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+          <h5 class="offcanvas-title text-secondary" id="offcanvasNavbarLabel">
+            OG-Coffee
+          </h5>
           <button
             type="button"
             class="btn-close text-reset bg-white"

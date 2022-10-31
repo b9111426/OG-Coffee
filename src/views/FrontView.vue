@@ -19,7 +19,7 @@ export default {
 </script>
 <style long="scss" scoped>
 .box {
-  height: calc(100vh - 88px);
+  height: calc(100vh - 89px);
   overflow: auto;
 }
 </style>

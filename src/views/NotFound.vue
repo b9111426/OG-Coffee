@@ -18,7 +18,7 @@ export default {
     const anLottie = this.lottie.loadAnimation({
       container: this.$refs.svgContainer,
       animType: 'svg',
-      loop: true,
+      loop: false,
       path: 'https://assets9.lottiefiles.com/packages/lf20_ueovf9mk.json'
     })
     anLottie.setSpeed(1)

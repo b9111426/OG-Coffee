@@ -80,7 +80,7 @@
                         type="text"
                         class="form-control"
                         placeholder="請輸入圖片連結"
-                        @input="btnShow"
+                        @input="pushPic($event)"
                         ref="fileUrl"
                       />
                     </div>
@@ -96,14 +96,6 @@
                         @change="uploadFile"
                       />
                     </div>
-
-                    <button
-                      v-if="isBtnShow"
-                      class="btn btn-primary btn-sm d-block w-100"
-                      @click="addPic"
-                    >
-                      新增圖片
-                    </button>
                   </div>
                   <div class="col-lg-6 col-12 mt-3 mt-lg-0">
                     <div
@@ -175,8 +167,8 @@
                       @change="handTempProduct"
                       aria-label="category select"
                     >
-                      <option value="飲品">飲品</option>
-                      <option value="蛋糕">蛋糕</option>
+                      <option value="飲品" selected>飲品</option>
+                      <option value="點心">點心</option>
                       <option value="餐點">餐點</option>
                     </select>
                   </div>
@@ -190,9 +182,15 @@
                       v-model="tempProduct.sub_category"
                       aria-label="category select"
                     >
-                      <option value="飲品">飲品</option>
-                      <option value="蛋糕">蛋糕</option>
-                      <option value="餐點">餐點</option>
+                      <template v-if="this.tempProduct.category === '飲品'">
+                        <option value="冷飲">冷飲</option>
+                        <option value="熱飲">熱飲</option>
+                        <option value="漂浮系列">漂浮系列</option>
+                      </template>
+                      <template v-if="this.tempProduct.category === '點心'">
+                        <option value="甜點">甜點</option>
+                        <option value="麵包">麵包</option>
+                      </template>
                     </select>
                   </div>
                 </div>
@@ -320,11 +318,11 @@
       </div>
     </div>
   </div>
-  <pre>{{ product }}</pre>
 </template>
 
 <script>
 import modalMixin from '@/mixins/modalMixin'
+import _ from 'lodash'
 export default {
   props: {
     product: {
@@ -359,13 +357,6 @@ export default {
     }
   },
   methods: {
-    btnShow() {
-      if (this.$refs.fileUrl.value) {
-        this.isBtnShow = true
-      } else {
-        this.isBtnShow = false
-      }
-    },
     async uploadFile() {
       try {
         this.isLoading = true
@@ -373,22 +364,19 @@ export default {
         const formData = new FormData()
         formData.append('file-to-upload', uploadedFile)
         const res = await this.$store.dispatch('Products/upLoadFile', formData)
-        this.$refs.fileUrl.value = res.data.imageUrl
-        this.isBtnShow = true
+        this.tempProduct.imageUrl.push(res.data.imageUrl)
+        //this.isBtnShow = true
         this.isLoading = false
+        this.$refs.fileUrl.value = null
+        this.$refs.fileInput.value = null
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
     },
-    addPic() {
-      const url = this.$refs.fileUrl.value
-      if (!url) {
-        return
-      }
+    pushPic: _.debounce(function (e) {
+      const url = e.target.value.trim()
       this.tempProduct.imageUrl.push(url)
-      this.$refs.fileUrl.value = null
-      this.$refs.fileInput.value = null
-    },
+    }, 700),
     removePic(e) {
       const idx = e.target.getAttribute('data-idx')
       this.tempProduct.imageUrl.splice(idx, 1)
@@ -405,7 +393,7 @@ export default {
         case '飲品':
           unit = '杯'
           break
-        case '蛋糕':
+        case '點心':
           unit = '個'
           break
         case '餐點':
