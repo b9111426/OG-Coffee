@@ -191,6 +191,10 @@
                         <option value="甜點">甜點</option>
                         <option value="麵包">麵包</option>
                       </template>
+                      <template v-if="this.tempProduct.category === '餐點'">
+                        <option value="餐前">餐前</option>
+                        <option value="主食">主食</option>
+                      </template>
                     </select>
                   </div>
                 </div>
