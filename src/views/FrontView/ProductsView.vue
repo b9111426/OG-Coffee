@@ -17,13 +17,13 @@
           <p class="border-bottom py-2 border-gray-dark">分類</p>
           <div class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
             <a
-              class="collapsed link-dark-gray fw-bold"
+              class="collapsed fw-bold"
               data-bs-toggle="collapse"
               :href="`#collapse${idx}`"
             >
               <div class="d-flex justify-content-between">
-                <p>{{ i.category }}</p>
-                <p>{{ i.num }}</p>
+                <span>{{ i.category }}</span>
+                <span>{{ i.num }}</span>
                 <i class="bi bi-caret-left-fill"></i>
               </div>
             </a>
@@ -33,7 +33,10 @@
               class="collapse text-start text-primary"
               :id="`collapse${idx}`"
             >
-              <div>{{ x }}</div>
+              <a href="#" class="d-flex justify-content-between ms-2">
+                <span>{{ x.category }}</span>
+                <span>{{ x.num }}</span>
+              </a>
             </div>
           </div>
         </div>
@@ -65,7 +68,6 @@
       </div>
     </div>
   </div>
-  <pre>{{ category }}</pre>
 </template>
 
 <script>

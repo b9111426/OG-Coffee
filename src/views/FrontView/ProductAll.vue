@@ -1,5 +1,5 @@
 <template>
-  <div class="contain-fluid">
+  <div class="contain-fluid pb-5">
     <div class="row">
       <div class="col-lg-3 col-6 g-3" v-for="item in products" :key="item.id">
         <div class="card h-100">
@@ -33,7 +33,7 @@
     </div>
     <!-- 分頁 -->
     <Pagination
-      class="mt-3"
+      class="mt-4"
       :pages="pagination"
       @emit-pages="getProducts"
     ></Pagination>
