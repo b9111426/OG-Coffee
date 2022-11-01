@@ -56,7 +56,11 @@ export default {
   props: ['pages'],
   methods: {
     updatePage(page) {
-      this.$emit('emitPages', page)
+      if (this.pages.category === 'search') {
+        this.$emit('searchPages', page)
+      } else {
+        this.$emit('emitPages', page, this.pages.category)
+      }
     }
   },
   computed: {

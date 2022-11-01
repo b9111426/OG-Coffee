@@ -12,6 +12,9 @@ import {
 } from '@/api'
 
 export default {
+  setSearchPagination({ commit }, page) {
+    commit('handSearchPagination', page)
+  },
   searchProduct({ commit }, str) {
     commit('handSearchProduct', str)
   },

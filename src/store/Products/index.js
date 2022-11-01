@@ -7,6 +7,7 @@ export default {
   state: {
     allProducts: [],
     products: [],
+    searchAllProducts: [],
     pagination: {},
     categoryList: [],
     isLoading: false,

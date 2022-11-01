@@ -1,9 +1,38 @@
 export default {
+  handSearchPagination(state, page) {
+    if (page > state.pagination.total_pages) {
+      state.pagination.current_page = state.pagination.total_pages
+    } else {
+      state.pagination.current_page = page
+    }
+    let startPage = (page - 1) * 10
+    let endPage = startPage + 10
+    state.products = state.searchAllProducts.slice(startPage, endPage)
+    if (page === state.pagination.total_pages) {
+      state.pagination.has_next = false
+      state.pagination.has_pre = true
+    } else if (page === 1) {
+      state.pagination.has_next = true
+      state.pagination.has_pre = false
+    }
+  },
   handSearchProduct(state, str) {
+    state.isSearch = true
     const ary = state.allProducts.filter((i) => {
       return i.title.includes(str)
     })
-    state.products = ary
+    state.searchAllProducts = ary
+    state.products = ary.slice(0, 10)
+    const totalPage = Math.ceil(ary.length / 10)
+    const currentPage = 1
+
+    state.pagination = {
+      total_pages: totalPage,
+      current_page: currentPage,
+      has_pre: currentPage !== 1,
+      has_next: totalPage > currentPage,
+      category: 'search'
+    }
   },
   handBreadcrumb(state, str) {
     state.breadcrumb = str

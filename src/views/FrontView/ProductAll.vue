@@ -25,8 +25,8 @@
             </p>
           </a>
           <div class="card-body">
-            <p class="text-start">{{ item.title }}</p>
-            <p class="text-start">{{ item.subtitle }}</p>
+            <span class="text-start">{{ item.title }}</span>
+            <span class="text-start">{{ item.subtitle }}</span>
           </div>
         </div>
       </div>
@@ -36,9 +36,9 @@
       class="mt-4"
       :pages="pagination"
       @emit-pages="getProducts"
+      @searchPages="handSearchPages"
     ></Pagination>
   </div>
-  <pre>{{ pagination }}</pre>
 </template>
 <script>
 import Pagination from '@/components/Pagination.vue'
@@ -59,6 +59,9 @@ export default {
       } catch (err) {
         throw new Error(err)
       }
+    },
+    handSearchPages(page) {
+      this.$store.dispatch('Products/setSearchPagination', page)
     }
   },
   mounted() {
