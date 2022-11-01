@@ -6,7 +6,8 @@ import {
   getCartRequest,
   deleteCartRequest,
   addCartRequest,
-  modifyCartRequest
+  modifyCartRequest,
+  frontCategoryRequest
 } from './frontRequest'
 import {
   checkRequest,
@@ -61,3 +62,4 @@ export const apiDeleteArticle = deleteArticleRequest
 export const apiModifyArticle = modifyArticleRequest
 export const apiAddArticle = addArticleRequest
 export const apiGetArticle = getArticleRequest
+export const apiFrontCategory = frontCategoryRequest

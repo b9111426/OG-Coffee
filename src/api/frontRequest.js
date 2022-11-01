@@ -7,6 +7,10 @@ const frontApi = axios.create({
 export const allFrontProductRequest = () => frontApi.get('/products/all')
 export const frontProductRequest = (page) =>
   frontApi.get(`/products/?page=${page}`)
+export const frontCategoryRequest = (page, category) => {
+  return frontApi.get(`/products/?page=${page};category=${category}`)
+}
+
 export const singleProductRequest = (id) => frontApi.get(`/product/${id}`)
 export const getCartRequest = () => frontApi.get('/cart')
 export const deleteCartRequest = (id) => frontApi.delete(`/cart/${id}`)

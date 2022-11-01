@@ -54,9 +54,6 @@
 <script>
 export default {
   props: ['pages'],
-  data() {
-    return {}
-  },
   methods: {
     updatePage(page) {
       this.$emit('emitPages', page)

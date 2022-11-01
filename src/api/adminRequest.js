@@ -23,7 +23,8 @@ export const addProductRequest = (product) =>
   adminApi.post('/product', { data: product })
 
 //後台優惠卷
-export const getCouponsRequest = (page) => adminApi.get(`/coupons?page=${page}`)
+export const getCouponsRequest = (page) =>
+  adminApi.get(`/coupons/?page=${page}`)
 export const addCouponsRequest = (coupon) =>
   adminApi.post('/coupon', { data: coupon })
 export const modifyCouponsRequest = (id, coupon) =>
@@ -31,7 +32,7 @@ export const modifyCouponsRequest = (id, coupon) =>
 export const deleteCouponRequest = (id) => adminApi.delete(`/coupon/${id}`)
 
 //後台訂單
-export const getOrdersRequest = (page) => adminApi.get(`/orders?page=${page}`)
+export const getOrdersRequest = (page) => adminApi.get(`/orders/?page=${page}`)
 export const modifyOrdersRequest = (id, order) =>
   adminApi.put(`/order/${id}`, { data: order })
 
@@ -39,7 +40,7 @@ export const deleteOrderRequest = (id) => adminApi.delete(`/order/${id}`)
 
 //後台文章
 export const getArticlesRequest = (page) =>
-  adminApi.get(`/articles?page=${page}`)
+  adminApi.get(`/articles/?page=${page}`)
 export const modifyArticleRequest = (id, order) =>
   adminApi.put(`/article/${id}`, { data: order })
 export const getArticleRequest = (id) => adminApi.get(`/article/${id}`)

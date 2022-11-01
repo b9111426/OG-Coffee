@@ -38,6 +38,7 @@
       @emit-pages="getProducts"
     ></Pagination>
   </div>
+  <pre>{{ pagination }}</pre>
 </template>
 <script>
 import Pagination from '@/components/Pagination.vue'
@@ -51,12 +52,11 @@ export default {
       this.$store.dispatch('Products/setLoading', true)
       this.$router.push({ path: `products/${id}` })
     },
-    async getProducts(page = 1) {
+    async getProducts(page = 1, category) {
       try {
-        await this.$store.dispatch('Products/getFrontProducts', page)
-        this.$store.dispatch('handLoading', false)
+        const data = { page, category }
+        await this.$store.dispatch('Products/getFrontProducts', data)
       } catch (err) {
-        this.$store.dispatch('handLoading', false)
         throw new Error(err)
       }
     }
@@ -71,9 +71,6 @@ export default {
     pagination() {
       return this.$store.getters['Products/productsPage']
     }
-  },
-  created() {
-    this.getProducts()
   }
 }
 </script>

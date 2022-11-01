@@ -8,6 +8,7 @@ export default {
     allProducts: [],
     products: [],
     pagination: {},
+    categoryList: [],
     isLoading: false,
     breadcrumb: ''
   },

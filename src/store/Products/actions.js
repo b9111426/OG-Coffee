@@ -7,18 +7,29 @@ import {
   apiUpLoad,
   apiModifyProduct,
   apiAddProduct,
-  apiAllProduct
+  apiAllProduct,
+  apiFrontCategory
 } from '@/api'
 
 export default {
+  searchProduct({ commit }, str) {
+    commit('handSearchProduct', str)
+  },
   setBreadcrumb({ commit }, str) {
     commit('handBreadcrumb', str)
   },
   setLoading({ commit }, boolean) {
     commit('handLoading', boolean)
   },
-  async getFrontProducts({ commit }, page) {
-    const res = await apiFrontProduct(page)
+  async getFrontProducts({ commit }, data) {
+    let { category, page } = data
+    let res = null
+    if (category === undefined) {
+      res = await apiFrontProduct(page)
+    } else {
+      res = await apiFrontCategory(page, category)
+    }
+
     commit('handFrontProducts', res)
   },
   async getFrontAllProduct({ commit }) {

@@ -55,6 +55,28 @@
           </li>
         </ul>
       </div>
+      <ul class="d-flex d-lg-none me-auto">
+        <li class="mx-1" title="登入後台">
+          <router-link class="nav-link px-2" to="/admin">
+            <i class="bi bi-person fs-2"></i>
+          </router-link>
+        </li>
+        <li class="mx-1" title="購物車">
+          <router-link class="position-relative" to="/cart">
+            <i class="bi bi-cart2 fs-2"></i>
+            <div
+              v-if="cartQty"
+              :class="{ shake: isShake }"
+              class="cartBadge badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle"
+            >
+              <span
+                class="position-absolute top-50 start-50 translate-middle"
+                >{{ cartQty }}</span
+              >
+            </div>
+          </router-link>
+        </li>
+      </ul>
       <router-link
         class="navbar-brand frontNavbar-logo"
         style="line-height: 1"
@@ -152,27 +174,8 @@
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/admin">
-                  <i class="bi bi-person"></i>
-                  登入後台</router-link
-                >
-              </li>
-              <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/cart">
-                  <i class="bi bi-cart2"></i>
-                  購物車
-                </router-link>
-              </li>
-              <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/about">
-                  <i class="bi bi-chat-text"></i>
                   聯絡我們</router-link
-                >
-              </li>
-              <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/newer">
-                  <i class="bi bi-search"></i>
-                  找產品</router-link
                 >
               </li>
             </ul>

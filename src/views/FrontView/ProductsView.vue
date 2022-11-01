@@ -6,22 +6,43 @@
           <input
             type="text"
             class="form-control"
+            v-model="searchName"
+            @keyup.enter="searchProduct"
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />
-          <button class="btn btn-primary" type="button" id="button-addon2">
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="button-addon2"
+            @click="searchProduct"
+          >
             <i class="bi bi-search"></i>
           </button>
         </div>
         <div class="d-none d-lg-block">
-          <p class="border-bottom py-2 border-gray-dark">分類</p>
+          <p class="border-bottom py-2 border-gray-dark position-relative">
+            分類
+            <span>
+              <img
+                v-if="isLoading2"
+                class="loading2 position-absolute end-0 top-50 me-5 translate-middle"
+                src="@/assets/images/load.gif"
+                alt=""
+              />
+            </span>
+          </p>
           <div class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
             <a
               class="collapsed fw-bold"
               data-bs-toggle="collapse"
               :href="`#collapse${idx}`"
             >
-              <div class="d-flex justify-content-between">
+              <div
+                class="d-flex justify-content-between"
+                @click.capture="switchCategory($event)"
+                :data-category="i.category"
+              >
                 <span>{{ i.category }}</span>
                 <span>{{ i.num }}</span>
                 <i class="bi bi-caret-left-fill"></i>
@@ -40,14 +61,30 @@
             </div>
           </div>
         </div>
+        <div class="d-lg-none d-block">
+          <select
+            class="form-select"
+            @change="selectCategory($event)"
+            aria-label="select category"
+          >
+            <option value="" selected disabled>商品分類</option>
+            <option
+              :value="i.category"
+              v-for="(i, idx) in category"
+              :key="idx + 5678"
+            >
+              {{ i.category }}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="col-lg-9 col-12 py-2">
         <!--麵包屑-->
         <div class="row row-cols-1 mb-3">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" ref="breadcrumb">
               <li class="breadcrumb-item">
-                <router-link to="/products">全部商品</router-link>
+                <a href="javascript:;" @click="setBreadcrumb"> 全部商品 </a>
               </li>
               <li class="breadcrumb-item">{{ breadcrumb }}</li>
             </ol>
@@ -71,9 +108,13 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data() {
-    return {}
+    return {
+      isLoading2: false,
+      searchName: ''
+    }
   },
   created() {
     this.getAllProducts()
@@ -83,20 +124,52 @@ export default {
     toggleLoading(boolean) {
       this.isLoading = boolean
     },
-    async getAllProducts() {
+    getProducts: _.debounce(async function (page = 1, category) {
       try {
-        await this.$store.dispatch('Products/getFrontAllProduct')
+        this.isLoading2 = true
+        const data = { page, category }
+        await this.$store.dispatch('Products/getFrontProducts', data)
+        this.isLoading2 = false
         this.$store.dispatch('handLoading', false)
+        this.$router.push('/products')
       } catch (err) {
         this.$store.dispatch('handLoading', false)
         throw new Error(err)
       }
-    }
+    }, 500),
+    async getAllProducts() {
+      try {
+        await this.$store.dispatch('Products/getFrontAllProduct')
+        this.getProducts(1, '飲品')
+      } catch (err) {
+        this.$store.dispatch('handLoading', false)
+        throw new Error(err)
+      }
+    },
+    switchCategory(e) {
+      const category = e.currentTarget.dataset.category
+      this.$store.dispatch('Products/setBreadcrumb', category)
+      this.getProducts(1, category)
+    },
+    selectCategory(e) {
+      const category = e.target.value
+      this.$store.dispatch('Products/setBreadcrumb', category)
+      this.getProducts(1, category)
+    },
+    searchProduct() {
+      if (this.searchName.trim() === '') {
+        return
+      }
+      this.$store.dispatch('Products/searchProduct', this.searchName)
+      this.$router.push('/products')
+      this.searchName = ''
+    },
+    setBreadcrumb: _.debounce(function () {
+      this.getProducts()
+      this.$store.dispatch('Products/setBreadcrumb', '')
+    }, 500)
   },
   computed: {
-    allProduct() {
-      return this.$store.getters['Products/allProductsData']
-    },
     isLoading() {
       return this.$store.getters['Products/loadingState']
     },
@@ -114,6 +187,9 @@ export default {
 .loading {
   width: 90px;
   height: 80px;
+}
+.loading2 {
+  height: 40px;
 }
 .bi-caret-left-fill {
   transform: rotate(-90deg);
