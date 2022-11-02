@@ -16,8 +16,24 @@ export default {
       state.pagination.has_pre = false
     }
   },
+  handSubCategory(state, str) {
+    const ary = state.allProducts.filter((i) => {
+      return i.sub_category.includes(str)
+    })
+    state.searchAllProducts = ary
+    state.products = ary.slice(0, 10)
+    const totalPage = Math.ceil(ary.length / 10)
+    const currentPage = 1
+
+    state.pagination = {
+      total_pages: totalPage,
+      current_page: currentPage,
+      has_pre: currentPage !== 1,
+      has_next: totalPage > currentPage,
+      category: 'search'
+    }
+  },
   handSearchProduct(state, str) {
-    state.isSearch = true
     const ary = state.allProducts.filter((i) => {
       return i.title.includes(str)
     })

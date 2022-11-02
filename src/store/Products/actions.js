@@ -15,6 +15,9 @@ export default {
   setSearchPagination({ commit }, page) {
     commit('handSearchPagination', page)
   },
+  searchSubCategory({ commit }, str) {
+    commit('handSubCategory', str)
+  },
   searchProduct({ commit }, str) {
     commit('handSearchProduct', str)
   },

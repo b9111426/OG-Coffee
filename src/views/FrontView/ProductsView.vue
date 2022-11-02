@@ -54,7 +54,12 @@
               class="collapse text-start text-primary"
               :id="`collapse${idx}`"
             >
-              <a href="#" class="d-flex justify-content-between ms-2">
+              <a
+                href="#"
+                class="d-flex justify-content-between ms-2"
+                @click.capture="switchSubCategory($event)"
+                :data-category="x.category"
+              >
                 <span>{{ x.category }}</span>
                 <span>{{ x.num }}</span>
               </a>
@@ -167,7 +172,12 @@ export default {
     setBreadcrumb: _.debounce(function () {
       this.getProducts()
       this.$store.dispatch('Products/setBreadcrumb', '')
-    }, 500)
+    }, 500),
+    switchSubCategory(e) {
+      const subCategory = e.currentTarget.dataset.category
+      this.$store.dispatch('Products/searchSubCategory', subCategory)
+      this.$router.push('/products')
+    }
   },
   computed: {
     isLoading() {
