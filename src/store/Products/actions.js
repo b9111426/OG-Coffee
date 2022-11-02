@@ -12,6 +12,9 @@ import {
 } from '@/api'
 
 export default {
+  setSortState({ commit }, boolean) {
+    commit('handSortState', boolean)
+  },
   switchSort({ commit }, boolean) {
     commit('handSwitchSort', boolean)
   },
@@ -23,9 +26,6 @@ export default {
   },
   searchProduct({ commit }, str) {
     commit('handSearchProduct', str)
-  },
-  setBreadcrumb({ commit }, str) {
-    commit('handBreadcrumb', str)
   },
   setLoading({ commit }, boolean) {
     commit('handLoading', boolean)

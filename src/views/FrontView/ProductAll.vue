@@ -19,17 +19,43 @@
             </div>
             <p
               v-if="!item.is_soldOut"
-              class="position-absolute text-white top-50 start-50 translate-middle"
+              class="position-absolute text-white text-nowrap top-50 start-50 translate-middle"
             >
               加入購物車
             </p>
           </a>
-          <div class="card-body">
-            <span class="text-start">{{ item.title }}</span>
-            <span class="text-start">{{ item.subtitle }}</span>
+          <div class="card-body d-flex flex-column p-1 p-lg-3">
+            <p class="text-center fs-5">{{ item.title }}</p>
+            <p class="text-center fs-7 fs-lg-5 lh-mm mb-3">
+              {{ item.subtitle }}
+            </p>
+            <div class="mt-auto d-block d-lg-none">
+              <AddMinBtn
+                class="btn-size"
+                :val="qty"
+                @add="add"
+                @min="min"
+                @push-val="pushVal"
+              ></AddMinBtn>
+            </div>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary py-0 d-block d-lg-none mt-2"
+              :data-id="item.id"
+              @click="addToCart($event)"
+            >
+              <i class="bi bi-cart-fill fs-5"></i>
+            </button>
           </div>
         </div>
       </div>
+      <template v-if="isShow">
+        <div v-if="products.length === 0">
+          <p class="fs-3 text-primary mt-5">
+            找不到您所查詢的「{{ notFound }}」相關商品
+          </p>
+        </div>
+      </template>
     </div>
     <!-- 分頁 -->
     <Pagination
@@ -42,14 +68,27 @@
 </template>
 <script>
 import Pagination from '@/components/Pagination.vue'
+import AddMinBtn from '@/components/AddMinBtn.vue'
+import _ from 'lodash'
+
 export default {
-  components: { Pagination },
+  components: { Pagination, AddMinBtn },
+  data() {
+    return {
+      isShow: false,
+      qty: 1
+    }
+  },
+  updated() {
+    this.isShow = true
+  },
   methods: {
     toNewRouter(id, sellout) {
       if (sellout) {
         return
       }
       this.$store.dispatch('Products/setLoading', true)
+      this.$store.dispatch('Products/setSortState', false)
       this.$router.push({ path: `products/${id}` })
     },
     async getProducts(page = 1, category) {
@@ -62,10 +101,33 @@ export default {
     },
     handSearchPages(page) {
       this.$store.dispatch('Products/setSearchPagination', page)
-    }
-  },
-  mounted() {
-    this.$store.dispatch('Products/setBreadcrumb', '')
+    },
+    add() {
+      this.qty++
+    },
+    min() {
+      this.qty--
+      if (this.qty <= 1) {
+        this.qty = 1
+      }
+    },
+    pushVal(val) {
+      this.qty = val
+    },
+    addToCart: _.debounce(async function (e) {
+      const id = e.target.dataset.id
+      const data = {
+        product_id: id,
+        qty: this.qty
+      }
+      try {
+        await this.$store.dispatch('Cart/addCart', data)
+        this.$store.dispatch('Cart/getCart')
+        this.$store.dispatch('Cart/setShake')
+      } catch (err) {
+        throw new Error(err)
+      }
+    }, 500)
   },
   computed: {
     products() {
@@ -73,6 +135,9 @@ export default {
     },
     pagination() {
       return this.$store.getters['Products/productsPage']
+    },
+    notFound() {
+      return this.$store.getters['Products/notFound']
     }
   }
 }
@@ -105,5 +170,8 @@ export default {
     font-size: 1.5rem;
     letter-spacing: 0.8rem;
   }
+}
+.btn-size {
+  height: 35px;
 }
 </style>

@@ -32,7 +32,7 @@
               />
             </span>
           </p>
-          <div class="p-3" v-for="(i, idx) in category" :key="idx + 5678">
+          <div class="p-3" v-for="(i, idx) in categoryList" :key="idx + 5678">
             <a
               class="collapsed fw-bold"
               data-bs-toggle="collapse"
@@ -58,7 +58,8 @@
                 href="#"
                 class="d-flex justify-content-between ms-2"
                 @click="renderSubCategory($event)"
-                :data-category="x.category"
+                :data-sub_category="x.category"
+                :data-category="i.category"
               >
                 <span>{{ x.category }}</span>
                 <span>{{ x.num }}</span>
@@ -72,10 +73,9 @@
             @change="selectCategory($event)"
             aria-label="select category"
           >
-            <option value="" selected disabled>商品分類</option>
             <option
               :value="i.category"
-              v-for="(i, idx) in category"
+              v-for="(i, idx) in categoryList"
               :key="idx + 5678"
             >
               {{ i.category }}
@@ -91,10 +91,27 @@
               <li class="breadcrumb-item">
                 <a href="javascript:;" @click="setAllProducts"> 全部商品 </a>
               </li>
-              <li class="breadcrumb-item gray-dark">{{ breadcrumb }}</li>
+              <li v-if="breadcrumb.length === 0" class="breadcrumb-item"></li>
+              <li v-else-if="breadcrumb.length === 1" class="breadcrumb-item">
+                {{ breadcrumb[0] }}
+              </li>
+              <template v-else>
+                <li class="breadcrumb-item">
+                  <a
+                    href="javascript:;"
+                    @click="renderCategory($event)"
+                    :data-category="breadcrumb[0]"
+                    >{{ breadcrumb[0] }}</a
+                  >
+                </li>
+                <li class="breadcrumb-item">
+                  {{ breadcrumb[1] }}
+                </li>
+              </template>
             </ol>
           </nav>
           <a
+            v-show="sortState"
             href="javascript:;"
             class="ms-5 link-dark border-bottom border-primary ms-auto"
             @click="switchSort"
@@ -131,7 +148,8 @@ export default {
     return {
       isLoading2: false,
       sortRise: false,
-      searchName: ''
+      searchName: '',
+      breadcrumb: []
     }
   },
   created() {
@@ -159,7 +177,9 @@ export default {
     async getAllProducts() {
       try {
         await this.$store.dispatch('Products/getFrontAllProduct')
-        this.getProducts(1, '飲品')
+        const firstCategory = this.categoryList[0].category
+        this.getProducts(1, firstCategory)
+        this.breadcrumb.push(firstCategory)
       } catch (err) {
         this.$store.dispatch('handLoading', false)
         throw new Error(err)
@@ -167,15 +187,19 @@ export default {
     },
     renderCategory(e) {
       const category = e.currentTarget.dataset.category
-      this.$store.dispatch('Products/setBreadcrumb', category)
+      this.breadcrumb = []
+      this.breadcrumb.push(category)
       this.$store.dispatch('Products/setTempProduct', category)
       this.getProducts(1, category)
+      this.$store.dispatch('Products/setSortState', true)
     },
     selectCategory(e) {
       const category = e.target.value
-      this.$store.dispatch('Products/setBreadcrumb', category)
+      this.breadcrumb = []
+      this.breadcrumb.push(category)
       this.$store.dispatch('Products/setTempProduct', category)
       this.getProducts(1, category)
+      this.$store.dispatch('Products/setSortState', true)
     },
     searchProduct() {
       if (this.searchName.trim() === '') {
@@ -184,16 +208,20 @@ export default {
       this.$store.dispatch('Products/searchProduct', this.searchName)
       this.$router.push('/products')
       this.searchName = ''
+      this.breadcrumb = []
     },
     setAllProducts: _.debounce(function () {
+      this.breadcrumb = []
       this.getProducts()
-      this.$store.dispatch('Products/setBreadcrumb', '')
+      this.$store.dispatch('Products/setSortState', true)
     }, 500),
     renderSubCategory(e) {
-      const subCategory = e.currentTarget.dataset.category
+      const subCategory = e.currentTarget.dataset.sub_category
+      const category = e.currentTarget.dataset.category
+      this.breadcrumb = [category, subCategory]
       this.$store.dispatch('Products/searchSubCategory', subCategory)
-      this.$store.dispatch('Products/setBreadcrumb', subCategory)
       this.$router.push('/products')
+      this.$store.dispatch('Products/setSortState', true)
     },
     switchSort() {
       this.sortRise = !this.sortRise
@@ -204,11 +232,11 @@ export default {
     isLoading() {
       return this.$store.getters['Products/loadingState']
     },
-    breadcrumb() {
-      return this.$store.getters['Products/breadcrumb']
-    },
-    category() {
+    categoryList() {
       return this.$store.getters['Products/category']
+    },
+    sortState() {
+      return this.$store.getters['Products/sortState']
     }
   }
 }

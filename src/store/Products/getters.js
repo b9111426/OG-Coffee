@@ -5,6 +5,9 @@ export default {
   loadingState(state) {
     return state.isLoading
   },
+  sortState(state) {
+    return state.isSortShow
+  },
   productsData(state) {
     return state.products
   },
@@ -16,5 +19,8 @@ export default {
   },
   category(state) {
     return state.categoryList
+  },
+  notFound(state) {
+    return state.notFound
   }
 }

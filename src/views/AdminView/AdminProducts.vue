@@ -20,7 +20,7 @@
           <table class="table mt-4 table-hover">
             <thead>
               <tr class="table-light">
-                <th width="120" class="text-nowrap pe-3">分類</th>
+                <th width="120" class="text-nowrap pe-lg-3 pe-1">分類</th>
                 <th width="150" class="text-center text-nowrap px-5">預覽</th>
                 <th class="text-center text-nowrap px-3">產品名稱</th>
                 <th
@@ -29,7 +29,12 @@
                 >
                   原價
                 </th>
-                <th width="120" class="text-end text-nowrap ps-5">售價</th>
+                <th
+                  width="120"
+                  class="text-center text-lg-end text-nowrap pe-lg-2 px-3"
+                >
+                  售價
+                </th>
                 <th
                   width="145"
                   class="text-center d-none d-lg-table-cell text-nowrap px-3"
@@ -46,7 +51,7 @@
                 class="align-middle"
                 :class="{ 'text-secondary': !item.is_enabled }"
               >
-                <td>{{ item.category }}</td>
+                <td class="text-nowrap">{{ item.category }}</td>
                 <td class="text-center">
                   <div class="position-relative d-inline-block overflow-hidden">
                     <div
@@ -263,11 +268,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .pre-pic {
   width: 100px;
   height: 100px;
   object-fit: cover;
   object-position: center center;
+  @include pad() {
+    width: 60px;
+    height: 60px;
+  }
 }
 .sellOutTag {
   width: 120px;

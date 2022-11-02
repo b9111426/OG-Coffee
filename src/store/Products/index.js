@@ -11,7 +11,8 @@ export default {
     pagination: {},
     categoryList: [],
     isLoading: false,
-    breadcrumb: ''
+    isSortShow: true,
+    notFound: ''
   },
   actions,
   mutations,
