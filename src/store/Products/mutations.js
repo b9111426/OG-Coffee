@@ -1,4 +1,31 @@
 export default {
+  handSwitchSort(state, boolean) {
+    if (boolean) {
+      state.tempProducts.sort((a, b) => a.price - b.price)
+    } else {
+      state.tempProducts.sort((a, b) => b.price - a.price)
+    }
+
+    state.products = state.tempProducts.slice(0, 10)
+    const totalPage = Math.ceil(state.tempProducts.length / 10)
+    state.pagination = {
+      total_pages: totalPage,
+      current_page: 1,
+      has_pre: false,
+      has_next: true,
+      category: 'search'
+    }
+  },
+  handTempProduct(state, category) {
+    if (category === undefined) {
+      state.tempProducts = state.allProducts
+    } else {
+      const ary = state.allProducts.filter((i) => {
+        return i.category === category
+      })
+      state.tempProducts = ary
+    }
+  },
   handSearchPagination(state, page) {
     if (page > state.pagination.total_pages) {
       state.pagination.current_page = state.pagination.total_pages
@@ -7,7 +34,7 @@ export default {
     }
     let startPage = (page - 1) * 10
     let endPage = startPage + 10
-    state.products = state.searchAllProducts.slice(startPage, endPage)
+    state.products = state.tempProducts.slice(startPage, endPage)
     if (page === state.pagination.total_pages) {
       state.pagination.has_next = false
       state.pagination.has_pre = true
@@ -20,7 +47,7 @@ export default {
     const ary = state.allProducts.filter((i) => {
       return i.sub_category.includes(str)
     })
-    state.searchAllProducts = ary
+    state.tempProducts = ary
     state.products = ary.slice(0, 10)
     const totalPage = Math.ceil(ary.length / 10)
     const currentPage = 1
@@ -37,16 +64,15 @@ export default {
     const ary = state.allProducts.filter((i) => {
       return i.title.includes(str)
     })
-    state.searchAllProducts = ary
+    state.tempProducts = ary
     state.products = ary.slice(0, 10)
     const totalPage = Math.ceil(ary.length / 10)
-    const currentPage = 1
 
     state.pagination = {
       total_pages: totalPage,
-      current_page: currentPage,
-      has_pre: currentPage !== 1,
-      has_next: totalPage > currentPage,
+      current_page: 1,
+      has_pre: false,
+      has_next: true,
       category: 'search'
     }
   },
@@ -56,6 +82,7 @@ export default {
   handLoading(state, boolean) {
     state.isLoading = boolean
   },
+
   handFrontProducts(state, res) {
     state.products = res.data.products
     state.pagination = res.data.pagination

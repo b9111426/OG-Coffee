@@ -146,7 +146,7 @@ export default {
         this.product = res.data.product
         this.unitAry = this.product.unit.split('、')
         this.isShow = true
-        this.$store.dispatch('Products/setBreadcrumb', this.product.category)
+        this.$store.dispatch('Products/setBreadcrumb', this.product.title)
         this.$store.dispatch('Products/setLoading', false)
       } catch (err) {
         throw new Error(err)

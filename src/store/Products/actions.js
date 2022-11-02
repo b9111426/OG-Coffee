@@ -12,6 +12,9 @@ import {
 } from '@/api'
 
 export default {
+  switchSort({ commit }, boolean) {
+    commit('handSwitchSort', boolean)
+  },
   setSearchPagination({ commit }, page) {
     commit('handSearchPagination', page)
   },
@@ -26,6 +29,9 @@ export default {
   },
   setLoading({ commit }, boolean) {
     commit('handLoading', boolean)
+  },
+  setTempProduct({ commit }, category) {
+    commit('handTempProduct', category)
   },
   async getFrontProducts({ commit }, data) {
     let { category, page } = data

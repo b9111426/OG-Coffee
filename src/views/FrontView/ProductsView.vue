@@ -39,8 +39,8 @@
               :href="`#collapse${idx}`"
             >
               <div
-                class="d-flex justify-content-between"
-                @click.capture="switchCategory($event)"
+                class="d-flex justify-content-between bg-gray"
+                @click="renderCategory($event)"
                 :data-category="i.category"
               >
                 <span>{{ i.category }}</span>
@@ -57,7 +57,7 @@
               <a
                 href="#"
                 class="d-flex justify-content-between ms-2"
-                @click.capture="switchSubCategory($event)"
+                @click="renderSubCategory($event)"
                 :data-category="x.category"
               >
                 <span>{{ x.category }}</span>
@@ -85,15 +85,27 @@
       </div>
       <div class="col-lg-9 col-12 py-2">
         <!--麵包屑-->
-        <div class="row row-cols-1 mb-3">
+        <div class="d-flex align-items-center justify-content-start mb-3">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb" ref="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="javascript:;" @click="setBreadcrumb"> 全部商品 </a>
+                <a href="javascript:;" @click="setAllProducts"> 全部商品 </a>
               </li>
-              <li class="breadcrumb-item">{{ breadcrumb }}</li>
+              <li class="breadcrumb-item gray-dark">{{ breadcrumb }}</li>
             </ol>
           </nav>
+          <a
+            href="javascript:;"
+            class="ms-5 link-dark border-bottom border-primary ms-auto"
+            @click="switchSort"
+          >
+            <span v-show="!sortRise" class="text-primary"
+              >價格由高至低<i class="bi bi-chevron-down ps-1"></i
+            ></span>
+            <span v-show="sortRise" class="text-primary"
+              >價格由低至高<i class="bi bi-chevron-up ps-1"></i
+            ></span>
+          </a>
         </div>
 
         <div class="row row-cols-1 position-relative">
@@ -118,6 +130,7 @@ export default {
   data() {
     return {
       isLoading2: false,
+      sortRise: false,
       searchName: ''
     }
   },
@@ -134,6 +147,7 @@ export default {
         this.isLoading2 = true
         const data = { page, category }
         await this.$store.dispatch('Products/getFrontProducts', data)
+        this.$store.dispatch('Products/setTempProduct', category)
         this.isLoading2 = false
         this.$store.dispatch('handLoading', false)
         this.$router.push('/products')
@@ -151,14 +165,16 @@ export default {
         throw new Error(err)
       }
     },
-    switchCategory(e) {
+    renderCategory(e) {
       const category = e.currentTarget.dataset.category
       this.$store.dispatch('Products/setBreadcrumb', category)
+      this.$store.dispatch('Products/setTempProduct', category)
       this.getProducts(1, category)
     },
     selectCategory(e) {
       const category = e.target.value
       this.$store.dispatch('Products/setBreadcrumb', category)
+      this.$store.dispatch('Products/setTempProduct', category)
       this.getProducts(1, category)
     },
     searchProduct() {
@@ -169,14 +185,19 @@ export default {
       this.$router.push('/products')
       this.searchName = ''
     },
-    setBreadcrumb: _.debounce(function () {
+    setAllProducts: _.debounce(function () {
       this.getProducts()
       this.$store.dispatch('Products/setBreadcrumb', '')
     }, 500),
-    switchSubCategory(e) {
+    renderSubCategory(e) {
       const subCategory = e.currentTarget.dataset.category
       this.$store.dispatch('Products/searchSubCategory', subCategory)
+      this.$store.dispatch('Products/setBreadcrumb', subCategory)
       this.$router.push('/products')
+    },
+    switchSort() {
+      this.sortRise = !this.sortRise
+      this.$store.dispatch('Products/switchSort', this.sortRise)
     }
   },
   computed: {
