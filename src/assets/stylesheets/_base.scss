@@ -9,6 +9,13 @@ body{
   --secondary: #cfdedf;
   --ck-z-default: 10555 !important;
   --ck-z-modal: calc(var(--ck-z-default) + 999) !important;
+  --slide-x:-100px
+}
+
+@include pad(){
+  :root{
+    --slide-x:0px
+  }
 }
 
 html,.card{
