@@ -11,6 +11,12 @@
   }
 }
 
+@mixin phone {
+  @media (max-width: 768px){
+    @content;
+  }
+}
+
 
 //抖動效果
 @mixin jello-effect{

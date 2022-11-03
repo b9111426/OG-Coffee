@@ -12,7 +12,8 @@ export default {
     await apiDeleteCart(id)
   },
   async addCart(context, data) {
-    await apiAddCart(data)
+    const res = await apiAddCart(data)
+    return res
   },
   async modifyCart(context, obj) {
     const { id, data } = obj

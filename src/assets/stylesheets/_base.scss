@@ -12,7 +12,7 @@ body{
   --slide-x:-100px
 }
 
-@include pad(){
+@include phone(){
   :root{
     --slide-x:0px
   }

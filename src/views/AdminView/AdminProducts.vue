@@ -237,7 +237,7 @@ export default {
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
         this.$store.dispatch('fireToast', {
-          title: `${title}產品已刪除`,
+          title: `「${title}」產品已刪除`,
           style: 'success'
         })
         this.getProducts(this.currentPage)

@@ -1,7 +1,11 @@
 <template>
   <div class="contain-fluid pb-5">
     <div class="row">
-      <div class="col-lg-3 col-6 g-3" v-for="item in products" :key="item.id">
+      <div
+        class="col-lg-3 col-md-4 col-6 g-3"
+        v-for="item in products"
+        :key="item.id"
+      >
         <div class="card h-100">
           <a
             class="position-relative"
@@ -29,18 +33,10 @@
             <p class="text-center fs-7 fs-lg-5 lh-mm mb-3">
               {{ item.subtitle }}
             </p>
-            <div class="mt-auto d-block d-lg-none">
-              <AddMinBtn
-                class="btn-size"
-                :val="qty"
-                @add="add"
-                @min="min"
-                @push-val="pushVal"
-              ></AddMinBtn>
-            </div>
+
             <button
               type="button"
-              class="btn btn-sm btn-outline-primary py-0 d-block d-lg-none mt-2"
+              class="btn btn-sm btn-outline-primary py-0 d-block d-lg-none mt-auto"
               :data-id="item.id"
               @click="addToCart($event)"
             >
@@ -68,15 +64,13 @@
 </template>
 <script>
 import Pagination from '@/components/Pagination.vue'
-import AddMinBtn from '@/components/AddMinBtn.vue'
 import _ from 'lodash'
 
 export default {
-  components: { Pagination, AddMinBtn },
+  components: { Pagination },
   data() {
     return {
-      isShow: false,
-      qty: 1
+      isShow: false
     }
   },
   updated() {
@@ -102,26 +96,19 @@ export default {
     handSearchPages(page) {
       this.$store.dispatch('Products/setSearchPagination', page)
     },
-    add() {
-      this.qty++
-    },
-    min() {
-      this.qty--
-      if (this.qty <= 1) {
-        this.qty = 1
-      }
-    },
-    pushVal(val) {
-      this.qty = val
-    },
     addToCart: _.debounce(async function (e) {
       const id = e.target.dataset.id
       const data = {
         product_id: id,
-        qty: this.qty
+        qty: 1
       }
       try {
-        await this.$store.dispatch('Cart/addCart', data)
+        const res = await this.$store.dispatch('Cart/addCart', data)
+        const title = res.data.data.product.title
+        this.$store.dispatch('fireToast', {
+          title: `「${title}」已加入購物車`,
+          style: 'success'
+        })
         this.$store.dispatch('Cart/getCart')
         this.$store.dispatch('Cart/setShake')
       } catch (err) {

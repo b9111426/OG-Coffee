@@ -131,8 +131,13 @@ export default {
         qty: this.qty
       }
       try {
-        await this.$store.dispatch('Cart/addCart', data)
+        const res = await this.$store.dispatch('Cart/addCart', data)
+        const title = res.data.data.product.title
         this.$store.dispatch('Cart/getCart')
+        this.$store.dispatch('fireToast', {
+          title: `「${title}」已加入購物車`,
+          style: 'success'
+        })
         this.$store.dispatch('Cart/setShake')
         this.isLoading = false
       } catch (err) {
