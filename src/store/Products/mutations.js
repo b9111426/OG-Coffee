@@ -15,7 +15,7 @@ export default {
       total_pages: totalPage,
       current_page: totalPage === 0 ? 0 : 1,
       has_pre: false,
-      has_next: totalPage !== 0 ? 1 : 0,
+      has_next: totalPage === 1 ? false : true,
       category: 'search'
     }
   },
@@ -80,7 +80,7 @@ export default {
       total_pages: totalPage,
       current_page: totalPage === 0 ? 0 : 1,
       has_pre: false,
-      has_next: totalPage !== 1 ? false : true,
+      has_next: totalPage === 1 ? false : true,
       category: 'search'
     }
   },
