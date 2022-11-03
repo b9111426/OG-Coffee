@@ -17,7 +17,7 @@ const app = createApp(App)
 
 app.config.globalProperties.lottie = lottie
 
-app.directive('price', {
+app.directive('num', {
   mounted(el, binding) {
     const p = currency(binding.value)
     el.innerHTML = p

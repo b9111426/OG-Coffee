@@ -37,7 +37,7 @@
               class="order-2 order-lg-1 col-8 col-lg-2 text-nowrap py-2"
             ></div>
             <div class="order-3 order-lg-2 col-4 col-lg-2 text-nowrap py-2">
-              <p v-price="i.product.price"></p>
+              <p v-num="i.product.price"></p>
             </div>
             <div class="order-4 order-lg-3 col-8 col-lg-2 text-nowrap py-2">
               <AddMinBtn
@@ -48,7 +48,7 @@
               ></AddMinBtn>
             </div>
             <div class="order-5 order-lg-4 col-4 col-lg-2 text-nowrap py-2">
-              <p v-price="i.final_total"></p>
+              <p v-num="i.final_total"></p>
             </div>
             <div class="order-1 order-lg-5 col-2 col-lg-1 text-nowrap">
               <button
@@ -160,18 +160,18 @@
             <span class="me-auto">小結:</span>
             <span
               >NT$
-              <samp v-price="totalPrice"></samp>
+              <span v-num="totalPrice"></span>
             </span>
           </div>
           <div v-if="isTogo" class="mb-2 d-flex">
             <span class="me-auto">外送費:</span>
             <span>NT$ {{ deliveryFee }}</span>
           </div>
-          <div class="mb-4 d-flex align-item-center">
+          <div class="mb-4 d-flex align-items-center">
             <strong class="me-auto">總計:</strong>
             <strong class="h4"
               >NT$
-              <samp v-price="finalPrice"></samp>
+              <span v-num="finalPrice"></span>
             </strong>
           </div>
           <router-link class="btn btn-success w-100" to="/cart/checkout"
@@ -188,7 +188,6 @@
     ref="delModal"
     @del-item="delCartProduct"
   ></DelModal>
-  <pre>{{ cartData }}</pre>
 </template>
 
 <script>
