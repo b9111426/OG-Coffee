@@ -29,7 +29,7 @@
                 :key="key"
                 :class="{ 'text-secondary': !item.is_paid }"
               >
-                <td>{{ $filters.date(item.create_at) }}</td>
+                <td><samp v-date="item.due_date"></samp></td>
                 <td>
                   <span v-text="item.user.email" v-if="item.user"></span>
                 </td>

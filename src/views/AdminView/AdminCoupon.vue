@@ -44,7 +44,7 @@
               >
                 <td>{{ item.title }}</td>
                 <td>{{ item.percent }}%</td>
-                <td>{{ $filters.date(item.due_date) }}</td>
+                <td><samp v-date="item.due_date"></samp></td>
                 <td class="d-none d-lg-table-cell">
                   <div class="ps-4">
                     <div class="form-check d-flex justify-content-start">

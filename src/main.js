@@ -12,14 +12,9 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
 import lottie from 'lottie-web'
 
 import { date, currency } from './libs/filters'
-import $httpMessageState from './libs/pushMessageState'
 
 const app = createApp(App)
-app.config.globalProperties.$filters = {
-  date,
-  currency
-}
-app.config.globalProperties.$httpMessageState = $httpMessageState
+
 app.config.globalProperties.lottie = lottie
 
 app.directive('price', {
@@ -30,6 +25,16 @@ app.directive('price', {
   updated(el, binding) {
     const p = currency(binding.value)
     el.innerHTML = p
+  }
+})
+app.directive('date', {
+  mounted(el, binding) {
+    const t = date(binding.value)
+    el.innerHTML = t
+  },
+  updated(el, binding) {
+    const t = date(binding.value)
+    el.innerHTML = t
   }
 })
 app.use(CKEditor)

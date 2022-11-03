@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state: {
     cartData: [],
-    isShake: false
+    isShake: false,
+    final_total: 0
   },
   actions,
   mutations,

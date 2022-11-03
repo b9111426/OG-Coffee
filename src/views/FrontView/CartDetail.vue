@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header d-flex py-3">
-          <h4>產品總數: ( {{ productNum }}件 )</h4>
+          <h4>產品總數: ( {{ cartData.length }}件 )</h4>
           <div v-if="isLoading" class="ms-auto">
             <img class="loading" src="@/assets/images/load.gif" alt="" />
           </div>
@@ -79,8 +79,9 @@
             <input
               class="form-check-input"
               type="radio"
-              name="eatOption"
               id="forHere"
+              value=""
+              v-model="isTogo"
             />
             <label class="form-check-label" for="forHere"> 內用 </label>
           </div>
@@ -88,23 +89,24 @@
             <input
               class="form-check-input"
               type="radio"
-              name="eatOption"
               id="toGo"
-              checked
+              value="toGo"
+              v-model="isTogo"
             />
             <label class="form-check-label" for="toGo"> 外送 </label>
           </div>
         </div>
       </div>
-      <div class="card mb-3">
+      <div v-show="isTogo" class="card mb-3">
         <div class="card-header">外送時間</div>
         <div class="card-body d-flex flex-column">
           <div class="form-check">
             <input
               class="form-check-input"
               type="radio"
-              name="orderTime"
               id="orderNow"
+              value=""
+              v-model="isReserve"
             />
             <label class="form-check-label float-start" for="orderNow">
               現在訂餐
@@ -114,33 +116,35 @@
             <input
               class="form-check-input"
               type="radio"
-              name="orderTime"
               id="orderLater"
-              checked
+              value="reserve"
+              v-model="isReserve"
             />
             <label class="form-check-label float-start" for="orderLater">
               預約訂餐 (請於指定送達時間至少2個小時前至7天內訂餐)
             </label>
           </div>
-          <div class="d-flex align-items-baseline">
-            <label class="form-label text-nowrap me-2" for="orderDate">
-              日期：
-            </label>
-            <select class="form-select mb-3" id="orderDate">
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div class="d-flex align-items-baseline">
-            <label class="form-label text-nowrap me-2" for="orderTime">
-              時間：
-            </label>
-            <select class="form-select" id="orderTime">
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+          <div v-show="isReserve">
+            <div class="d-flex align-items-baseline">
+              <label class="form-label text-nowrap me-2" for="orderDate">
+                日期：
+              </label>
+              <select class="form-select mb-3" id="orderDate">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <label class="form-label text-nowrap me-2" for="orderTime">
+                時間：
+              </label>
+              <select class="form-select" id="orderTime">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -153,14 +157,22 @@
         <div class="card-header">訂單資訊</div>
         <div class="card-body">
           <div class="mb-2 d-flex">
-            <span class="me-auto">小結:</span> <span>NT$999</span>
+            <span class="me-auto">小結:</span>
+            <span
+              >NT$
+              <samp v-price="totalPrice"></samp>
+            </span>
           </div>
-          <div class="mb-2 d-flex">
-            <span class="me-auto">外送費:</span> <span>NT$999</span>
+          <div v-if="isTogo" class="mb-2 d-flex">
+            <span class="me-auto">外送費:</span>
+            <span>NT$ {{ deliveryFee }}</span>
           </div>
           <div class="mb-4 d-flex align-item-center">
             <strong class="me-auto">總計:</strong>
-            <strong class="h4">NT$999</strong>
+            <strong class="h4"
+              >NT$
+              <samp v-price="finalPrice"></samp>
+            </strong>
           </div>
           <router-link class="btn btn-success w-100" to="/cart/checkout"
             >前往結帳</router-link
@@ -176,6 +188,7 @@
     ref="delModal"
     @del-item="delCartProduct"
   ></DelModal>
+  <pre>{{ cartData }}</pre>
 </template>
 
 <script>
@@ -187,7 +200,10 @@ export default {
     return {
       isLoadingItem: '',
       tempProduct: {},
-      isLoading: false
+      deliveryFee: 0,
+      isLoading: false,
+      isTogo: '',
+      isReserve: ''
     }
   },
   components: {
@@ -278,6 +294,7 @@ export default {
   },
   mounted() {
     this.createLottie()
+    console.log(new Date().toLocaleString())
   },
   created() {
     this.getCart()
@@ -285,12 +302,20 @@ export default {
   },
   computed: {
     cartData() {
-      const cartData = this.$store.getters['Cart/getCart']
-      return cartData
+      return this.$store.getters['Cart/getCart']
     },
-    productNum() {
-      const cartData = this.$store.getters['Cart/getCart']
-      return cartData.length
+    totalPrice() {
+      return this.$store.getters['Cart/finalTotal']
+    },
+    finalPrice() {
+      return this.totalPrice + this.deliveryFee
+    }
+  },
+  watch: {
+    isTogo() {
+      if (this.isTogo) {
+        this.deliveryFee = 50
+      }
     }
   }
 }
