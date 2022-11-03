@@ -44,7 +44,7 @@
                 :val="i.qty"
                 @add="modify(i.id, i.product_id, i.qty, 'add')"
                 @min="modify(i.id, i.product_id, i.qty, 'min')"
-                @push-val="pushVal"
+                @push-val="pushVal($event, i.id, i.product_id)"
               ></AddMinBtn>
             </div>
             <div class="order-5 order-lg-4 col-4 col-lg-2 text-nowrap py-2">
@@ -187,7 +187,6 @@ export default {
     return {
       isLoadingItem: '',
       tempProduct: {},
-      qty: 1,
       isLoading: false
     }
   },
@@ -201,6 +200,10 @@ export default {
       str === 'add' ? qty++ : qty--
       if (qty <= 1) {
         qty = 1
+      } else if (qty > 999) {
+        qty = 999
+        this.isLoading = false
+        return
       }
       const obj = {
         id,
@@ -217,9 +220,23 @@ export default {
         throw new Error(err)
       }
     }, 500),
-    pushVal(val) {
-      this.qty = val
-    },
+    pushVal: _.debounce(async function (val, id, p_id) {
+      this.isLoading = true
+      const obj = {
+        id,
+        data: {
+          product_id: p_id,
+          qty: val
+        }
+      }
+      try {
+        await this.$store.dispatch('Cart/modifyCart', obj)
+        await this.$store.dispatch('Cart/getCart')
+        this.isLoading = false
+      } catch (err) {
+        throw new Error(err)
+      }
+    }, 500),
     openDelModal(title, id) {
       this.tempProduct.title = title
       this.tempProduct.id = id
@@ -241,7 +258,7 @@ export default {
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
         this.$store.dispatch('fireToast', {
-          title: `「${title}」已刪除`,
+          title: `${title}已刪除`,
           style: 'success'
         })
         this.getCart()

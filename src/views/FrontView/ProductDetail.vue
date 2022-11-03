@@ -108,12 +108,16 @@ export default {
       isShow: false,
       isLoading: false,
       unitAry: [],
+      cartQty: null,
       qty: 1
     }
   },
   methods: {
     add() {
       this.qty++
+      if (this.qty > 999) {
+        this.qty = 999
+      }
     },
     min() {
       this.qty--
@@ -125,10 +129,21 @@ export default {
       this.qty = val
     },
     addToCart: _.debounce(async function () {
+      let num = 999 - this.cartQty
+      if (num === 0) {
+        this.$store.dispatch('fireToast', {
+          title: '商品數量已達上限',
+          style: 'danger'
+        })
+        return
+      } else if (num === 999) {
+        num = this.qty
+      }
+
       this.isLoading = true
       const data = {
         product_id: this.product.id,
-        qty: this.qty
+        qty: num
       }
       try {
         const res = await this.$store.dispatch('Cart/addCart', data)
@@ -166,10 +181,24 @@ export default {
     goCartView: _.debounce(function () {
       this.addToCart()
       this.$router.push({ path: '/cart' })
-    }, 500)
+    }, 500),
+    async getCart() {
+      try {
+        const res = await this.$store.dispatch('Cart/getCart')
+        const { id } = this.$route.params
+        const ary = res.data.data.carts
+        const [selected] = ary.filter((i) => {
+          return i.product.id === id
+        })
+        this.cartQty = selected?.qty || 0
+      } catch (err) {
+        throw new Error(err)
+      }
+    }
   },
   created() {
     this.getProduct()
+    this.getCart()
   }
 }
 </script>

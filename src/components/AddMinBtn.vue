@@ -34,7 +34,12 @@ export default {
   emits: ['add', 'min', 'push-val'],
   methods: {
     pushVal(e) {
-      this.$emit('push-val', e.target.value)
+      let num = parseInt(e.target.value)
+      if (num > 999) {
+        num = 999
+        e.target.value = 999
+      }
+      this.$emit('push-val', num)
     }
   }
 }
