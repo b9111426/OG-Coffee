@@ -129,7 +129,8 @@
               v-model="isReserve"
             />
             <label class="form-check-label float-start" for="orderLater">
-              預約訂餐 (請於指定送達時間至少2個小時前至7天內訂餐)
+              預約訂餐
+              (指定送達時間至少2個小時前至7天內訂餐)(外送時間:am9:00~pm9:30)
             </label>
           </div>
           <div v-show="isReserve">
