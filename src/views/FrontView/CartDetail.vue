@@ -60,6 +60,14 @@
               </button>
             </div>
           </div>
+          <div
+            v-show="cartData.length === 0"
+            class="mt-3"
+            id="emptyCart"
+            ref="emptyCart"
+          >
+            <span class="h3 text-gray-dark">購物車無任何商品</span>
+          </div>
           <div class="d-flex mt-2">
             <router-link to="/products" class="ms-auto"
               ><i class="bi bi-chevron-double-right me-1"></i>
@@ -130,9 +138,9 @@
                 日期：
               </label>
               <select class="form-select mb-3" id="orderDate">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option v-for="i in reserveDate" :key="i" :value="i">
+                  {{ i }}
+                </option>
               </select>
             </div>
             <div class="d-flex align-items-baseline">
@@ -140,9 +148,10 @@
                 時間：
               </label>
               <select class="form-select" id="orderTime">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="" disabled selected>請選擇您的外送時間</option>
+                <option v-for="i in reserveTime" :key="i" :value="i">
+                  {{ i }}
+                </option>
               </select>
             </div>
           </div>
@@ -198,7 +207,7 @@ import _ from 'lodash'
 import DelModal from '@/components/DelModal.vue'
 import AddMinBtn from '@/components/AddMinBtn.vue'
 export default {
-  emits: ['aaa'],
+  emits: ['setProgress'],
   data() {
     return {
       isLoadingItem: '',
@@ -206,7 +215,9 @@ export default {
       deliveryFee: 0,
       isLoading: false,
       isTogo: '',
-      isReserve: ''
+      isReserve: '',
+      reserveDate: [],
+      reserveTime: []
     }
   },
   components: {
@@ -295,15 +306,61 @@ export default {
       anLottie.setSpeed(1)
     },
     toCheckOut() {
-      this.$emit('aaa')
+      this.$emit('setProgress', 1)
       this.$router.push('/cart/checkout')
+    },
+    handDateAry() {
+      const year = new Date().getFullYear()
+      const month = new Date().getMonth() + 1
+      let startDate = new Date().getDate()
+      let str = ''
+      for (let idx = 0; idx < 7; idx++) {
+        let num = ''
+        num = startDate + idx
+        if (num < 10) {
+          str = `${year}/${month}/0${num}`
+        } else {
+          str = `${year}/${month}/${num}`
+        }
+
+        this.reserveDate.push(str)
+      }
+    },
+    handTimeAry() {
+      //let hours = new Date().getHours()
+      //let minutes = new Date().getMinutes()
+
+      let hours = 2
+      let minutes = 5
+      if (hours < 9) {
+        hours = 9
+      }
+      let startMin = Math.ceil(minutes / 15) * 15
+      const x = (60 - startMin) / 15
+      const y = (24 - hours) * 4
+      console.log(x)
+
+      this.reserveTime.push(`${hours}:${startMin}`)
+      for (let idx = 0; idx < x + y; idx++) {
+        startMin += 15
+        if (startMin > 59) {
+          startMin = 0
+        }
+        //if (startMin > 60) {
+        //  startMin = 0
+        //}
+        //console.log(startMin)
+      }
+
+      //console.log(hours, minutes)
     }
   },
   mounted() {
     this.createLottie()
-    console.log(new Date().toLocaleString())
   },
   created() {
+    this.handDateAry()
+    this.handTimeAry()
     this.getCart()
     this.$store.dispatch('handLoading', true)
   },

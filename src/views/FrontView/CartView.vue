@@ -15,7 +15,7 @@
       </ul>
     </div>
 
-    <router-view @aaa="bbb"></router-view>
+    <router-view @setProgress="handProgressNav"></router-view>
   </div>
 </template>
 
@@ -27,15 +27,14 @@ export default {
     }
   },
   methods: {
-    bbb() {
+    handProgressNav(num) {
       this.switchNode = true
-      this.$refs.progressNav.children[1].classList.add('active')
+      this.$refs.progressNav.children[num].classList.add('active')
     },
     goCart() {
       this.$router.push('/cart')
     }
   },
-  mounted() {},
   watch: {
     $route(to) {
       if (to.href === '/cart') {
