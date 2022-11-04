@@ -1,18 +1,51 @@
 <template>
   <div class="container">
     <div class="row">
-      <ul id="progressbar" class="progress_nav my-3">
-        <li class="step active">購物車</li>
+      <ul class="progress_nav my-3" ref="progressNav">
+        <a
+          v-if="switchNode"
+          href="javascript:;"
+          class="step active"
+          @click="goCart"
+          >購物車</a
+        >
+        <li v-else class="step active">購物車</li>
         <li class="step">填寫資料</li>
         <li class="step">提交訂單</li>
       </ul>
     </div>
 
-    <router-view></router-view>
+    <router-view @aaa="bbb"></router-view>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      switchNode: false
+    }
+  },
+  methods: {
+    bbb() {
+      this.switchNode = true
+      this.$refs.progressNav.children[1].classList.add('active')
+    },
+    goCart() {
+      this.$router.push('/cart')
+    }
+  },
+  mounted() {},
+  watch: {
+    $route(to) {
+      if (to.href === '/cart') {
+        this.switchNode = false
+        this.$refs.progressNav.children[1].className = 'step'
+      }
+    }
+  }
+}
+</script>
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixin';
 

@@ -174,8 +174,11 @@
               <span v-num="finalPrice"></span>
             </strong>
           </div>
-          <router-link class="btn btn-success w-100" to="/cart/checkout"
-            >前往結帳</router-link
+          <a
+            href="javascript:;"
+            class="btn btn-success w-100"
+            @click="toCheckOut"
+            >前往結帳</a
           >
         </div>
       </div>
@@ -195,6 +198,7 @@ import _ from 'lodash'
 import DelModal from '@/components/DelModal.vue'
 import AddMinBtn from '@/components/AddMinBtn.vue'
 export default {
+  emits: ['aaa'],
   data() {
     return {
       isLoadingItem: '',
@@ -289,6 +293,10 @@ export default {
         path: 'https://lottie.host/d6b9ff64-e007-4565-999e-ce83c26d82f9/LueoasihD3.json'
       })
       anLottie.setSpeed(1)
+    },
+    toCheckOut() {
+      this.$emit('aaa')
+      this.$router.push('/cart/checkout')
     }
   },
   mounted() {
