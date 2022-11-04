@@ -137,7 +137,14 @@
               <label class="form-label text-nowrap me-2" for="orderDate">
                 日期：
               </label>
-              <select class="form-select mb-3" id="orderDate">
+              <select
+                class="form-select mb-3"
+                id="orderDate"
+                v-model="order.reserveDate"
+              >
+                <option value="" disabled selected class="text-gray">
+                  請選擇您的外送日期
+                </option>
                 <option v-for="i in reserveDate" :key="i" :value="i">
                   {{ i }}
                 </option>
@@ -147,8 +154,16 @@
               <label class="form-label text-nowrap me-2" for="orderTime">
                 時間：
               </label>
-              <select class="form-select" id="orderTime">
-                <option value="" disabled selected>請選擇您的外送時間</option>
+              <select
+                class="form-select"
+                id="orderTime"
+                onmousedown="if(this.options.length>6){this.size=7}"
+                onblur="this.size=0"
+                onchange="this.size=0"
+              >
+                <option value="" disabled selected class="text-gray">
+                  請選擇您的外送時間
+                </option>
                 <option v-for="i in reserveTime" :key="i" :value="i">
                   {{ i }}
                 </option>
@@ -217,7 +232,10 @@ export default {
       isTogo: '',
       isReserve: '',
       reserveDate: [],
-      reserveTime: []
+
+      order: {
+        reserveDate: ''
+      }
     }
   },
   components: {
@@ -310,49 +328,17 @@ export default {
       this.$router.push('/cart/checkout')
     },
     handDateAry() {
-      const year = new Date().getFullYear()
-      const month = new Date().getMonth() + 1
-      let startDate = new Date().getDate()
-      let str = ''
-      for (let idx = 0; idx < 7; idx++) {
-        let num = ''
-        num = startDate + idx
-        if (num < 10) {
-          str = `${year}/${month}/0${num}`
-        } else {
-          str = `${year}/${month}/${num}`
-        }
-
+      let num = 0
+      const hours = new Date().getHours()
+      //如果超過晚上7點，只能訂隔天
+      if (hours > 19) {
+        num = 1
+      }
+      for (let idx = num; idx < num + 7; idx++) {
+        let unix = new Date().getTime()
+        let str = new Date(unix + 86400000 * idx).toLocaleDateString()
         this.reserveDate.push(str)
       }
-    },
-    handTimeAry() {
-      //let hours = new Date().getHours()
-      //let minutes = new Date().getMinutes()
-
-      let hours = 2
-      let minutes = 5
-      if (hours < 9) {
-        hours = 9
-      }
-      let startMin = Math.ceil(minutes / 15) * 15
-      const x = (60 - startMin) / 15
-      const y = (24 - hours) * 4
-      console.log(x)
-
-      this.reserveTime.push(`${hours}:${startMin}`)
-      for (let idx = 0; idx < x + y; idx++) {
-        startMin += 15
-        if (startMin > 59) {
-          startMin = 0
-        }
-        //if (startMin > 60) {
-        //  startMin = 0
-        //}
-        //console.log(startMin)
-      }
-
-      //console.log(hours, minutes)
     }
   },
   mounted() {
@@ -360,7 +346,6 @@ export default {
   },
   created() {
     this.handDateAry()
-    this.handTimeAry()
     this.getCart()
     this.$store.dispatch('handLoading', true)
   },
@@ -373,6 +358,28 @@ export default {
     },
     finalPrice() {
       return this.totalPrice + this.deliveryFee
+    },
+    reserveTime() {
+      let ary = []
+      let startHours = 9
+      const hours = new Date().getHours()
+      let lastHours = startHours + (hours - startHours) + 2
+      const num = hours - startHours + 2
+      const today = new Date().toLocaleDateString()
+      //判斷是否為當天，如果是當天判斷可訂的剩餘時間
+      if (this.order.reserveDate === today) {
+        for (let idx = 0; idx < 13 - num; idx++) {
+          ary.push(`${lastHours + idx}:00`)
+          ary.push(`${lastHours + idx}:30`)
+        }
+      } else {
+        for (let idx = 0; idx < 13; idx++) {
+          ary.push(`${startHours + idx}:00`)
+          ary.push(`${startHours + idx}:30`)
+        }
+      }
+
+      return ary
     }
   },
   watch: {
