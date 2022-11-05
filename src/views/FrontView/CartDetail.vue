@@ -128,7 +128,10 @@
               value="reserve"
               v-model="isReserve"
             />
-            <label class="form-check-label float-start" for="orderLater">
+            <label
+              class="form-check-label float-start text-start"
+              for="orderLater"
+            >
               預約訂餐
               (指定送達時間至少2個小時前至7天內訂餐)(外送時間:am9:00~pm9:30)
             </label>
@@ -141,7 +144,7 @@
               <select
                 class="form-select mb-3"
                 id="orderDate"
-                v-model="order.reserveDate"
+                v-model="reserveSelectDate"
               >
                 <option value="" disabled selected class="text-gray">
                   請選擇您的外送日期
@@ -158,6 +161,7 @@
               <select
                 class="form-select"
                 id="orderTime"
+                v-model="reserveSelectTime"
                 onmousedown="if(this.options.length>6){this.size=7}"
                 onblur="this.size=0"
                 onchange="this.size=0"
@@ -222,21 +226,19 @@
 import _ from 'lodash'
 import DelModal from '@/components/DelModal.vue'
 import AddMinBtn from '@/components/AddMinBtn.vue'
+
 export default {
   emits: ['setProgress'],
   data() {
     return {
       isLoadingItem: '',
       tempProduct: {},
-      deliveryFee: 0,
       isLoading: false,
       isTogo: '',
       isReserve: '',
       reserveDate: [],
-
-      order: {
-        reserveDate: ''
-      }
+      reserveSelectDate: '',
+      reserveSelectTime: ''
     }
   },
   components: {
@@ -326,6 +328,16 @@ export default {
     },
     toCheckOut() {
       this.$emit('setProgress', 1)
+      const data = {
+        isTogo: this.isTogo,
+        isReserve: this.isReserve,
+        reserveSelectDate: this.reserveSelectDate,
+        reserveSelectTime: this.reserveSelectTime,
+        finalPrice: this.finalPrice,
+        deliveryFee: this.deliveryFee,
+        totalPrice: this.totalPrice
+      }
+      this.$store.dispatch('Orders/sendOrderInfo', data)
       this.$router.push('/cart/checkout')
     },
     handDateAry() {
@@ -368,7 +380,7 @@ export default {
       const num = hours - startHours + 2
       const today = new Date().toLocaleDateString()
       //判斷是否為當天，如果是當天判斷可訂的剩餘時間
-      if (this.order.reserveDate === today) {
+      if (this.reserveSelectDate === today) {
         for (let idx = 0; idx < 13 - num; idx++) {
           ary.push(`${lastHours + idx}:00`)
           ary.push(`${lastHours + idx}:30`)
@@ -381,12 +393,12 @@ export default {
       }
 
       return ary
-    }
-  },
-  watch: {
-    isTogo() {
+    },
+    deliveryFee() {
       if (this.isTogo) {
-        this.deliveryFee = 50
+        return 50
+      } else {
+        return 0
       }
     }
   }

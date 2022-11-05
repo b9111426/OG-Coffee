@@ -10,5 +10,8 @@ export default {
       return i.is_paid === true
     })
     return ary.length
+  },
+  orderInfo(state) {
+    return state.orderInfo
   }
 }

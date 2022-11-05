@@ -11,5 +11,8 @@ export default {
   },
   async deleteOrder(context, id) {
     await apiDeleteOrder(id)
+  },
+  sendOrderInfo({ commit }, data) {
+    commit('handOrderInfo', data)
   }
 }

@@ -39,7 +39,9 @@ export default {
     $route(to) {
       if (to.href === '/cart') {
         this.switchNode = false
-        this.$refs.progressNav.children[1].className = 'step'
+        for (let i = 1; i < 3; i++) {
+          this.$refs.progressNav.children[i].className = 'step'
+        }
       }
     }
   }

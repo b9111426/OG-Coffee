@@ -7,7 +7,8 @@ export default {
   state: {
     orders: [],
     pagination: {},
-    tempOrder: {}
+    tempOrder: {},
+    orderInfo: {}
   },
   actions,
   mutations,
