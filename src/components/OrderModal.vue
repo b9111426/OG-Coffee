@@ -23,11 +23,57 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <div class="row">
-              <div class="col-md-4">
-                <h3>用戶資料</h3>
-                <table class="table">
-                  <tbody v-if="tempOrder.user">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#home"
+                  type="button"
+                  role="tab"
+                >
+                  用戶外送資料
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >
+                  訂單細節
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="contact-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#contact"
+                  type="button"
+                  role="tab"
+                  aria-controls="contact"
+                  aria-selected="false"
+                >
+                  選購商品
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <table v-if="tempOrder.user?.isTogo" class="table">
+                  <tbody>
                     <tr>
                       <th style="width: 100px">姓名</th>
                       <td>{{ tempOrder.user.name }}</td>
@@ -46,9 +92,14 @@
                     </tr>
                   </tbody>
                 </table>
+                <p v-else class="mt-4">此訂單為內用</p>
               </div>
-              <div class="col-md-8">
-                <h3>訂單細節</h3>
+              <div
+                class="tab-pane fade"
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+              >
                 <table class="table">
                   <tbody>
                     <tr>
@@ -56,7 +107,7 @@
                       <td>{{ tempOrder.id }}</td>
                     </tr>
                     <tr>
-                      <th>下單時間</th>
+                      <th>下單日期</th>
                       <td>
                         <span v-date="tempOrder.create_at"></span>
                       </td>
@@ -65,9 +116,9 @@
                       <th>付款時間</th>
                       <td>
                         <span v-if="tempOrder.paid_date">
-                          <span v-date="tempOrder.paid_date"></span>
+                          {{ tempOrder.paid_date }}
                         </span>
-                        <span v-else>時間不正確</span>
+                        <span v-else>尚未付款</span>
                       </td>
                     </tr>
                     <tr>
@@ -82,43 +133,55 @@
                     <tr>
                       <th>總金額</th>
                       <td>
+                        <span class="h6">NT$ </span>
                         <span v-num="tempOrder.total"></span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <h3>選購商品</h3>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="contact"
+                role="tabpanel"
+                aria-labelledby="contact-tab"
+              >
                 <table class="table">
                   <thead>
                     <tr></tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in tempOrder.products" :key="item.id">
+                    <tr
+                      class="text-start"
+                      v-for="item in tempOrder.products"
+                      :key="item.id"
+                    >
                       <th>
                         {{ item.product.title }}
                       </th>
                       <td>{{ item.qty }} / {{ item.product.unit }}</td>
                       <td class="text-end">
+                        <span class="h6">NT$ </span>
                         <span v-num="item.final_total"></span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <div class="d-flex justify-content-end">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                      v-model="tempOrder.is_paid"
-                    />
-                    <label class="form-check-label" for="flexCheckDefault">
-                      <span v-if="tempOrder.is_paid">已付款</span>
-                      <span v-else>未付款</span>
-                    </label>
-                  </div>
-                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                  v-model="tempOrder.is_paid"
+                />
+                <label class="form-check-label" for="flexCheckDefault">
+                  <span v-if="tempOrder.is_paid">已付款</span>
+                  <span v-else>未付款</span>
+                </label>
               </div>
             </div>
           </div>
@@ -142,7 +205,6 @@
       </div>
     </div>
   </div>
-  <pre>{{ tempOrder }}</pre>
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'

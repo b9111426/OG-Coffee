@@ -16,6 +16,21 @@
                   class="form-check-input"
                   type="radio"
                   name="付款類型"
+                  value="cash"
+                  id="cash"
+                  v-model="user.payment"
+                  :class="{ 'is-invalid': errors['付款類型'] }"
+                >
+                </v-field>
+                <label class="form-check-label float-start" for="cash">
+                  現金
+                </label>
+              </div>
+              <div class="form-check py-2 border-bottom">
+                <v-field
+                  class="form-check-input"
+                  type="radio"
+                  name="付款類型"
                   value="creditCard"
                   id="creditCard"
                   v-model="user.payment"
@@ -90,7 +105,7 @@
               </div>
             </div>
           </div>
-          <div v-if="orderInfo.isTogo" class="card">
+          <div v-if="user.isTogo" class="card">
             <div class="card-header">填寫外送資料</div>
             <div class="card-body">
               <div class="mb-3">
@@ -171,7 +186,7 @@
         <div class="col-lg-4 col-12">
           <div class="card">
             <div class="card-header">訂單資訊</div>
-            <div v-if="orderInfo.isTogo">
+            <div v-if="user.isTogo">
               <div class="card-body border-bottom">
                 <div class="d-flex">
                   <span class="text-nowrap">送餐至:</span>
@@ -216,18 +231,18 @@
                 <span class="me-auto">小結:</span>
                 <span
                   >NT$
-                  <span v-num="orderInfo.totalPrice"></span>
+                  <span v-num="user.totalPrice"></span>
                 </span>
               </div>
-              <div v-if="orderInfo.isTogo" class="mb-2 d-flex">
+              <div v-if="user.isTogo" class="mb-2 d-flex">
                 <span class="me-auto">外送費:</span>
-                <span>NT$ {{ orderInfo.deliveryFee }}</span>
+                <span>NT$ {{ user.deliveryFee }}</span>
               </div>
               <div class="mb-4 d-flex align-item-center">
                 <strong class="me-auto">總計:</strong>
                 <strong class="h4"
                   >NT$
-                  <span v-num="orderInfo.finalPrice"></span>
+                  <span v-num="user.finalPrice"></span>
                 </strong>
               </div>
               <button class="btn btn-success w-100" type="submit">
@@ -239,6 +254,7 @@
       </div>
     </div>
   </v-form>
+  <pre>{{ user }}</pre>
 </template>
 
 <script>
@@ -260,15 +276,16 @@ export default {
   },
   methods: {
     async onSubmit() {
+      if (this.user.isTogo === '') {
+        this.user.name = '內用'
+        this.user.email = '內用'
+        this.user.tel = '內用'
+        this.user.address = '內用'
+      }
       try {
         const data = {
           data: {
-            user: {
-              name: '內用',
-              email: '內用',
-              tel: '內用',
-              address: '內用'
-            },
+            user: this.user,
             message: this.message
           }
         }
@@ -296,10 +313,11 @@ export default {
       return uniform.test(val) ? true : '需為正確的統一編號'
     }
   },
+  created() {
+    const data = this.$store.getters['Orders/orderInfo']
+    Object.assign(this.user, data)
+  },
   computed: {
-    orderInfo() {
-      return this.$store.getters['Orders/orderInfo']
-    },
     handTimes() {
       const data = this.$store.getters['Orders/orderInfo']
       return `${data.reserveSelectDate} ${data.reserveSelectTime}`
@@ -314,9 +332,8 @@ export default {
         },
         統一編號: this.isUniformNum
       }
-      const orderInfo = this.$store.getters['Orders/orderInfo']
       //依外帶或內用辨別需要驗證選項
-      if (!orderInfo.isTogo) {
+      if (!this.user.isTogo) {
         return obj
       } else {
         obj.email = 'required|email'

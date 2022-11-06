@@ -15,8 +15,8 @@
           <table class="table mt-4 table-hover">
             <thead>
               <tr class="table-light">
-                <th class="text-nowrap">購買時間</th>
-                <th class="text-nowrap">Email</th>
+                <th class="text-nowrap">下單日期</th>
+                <th class="text-nowrap">用餐選項</th>
                 <th class="text-nowrap">購買款項</th>
                 <th class="text-nowrap">應付金額</th>
                 <th class="text-nowrap d-none d-lg-table-cell">是否付款</th>
@@ -29,9 +29,9 @@
                 :key="key"
                 :class="{ 'text-secondary': !item.is_paid }"
               >
-                <td><span v-date="item.due_date"></span></td>
+                <td><span v-date="item.create_at"></span></td>
                 <td>
-                  <span v-text="item.user.email" v-if="item.user"></span>
+                  <span>{{ diningOption(item) }}</span>
                 </td>
                 <td>
                   <ul class="list-unstyled">
@@ -162,16 +162,23 @@ export default {
     },
     updatePaid: _.debounce(async function (item) {
       this.isLoading = true
+      if (item.is_paid) {
+        item.paid_date = new Date().toLocaleDateString()
+      } else {
+        item.paid_date = ''
+      }
+
       const data = {
         id: item.id,
         order: item
       }
       try {
         const res = await this.$store.dispatch('Orders/modifyOrder', data)
-        this.$store.dispatch('fireToast', { res })
         this.isLoading = false
+        await this.getOrders(this.currentPage)
         const orderComponent = this.$refs.orderModal
         orderComponent.hideModal()
+        this.$store.dispatch('fireToast', { res })
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
@@ -187,15 +194,20 @@ export default {
           style: 'success'
         })
       } catch (err) {
-        console.log('yes')
         this.$store.dispatch('fireToast', { res: err.response })
       }
-    }, 500)
-  },
-  mounted() {
-    this.getOrders()
+    }, 500),
+    diningOption(item) {
+      if (item.user.isTogo) {
+        return '外帶'
+      } else if (item.user.isReserve) {
+        return '預約外帶'
+      }
+      return '內用'
+    }
   },
   created() {
+    this.getOrders()
     this.$store.dispatch('handLoading', true)
   },
   computed: {
