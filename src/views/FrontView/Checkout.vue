@@ -76,12 +76,17 @@
                 <label for="uniform-numbers" class="form-label text-nowrap me-2"
                   >統一編號:</label
                 >
-                <input
+                <v-field
                   type="text"
                   class="form-control"
+                  name="統一編號"
                   id="uniform-numbers"
                   v-model="user.uniformNum"
-                />
+                  :class="{ 'is-invalid': errors['統一編號'] }"
+                >
+                </v-field>
+                <error-message name="統一編號" class="invalid-feedback">
+                </error-message>
               </div>
             </div>
           </div>
@@ -261,6 +266,13 @@ export default {
       }
       const phoneNumber = /((?=(09))[0-9]{10})$/
       return phoneNumber.test(val) ? true : '需為正確的電話號碼'
+    },
+    isUniformNum(val) {
+      if (val == '') {
+        return true
+      }
+      const uniform = /^[0-9]{8}$/
+      return uniform.test(val) ? true : '需為正確的統一編號'
     }
   },
   computed: {
@@ -278,7 +290,8 @@ export default {
             return true
           }
           return '付款類型為必選'
-        }
+        },
+        統一編號: this.isUniformNum
       }
       const orderInfo = this.$store.getters['Orders/orderInfo']
       //依外帶或內用辨別需要驗證選項

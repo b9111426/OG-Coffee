@@ -78,142 +78,157 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-8 col-12 mb-3">
-      <div class="card mb-3">
-        <div class="card-header">用餐選項</div>
-        <div class="card-body">
-          <div class="form-check d-inline-block">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="forHere"
-              value=""
-              v-model="isTogo"
-            />
-            <label class="form-check-label" for="forHere"> 內用 </label>
-          </div>
-          <div class="form-check d-inline-block ms-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="toGo"
-              value="toGo"
-              v-model="isTogo"
-            />
-            <label class="form-check-label" for="toGo"> 外送 </label>
-          </div>
-        </div>
-      </div>
-      <div v-show="isTogo" class="card mb-3">
-        <div class="card-header">外送時間</div>
-        <div class="card-body d-flex flex-column">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="orderNow"
-              value=""
-              v-model="isReserve"
-            />
-            <label class="form-check-label float-start" for="orderNow">
-              現在訂餐
-            </label>
-          </div>
-          <div class="form-check mb-3">
-            <input
-              class="form-check-input"
-              type="radio"
-              id="orderLater"
-              value="reserve"
-              v-model="isReserve"
-            />
-            <label
-              class="form-check-label float-start text-start"
-              for="orderLater"
-            >
-              預約訂餐
-              (指定送達時間至少2個小時前至7天內訂餐)(外送時間:am9:00~pm9:30)
-            </label>
-          </div>
-          <div v-show="isReserve">
-            <div class="d-flex align-items-baseline">
-              <label class="form-label text-nowrap me-2" for="orderDate">
-                日期：
-              </label>
-              <select
-                class="form-select mb-3"
-                id="orderDate"
-                v-model="reserveSelectDate"
-              >
-                <option value="" disabled selected class="text-gray">
-                  請選擇您的外送日期
-                </option>
-                <option v-for="i in reserveDate" :key="i" :value="i">
-                  {{ i }}
-                </option>
-              </select>
+  <v-form @submit="onSubmit" v-slot="{ errors }" ref="form">
+    <div class="row">
+      <div class="col-lg-8 col-12 mb-3">
+        <div class="card mb-3">
+          <div class="card-header">用餐選項</div>
+          <div class="card-body">
+            <div class="form-check d-inline-block">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="forHere"
+                value=""
+                v-model="isTogo"
+              />
+              <label class="form-check-label" for="forHere"> 內用 </label>
             </div>
-            <div class="d-flex align-items-baseline">
-              <label class="form-label text-nowrap me-2" for="orderTime">
-                時間：
-              </label>
-              <select
-                class="form-select"
-                id="orderTime"
-                v-model="reserveSelectTime"
-                onmousedown="if(this.options.length>6){this.size=7}"
-                onblur="this.size=0"
-                onchange="this.size=0"
-              >
-                <option value="" disabled selected class="text-gray">
-                  請選擇您的外送時間
-                </option>
-                <option v-for="i in reserveTime" :key="i" :value="i">
-                  {{ i }}
-                </option>
-              </select>
+            <div class="form-check d-inline-block ms-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="toGo"
+                value="toGo"
+                v-model="isTogo"
+              />
+              <label class="form-check-label" for="toGo"> 外送 </label>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-header">加購及購物袋</div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-12">
-      <div class="card">
-        <div class="card-header">訂單資訊</div>
-        <div class="card-body">
-          <div class="mb-2 d-flex">
-            <span class="me-auto">小結:</span>
-            <span
-              >NT$
-              <span v-num="totalPrice"></span>
-            </span>
-          </div>
-          <div v-if="isTogo" class="mb-2 d-flex">
-            <span class="me-auto">外送費:</span>
-            <span>NT$ {{ deliveryFee }}</span>
-          </div>
-          <div class="mb-4 d-flex align-items-center">
-            <strong class="me-auto">總計:</strong>
-            <strong class="h4"
-              >NT$
-              <span v-num="finalPrice"></span>
-            </strong>
-          </div>
-          <a
-            href="javascript:;"
-            class="btn btn-success w-100"
-            @click="toCheckOut"
-            >前往結帳</a
-          >
-        </div>
-      </div>
-    </div>
-  </div>
+        <div v-show="isTogo" class="card mb-3">
+          <div class="card-header">外送時間</div>
+          <div class="card-body d-flex flex-column">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="orderNow"
+                value=""
+                v-model="isReserve"
+              />
+              <label class="form-check-label float-start" for="orderNow">
+                現在訂餐
+              </label>
+            </div>
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="orderLater"
+                value="reserve"
+                v-model="isReserve"
+              />
+              <label
+                class="form-check-label float-start text-start"
+                for="orderLater"
+              >
+                預約訂餐
+                (指定送達時間至少2個小時前至7天內訂餐)(外送時間:am9:00~pm9:30)
+              </label>
+            </div>
+            <div v-show="isReserve">
+              <div class="d-flex align-items-baseline">
+                <label class="form-label text-nowrap me-2" for="orderDate">
+                  日期：
+                </label>
+                <v-field
+                  class="form-select mb-3 w-50 flex-shrink-0"
+                  id="orderDate"
+                  name="預約訂餐日期"
+                  :rules="{ required: isReserve !== '' }"
+                  as="select"
+                  v-model="reserveSelectDate"
+                  :class="{ 'is-invalid': errors['預約訂餐日期'] }"
+                >
+                  <option value="" disabled selected class="text-gray">
+                    請選擇您的外送日期
+                  </option>
+                  <option v-for="i in reserveDate" :key="i" :value="i">
+                    {{ i }}
+                  </option>
+                </v-field>
+                <error-message name="預約訂餐日期" class="invalid-feedback">
+                </error-message>
+              </div>
 
+              <div class="d-flex align-items-baseline">
+                <label class="form-label text-nowrap me-2" for="orderTime">
+                  時間：
+                </label>
+                <v-field
+                  class="form-select w-50 flex-shrink-0"
+                  id="orderTime"
+                  :rules="{ required: isReserve !== '' }"
+                  as="select"
+                  name="預約訂餐時間"
+                  v-model="reserveSelectTime"
+                  :class="{ 'is-invalid': errors['預約訂餐時間'] }"
+                  onmousedown="if(this.options.length>6){this.size=7}"
+                  onblur="this.size=0"
+                  onchange="this.size=0"
+                >
+                  <option value="" disabled selected class="text-gray">
+                    請選擇您的外送時間
+                  </option>
+                  <option v-for="i in reserveTime" :key="i" :value="i">
+                    {{ i }}
+                  </option>
+                </v-field>
+                <error-message name="預約訂餐時間" class="invalid-feedback">
+                </error-message>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">加購及購物袋</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="card">
+          <div class="card-header">訂單資訊</div>
+          <div class="card-body">
+            <div class="mb-2 d-flex">
+              <span class="me-auto">小結:</span>
+              <span
+                >NT$
+                <span v-num="totalPrice"></span>
+              </span>
+            </div>
+            <div v-if="isTogo" class="mb-2 d-flex">
+              <span class="me-auto">外送費:</span>
+              <span>NT$ {{ deliveryFee }}</span>
+            </div>
+            <div class="mb-4 d-flex align-items-center">
+              <strong class="me-auto">總計:</strong>
+              <strong class="h4"
+                >NT$
+                <span v-num="finalPrice"></span>
+              </strong>
+            </div>
+            <button
+              href="javascript:;"
+              type="submit"
+              class="btn btn-success w-100"
+            >
+              前往結帳
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </v-form>
   <!-- 刪除產品 -->
   <DelModal
     :item="tempProduct"
@@ -326,7 +341,7 @@ export default {
       })
       anLottie.setSpeed(1)
     },
-    toCheckOut() {
+    onSubmit() {
       this.$emit('setProgress', 1)
       const data = {
         isTogo: this.isTogo,
