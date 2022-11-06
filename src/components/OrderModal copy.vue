@@ -142,7 +142,6 @@
       </div>
     </div>
   </div>
-  <pre>{{ tempOrder }}</pre>
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'

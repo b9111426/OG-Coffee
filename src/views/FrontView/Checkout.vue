@@ -131,7 +131,7 @@
                   name="電話"
                   type="text"
                   class="form-control"
-                  v-model="user.phone"
+                  v-model="user.tel"
                   placeholder="請輸入電話"
                   :class="{ 'is-invalid': errors['電話'] }"
                 >
@@ -161,6 +161,7 @@
                 <textarea
                   class="form-control"
                   id="exampleFormControlTextarea1"
+                  v-model="message"
                   rows="3"
                 ></textarea>
               </div>
@@ -248,20 +249,40 @@ export default {
       user: {
         name: '',
         email: '',
-        phone: '',
+        tel: '',
         address: '',
         payment: '',
         bill: '',
         uniformNum: ''
-      }
+      },
+      message: ''
     }
   },
   methods: {
-    onSubmit() {
-      this.$emit('setProgress', 2)
+    async onSubmit() {
+      try {
+        const data = {
+          data: {
+            user: {
+              name: '內用',
+              email: '內用',
+              tel: '內用',
+              address: '內用'
+            },
+            message: this.message
+          }
+        }
+
+        const res = await this.$store.dispatch('Orders/submitOrder', data)
+        console.log(res)
+        this.$refs.form.resetForm()
+        this.$emit('setProgress', 2)
+      } catch (err) {
+        console.log(err)
+      }
     },
     isPhone(val) {
-      if (val === '') {
+      if (val === '' || null) {
         return '電話為必填'
       }
       const phoneNumber = /((?=(09))[0-9]{10})$/

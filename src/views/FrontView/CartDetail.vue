@@ -78,7 +78,7 @@
       </div>
     </div>
   </div>
-  <v-form @submit="onSubmit" v-slot="{ errors }" ref="form">
+  <v-form @submit="onSubmit" v-slot="{ errors }">
     <div class="row">
       <div class="col-lg-8 col-12 mb-3">
         <div class="card mb-3">

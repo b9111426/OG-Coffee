@@ -1,4 +1,9 @@
-import { apiGetOrder, apiModifyOrder, apiDeleteOrder } from '@/api'
+import {
+  apiGetOrder,
+  apiModifyOrder,
+  apiDeleteOrder,
+  apiPostOrder
+} from '@/api'
 export default {
   async getOrders({ commit }, page) {
     const res = await apiGetOrder(page)
@@ -14,5 +19,9 @@ export default {
   },
   sendOrderInfo({ commit }, data) {
     commit('handOrderInfo', data)
+  },
+  async submitOrder(context, data) {
+    const res = await apiPostOrder(data)
+    return res
   }
 }

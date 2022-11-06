@@ -1,8 +1,13 @@
 //數字千分位轉換
 export function currency(num) {
-  let parts = num.toString().split('.')
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-  return parts.join('.')
+  const n = parseInt(num, 10)
+  return `${n
+    .toFixed(0)
+    .replace(/./g, (c, i, a) =>
+      i && c !== '.' && (a.length - i) % 3 === 0
+        ? `, ${c}`.replace(/\s/g, '')
+        : c
+    )}`
 }
 
 //UNIX轉普通時間
