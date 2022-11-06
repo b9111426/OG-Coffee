@@ -23,5 +23,14 @@ export default {
   async submitOrder(context, data) {
     const res = await apiPostOrder(data)
     return res
+  },
+  async getAllOrders(context) {
+    let num = 0
+    const pages = context.state.pagination.total_pages
+    for (let idx = 1; idx <= pages; idx++) {
+      const res = await apiGetOrder(idx)
+      num += res.data.orders.length
+    }
+    context.commit('handAllOrders', num)
   }
 }

@@ -13,5 +13,8 @@ export default {
   },
   orderInfo(state) {
     return state.orderInfo
+  },
+  allOrdersNum(state) {
+    return state.allOrdersNum
   }
 }

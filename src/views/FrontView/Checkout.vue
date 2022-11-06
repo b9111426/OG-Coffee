@@ -254,10 +254,10 @@
       </div>
     </div>
   </v-form>
-  <pre>{{ user }}</pre>
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   emits: ['setProgress'],
   data() {
@@ -275,7 +275,7 @@ export default {
     }
   },
   methods: {
-    async onSubmit() {
+    onSubmit: _.debounce(async function () {
       if (this.user.isTogo === '') {
         this.user.name = '內用'
         this.user.email = '內用'
@@ -290,14 +290,20 @@ export default {
           }
         }
 
-        const res = await this.$store.dispatch('Orders/submitOrder', data)
-        console.log(res)
+        await this.$store.dispatch('Orders/submitOrder', data)
         this.$refs.form.resetForm()
         this.$emit('setProgress', 2)
+        this.$store.dispatch('fireToast', {
+          title: '訂單建立成功',
+          style: 'success'
+        })
+        setTimeout(() => {
+          this.$router.push('/cart')
+        }, 1200)
       } catch (err) {
-        console.log(err)
+        this.$store.dispatch('fireToast', { res: err.response })
       }
-    },
+    }, 500),
     isPhone(val) {
       if (val === '' || null) {
         return '電話為必填'

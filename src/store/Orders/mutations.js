@@ -5,5 +5,8 @@ export default {
   },
   handOrderInfo(state, data) {
     state.orderInfo = data
+  },
+  handAllOrders(state, num) {
+    state.allOrdersNum = num
   }
 }

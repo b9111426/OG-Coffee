@@ -8,7 +8,8 @@ export default {
     orders: [],
     pagination: {},
     tempOrder: {},
-    orderInfo: {}
+    orderInfo: {},
+    allOrdersNum: 0
   },
   actions,
   mutations,

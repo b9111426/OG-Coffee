@@ -4,7 +4,7 @@
     <div class="row mt-4">
       <div class="col-12 d-flex align-items-center mb-2 mb-lg-0">
         <div class="bg-white p-2 rounded text-dark">
-          <strong> 訂單總數: {{ orders.length }} </strong>
+          <strong> 訂單總數: {{ allOrdersNum }} </strong>
         </div>
         <div v-if="isLoading" class="ms-auto">
           <img class="loading" src="@/assets/images/load.gif" alt="" />
@@ -145,7 +145,15 @@ export default {
       this.currentPage = page
       try {
         await this.$store.dispatch('Orders/getOrders', page)
+        this.getAllOrders()
         this.$store.dispatch('handLoading', false)
+      } catch (err) {
+        throw new Error(err)
+      }
+    },
+    async getAllOrders() {
+      try {
+        await this.$store.dispatch('Orders/getAllOrders')
       } catch (err) {
         throw new Error(err)
       }
@@ -219,6 +227,9 @@ export default {
     },
     paidNum() {
       return this.$store.getters['Orders/paidNum']
+    },
+    allOrdersNum() {
+      return this.$store.getters['Orders/allOrdersNum']
     }
   }
 }

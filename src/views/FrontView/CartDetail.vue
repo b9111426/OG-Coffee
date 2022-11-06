@@ -62,14 +62,14 @@
           </div>
           <div
             v-show="cartData.length === 0"
-            class="mt-3"
+            class="mt-3 py-3"
             id="emptyCart"
             ref="emptyCart"
           >
             <span class="h3 text-gray-dark">購物車無任何商品</span>
           </div>
           <div class="d-flex mt-2">
-            <router-link to="/products" class="ms-auto"
+            <router-link to="/products" class="ms-auto fs-5 me-2"
               ><i class="bi bi-chevron-double-right me-1"></i>
               繼續購物</router-link
             >
@@ -341,7 +341,14 @@ export default {
       })
       anLottie.setSpeed(1)
     },
-    onSubmit() {
+    onSubmit: _.debounce(function () {
+      if (this.cartData.length === 0) {
+        this.$store.dispatch('fireToast', {
+          title: '購物車無商品',
+          style: 'danger'
+        })
+        return
+      }
       this.$emit('setProgress', 1)
       const data = {
         isTogo: this.isTogo,
@@ -354,7 +361,7 @@ export default {
       }
       this.$store.dispatch('Orders/sendOrderInfo', data)
       this.$router.push('/cart/checkout')
-    },
+    }, 500),
     handDateAry() {
       let num = 0
       const hours = new Date().getHours()

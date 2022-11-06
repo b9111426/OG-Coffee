@@ -80,7 +80,7 @@
                 v-if="isShow"
                 type="button"
                 class="btn btn-success w-100"
-                @click="goCartView()"
+                @click="addToCart('goCart')"
               >
                 立即購買
               </button>
@@ -128,7 +128,7 @@ export default {
     pushVal(val) {
       this.qty = val
     },
-    addToCart: _.debounce(async function () {
+    addToCart: _.debounce(async function (string) {
       let num = 999 - this.cartQty
       if (num === 0) {
         this.$store.dispatch('fireToast', {
@@ -155,6 +155,9 @@ export default {
         })
         this.$store.dispatch('Cart/setShake')
         this.isLoading = false
+        if (string === 'goCart') {
+          this.$router.push({ path: '/cart' })
+        }
       } catch (err) {
         throw new Error(err)
       }
@@ -178,10 +181,6 @@ export default {
       e.target.setAttribute('src', url1)
       this.$refs.pic1.setAttribute('src', url2)
     },
-    goCartView: _.debounce(function () {
-      this.addToCart()
-      this.$router.push({ path: '/cart' })
-    }, 500),
     async getCart() {
       try {
         const res = await this.$store.dispatch('Cart/getCart')
