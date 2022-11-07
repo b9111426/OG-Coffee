@@ -2,7 +2,8 @@ import {
   apiGetCoupons,
   apiAddCoupons,
   apiModifyCoupons,
-  apiDeleteCoupon
+  apiDeleteCoupon,
+  apiPostCoupon
 } from '@/api'
 export default {
   async getCoupons({ commit }, page) {
@@ -29,6 +30,10 @@ export default {
   },
   async deleteCoupon(context, id) {
     const res = await apiDeleteCoupon(id)
+    return res
+  },
+  async postFrontCoupon(context, data) {
+    const res = await apiPostCoupon(data)
     return res
   }
 }

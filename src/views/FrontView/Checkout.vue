@@ -212,6 +212,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      v-model="couponCode"
                       aria-label="Recipient's username"
                       aria-describedby="button-addon2"
                     />
@@ -219,6 +220,7 @@
                       class="btn btn-primary"
                       type="button"
                       id="button-addon2"
+                      @click="useCoupon"
                     >
                       使用
                     </button>
@@ -254,6 +256,7 @@
       </div>
     </div>
   </v-form>
+  <pre>{{ user }}</pre>
 </template>
 
 <script>
@@ -271,7 +274,8 @@ export default {
         bill: '',
         uniformNum: ''
       },
-      message: ''
+      message: '',
+      couponCode: ''
     }
   },
   methods: {
@@ -317,6 +321,15 @@ export default {
       }
       const uniform = /^[0-9]{8}$/
       return uniform.test(val) ? true : '需為正確的統一編號'
+    },
+    async useCoupon() {
+      const data = {
+        data: {
+          code: this.couponCode
+        }
+      }
+      const res = await this.$store.dispatch('Coupon/postFrontCoupon', data)
+      console.log(res)
     }
   },
   created() {
