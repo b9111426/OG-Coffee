@@ -206,16 +206,22 @@
             </div>
             <div class="card-body border-bottom">
               <div class="d-flex flex-column">
-                <p class="me-auto">優惠代碼:</p>
+                <p class="me-auto mb-2">
+                  優惠卷:
+                  <span v-if="myCoupons === null">目前無優惠卷</span>
+                </p>
                 <div class="d-block">
                   <div class="input-group input-group-sm mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="couponCode"
-                      aria-label="Recipient's username"
-                      aria-describedby="button-addon2"
-                    />
+                    <select class="form-select" ref="couponSelect">
+                      <option selected disabled>選取您優惠卷</option>
+                      <option
+                        :value="i.code"
+                        v-for="i in myCoupons"
+                        :key="i.id"
+                      >
+                        {{ i.title }} {{ i.percent / 10 }}折券
+                      </option>
+                    </select>
                     <button
                       class="btn btn-primary"
                       type="button"
@@ -254,7 +260,7 @@
                 </strong>
               </div>
               <button class="btn btn-success w-100" type="submit">
-                提交訂單
+                結帳並送出訂單
               </button>
             </div>
           </div>
@@ -262,7 +268,6 @@
       </div>
     </div>
   </v-form>
-  <pre>{{ user }}</pre>
 </template>
 
 <script>
@@ -330,12 +335,11 @@ export default {
       return uniform.test(val) ? true : '需為正確的統一編號'
     },
     async useCoupon() {
+      const code = this.$refs.couponSelect.value
       try {
         this.isLoading = true
         const data = {
-          data: {
-            code: this.couponCode
-          }
+          data: { code }
         }
         const res = await this.$store.dispatch('Coupon/postFrontCoupon', data)
         this.getCart()
@@ -344,17 +348,14 @@ export default {
         user.finalPrice = user.totalPrice + user.deliveryFee
         this.isLoading = false
       } catch (err) {
-        console.log('fuck1')
         this.isLoading = false
         throw new Error(err)
       }
     },
     async getCart() {
       try {
-        const res = await this.$store.dispatch('Cart/getCart')
-        console.log(res)
+        await this.$store.dispatch('Cart/getCart')
       } catch (err) {
-        console.log('fuck2')
         throw new Error(err)
       }
     }
@@ -389,6 +390,9 @@ export default {
         obj['外送地址'] = 'required'
         return obj
       }
+    },
+    myCoupons() {
+      return JSON.parse(localStorage.getItem('myCoupon'))
     }
   }
 }

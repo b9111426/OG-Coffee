@@ -38,7 +38,7 @@
                 <div
                   class="border border-primary text-black p-2 rounded-3 d-flex justify-content-center"
                 >
-                  <span>優惠卷:</span>
+                  <span class="text-break">優惠卷:</span>
                   <span class="ms-2 text-break">{{ i.coupon?.title }}</span>
                 </div>
               </div>
@@ -242,7 +242,6 @@
     ref="delModal"
     @del-item="delCartProduct"
   ></DelModal>
-  <pre>{{ cartData }}</pre>
 </template>
 
 <script>

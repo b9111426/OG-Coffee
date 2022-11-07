@@ -1,6 +1,6 @@
 <template>
   <div class="container py-5">
-    <h4 class="mb-5">取得優惠卷</h4>
+    <h4 class="mb-5">登入取得優惠卷</h4>
 
     <div class="row row-cols-lg-2 row-cols-1 g-3">
       <div
@@ -12,7 +12,10 @@
           <div
             class="coupon-inner position-absolute start-0 ms-2 h-100 d-flex align-items-center"
           >
-            <div class="coupon-inner-left bg-danger h-100 px-4 px-lg-5">
+            <div
+              class="coupon-inner-left bg-danger h-100 px-4 px-lg-5"
+              :class="today > i.due_date ? 'bg-gray-dark' : 'bg-danger'"
+            >
               <i class="bi bi-bag fs-3"></i>
               <div>
                 <span class="fs-4">{{ i.percent / 10 }}</span>
@@ -23,19 +26,23 @@
             <div
               class="d-flex flex-column justify-content-around align-items-start ps-2 h-100"
             >
-              <h3 class="text-dark">{{ i.title }}</h3>
+              <h6 class="text-dark">{{ i.title }}</h6>
               <p class="text-dark"><span v-date="i.due_date"></span> 失效</p>
               <p class="text-dark">折購碼: {{ i.code }}</p>
             </div>
           </div>
           <button
+            v-if="today < i.due_date"
             type="button"
             class="coupon-btn btn btn-danger position-absolute top-50 end-0 translate-middle"
-            @click="aaa($event)"
+            @click="takeCoupon(i)"
           >
             領取
           </button>
-          <div class="coupon-bg position-relative aaa"></div>
+          <div
+            class="coupon-bg position-relative"
+            :class="{ gray: today > i.due_date }"
+          ></div>
         </div>
       </div>
     </div>
@@ -44,6 +51,7 @@
 
 <script>
 import { apiCheckRequest } from '@/api'
+import _ from 'lodash'
 export default {
   data() {
     return {
@@ -83,14 +91,42 @@ export default {
         this.$router.push('/login')
       }
     },
-    aaa(e) {
-      console.log(e.target.parentNode)
-      e.target.parentNode.classList.add('d-none')
-    }
+    takeCoupon: _.debounce(function (item) {
+      const data = JSON.parse(localStorage.getItem('myCoupon'))
+      if (data === null) {
+        const obj = []
+        obj.push(item)
+        localStorage.setItem('myCoupon', JSON.stringify(obj))
+        this.$store.dispatch('fireToast', {
+          title: `「${item.title}」優惠卷已領取`,
+          style: 'success'
+        })
+      } else {
+        const ary = data.filter((i) => {
+          return i.id.includes(item.id)
+        })
+        if (ary.length === 0) {
+          data.push(item)
+          localStorage.setItem('myCoupon', JSON.stringify(data))
+          this.$store.dispatch('fireToast', {
+            title: `「${item.title}」優惠卷已領取`,
+            style: 'success'
+          })
+        } else {
+          this.$store.dispatch('fireToast', {
+            title: `「${item.title}」優惠卷已領取過`,
+            style: 'danger'
+          })
+        }
+      }
+    }, 1000)
   },
   computed: {
     coupons() {
       return this.$store.getters['Coupon/couponsData']
+    },
+    today() {
+      return Math.round(new Date().getTime() / 1000)
     }
   }
 }
@@ -99,9 +135,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixin';
 .coupon {
-  width: 400px;
+  width: 430px;
   height: 125px;
   color: #fff;
+
   @include phone() {
     width: 330px;
   }
@@ -120,6 +157,12 @@ export default {
     background-position: 11px 3px;
   }
 
+  &-bg.gray {
+    background: radial-gradient(transparent 0, transparent 5px, #adb5bd 5px);
+    background-size: 15px 15px;
+    background-position: 11px 3px;
+  }
+
   &-bg:before {
     position: absolute;
     left: 12px;
@@ -131,6 +174,11 @@ export default {
     background-color: var(--primary);
     border-radius: 0 10px 10px 0;
   }
+
+  &-bg.gray:before {
+    background-color: #ccc;
+  }
+
   &-btn {
     margin-right: -25px;
   }
