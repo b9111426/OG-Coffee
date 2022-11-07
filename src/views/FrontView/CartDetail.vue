@@ -235,6 +235,7 @@
     ref="delModal"
     @del-item="delCartProduct"
   ></DelModal>
+  <pre>{{ cartData }}</pre>
 </template>
 
 <script>

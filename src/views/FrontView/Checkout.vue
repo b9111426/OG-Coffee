@@ -229,8 +229,11 @@
               </div>
             </div>
             <div class="card-body border-bottom">
-              <div class="mb-2 d-flex">
+              <div class="mb-2 d-flex align-items-center">
                 <span class="me-auto">小結:</span>
+                <div v-if="isLoading">
+                  <img class="loading" src="@/assets/images/load.gif" alt="" />
+                </div>
                 <span
                   >NT$
                   <span v-num="user.totalPrice"></span>
@@ -240,8 +243,11 @@
                 <span class="me-auto">外送費:</span>
                 <span>NT$ {{ user.deliveryFee }}</span>
               </div>
-              <div class="mb-4 d-flex align-item-center">
+              <div class="mb-4 d-flex align-items-center">
                 <strong class="me-auto">總計:</strong>
+                <div v-if="isLoading">
+                  <img class="loading" src="@/assets/images/load.gif" alt="" />
+                </div>
                 <strong class="h4"
                   >NT$
                   <span v-num="user.finalPrice"></span>
@@ -275,7 +281,8 @@ export default {
         uniformNum: ''
       },
       message: '',
-      couponCode: ''
+      couponCode: '',
+      isLoading: false
     }
   },
   methods: {
@@ -305,7 +312,7 @@ export default {
           this.$router.push('/cart')
         }, 1200)
       } catch (err) {
-        this.$store.dispatch('fireToast', { res: err.response })
+        throw new Error(err)
       }
     }, 500),
     isPhone(val) {
@@ -323,13 +330,31 @@ export default {
       return uniform.test(val) ? true : '需為正確的統一編號'
     },
     async useCoupon() {
-      const data = {
-        data: {
-          code: this.couponCode
+      try {
+        this.isLoading = true
+        const data = {
+          data: {
+            code: this.couponCode
+          }
         }
+        const res = await this.$store.dispatch('Coupon/postFrontCoupon', data)
+        this.getCart()
+        const user = this.user
+        user.totalPrice = res.data.data.final_total
+        user.finalPrice = user.totalPrice + user.deliveryFee
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+        throw new Error(err)
       }
-      const res = await this.$store.dispatch('Coupon/postFrontCoupon', data)
+    }
+  },
+  async getCart() {
+    try {
+      const res = await this.$store.dispatch('Cart/getCart')
       console.log(res)
+    } catch (err) {
+      throw new Error(err)
     }
   },
   created() {
