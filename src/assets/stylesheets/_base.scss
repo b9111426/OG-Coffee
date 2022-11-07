@@ -7,6 +7,7 @@ body{
 :root{
   --primary:#a2997f;
   --secondary: #cfdedf;
+  --danger:#cd4820;
   --ck-z-default: 10555 !important;
   --ck-z-modal: calc(var(--ck-z-default) + 999) !important;
   --slide-x:-100px
@@ -56,6 +57,7 @@ thead th:last-child{
   border-radius: 0 7px 0 0;
 }
 
+//輪播
 .carousel {
   width: 100%;
   height: 100%;
@@ -72,6 +74,7 @@ thead th:last-child{
   object-fit: cover;
   object-position: 50% 50%;
 }
+
 
 .jello-horizontal {
 	-webkit-animation: jello-horizontal 0.9s both;

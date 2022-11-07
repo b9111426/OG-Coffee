@@ -119,6 +119,7 @@
     @emitPages="getOrders"
     class="mt-3 pb-5"
   ></Pagination>
+  <pre>{{ orders }}</pre>
 </template>
 <script>
 import DelModal from '@/components/DelModal.vue'

@@ -11,7 +11,7 @@
         <div class="card-body">
           <div class="row border-bottom d-none d-lg-flex">
             <div class="col-3 fw-bold text-nowrap py-2">商品資料</div>
-            <div class="col-2 fw-bold text-nowrap py-2">優惠</div>
+            <div class="col-2 fw-bold text-nowrap py-2">優惠卷</div>
             <div class="col-2 fw-bold text-nowrap py-2">單件價格</div>
             <div class="col-2 fw-bold text-nowrap py-2">數量</div>
             <div class="col-2 fw-bold text-nowrap py-2">小計</div>
@@ -33,9 +33,16 @@
                 <p class="text-break">{{ i.product.category }}</p>
               </div>
             </div>
-            <div
-              class="order-2 order-lg-1 col-8 col-lg-2 text-nowrap py-2"
-            ></div>
+            <div class="order-2 order-lg-1 col-8 col-lg-2 text-nowrap py-2">
+              <div v-if="i.coupon">
+                <div
+                  class="border border-primary text-black p-2 rounded-3 d-flex justify-content-center"
+                >
+                  <span>優惠卷:</span>
+                  <span class="ms-2 text-break">{{ i.coupon?.title }}</span>
+                </div>
+              </div>
+            </div>
             <div class="order-3 order-lg-2 col-4 col-lg-2 text-nowrap py-2">
               <p v-num="i.product.price"></p>
             </div>
@@ -68,8 +75,8 @@
           >
             <span class="h3 text-gray-dark">購物車無任何商品</span>
           </div>
-          <div class="d-flex mt-2">
-            <router-link to="/products" class="ms-auto fs-5 me-2"
+          <div class="d-flex align-items-center mt-2 flex-wrap">
+            <router-link to="/products" class="ms-auto fs-5 me-2 text-nowrap"
               ><i class="bi bi-chevron-double-right me-1"></i>
               繼續購物</router-link
             >

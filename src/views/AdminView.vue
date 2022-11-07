@@ -17,7 +17,7 @@ export default {
   components: {
     AdminNavbar
   },
-  mounted() {
+  created() {
     this.$store.dispatch('handLoading', true)
     this.checkLogin()
   },

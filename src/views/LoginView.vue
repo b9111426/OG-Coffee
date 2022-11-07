@@ -4,7 +4,7 @@
       class="vh-100 d-flex flex-column align-items-center justify-content-center"
     >
       <div class="row justify-content-center">
-        <h1 class="h2 mb-3 font-weight-normal">後台管理中心</h1>
+        <h1 class="h2 mb-3 font-weight-normal">會員登入</h1>
         <div class="col-8">
           <form id="form" class="form-signin" @submit.prevent="login">
             <div class="form-floating mb-3">
@@ -41,6 +41,7 @@
 
               <label for="password">Password</label>
             </div>
+
             <div class="form-check my-3 d-flex justify-content-start">
               <input
                 class="form-check-input me-2"
@@ -53,6 +54,19 @@
                 記住我
               </label>
             </div>
+            <p
+              class="mt-3 h6 text-start text-danger"
+              @click="handPassShow"
+              style="cursor: pointer"
+            >
+              帳密
+              <i v-show="isPassShow" class="bi bi-eye"></i>
+              <i v-show="!isPassShow" class="bi bi-eye-slash"></i>
+            </p>
+            <p v-if="isPassShow" class="text-start">
+              帳號:b9111426@gmail.com <br />
+              密碼:123456
+            </p>
             <button
               class="btn btn-lg btn-primary w-100 mt-3"
               type="submit"
@@ -79,6 +93,7 @@ export default {
         username: '',
         password: ''
       },
+      isPassShow: false,
       isSave: true,
       isEyeShow: true
     }
@@ -99,6 +114,9 @@ export default {
         this.$store.dispatch('fireToast', { res: err.response })
       }
     }, 500),
+    handPassShow() {
+      this.isPassShow = !this.isPassShow
+    },
     saveCode() {
       this.isSave = !this.isSave
       localStorage.setItem('isSave', JSON.stringify(this.isSave))

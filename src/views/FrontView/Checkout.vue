@@ -344,19 +344,22 @@ export default {
         user.finalPrice = user.totalPrice + user.deliveryFee
         this.isLoading = false
       } catch (err) {
+        console.log('fuck1')
         this.isLoading = false
+        throw new Error(err)
+      }
+    },
+    async getCart() {
+      try {
+        const res = await this.$store.dispatch('Cart/getCart')
+        console.log(res)
+      } catch (err) {
+        console.log('fuck2')
         throw new Error(err)
       }
     }
   },
-  async getCart() {
-    try {
-      const res = await this.$store.dispatch('Cart/getCart')
-      console.log(res)
-    } catch (err) {
-      throw new Error(err)
-    }
-  },
+
   created() {
     const data = this.$store.getters['Orders/orderInfo']
     Object.assign(this.user, data)
