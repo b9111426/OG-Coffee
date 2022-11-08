@@ -22,16 +22,16 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/stylesheets/mixin';
 .box {
-  height: calc(100vh - 89px);
+  height: calc(100vh - var(--header-h));
   overflow: auto;
   @include pad() {
-    min-height: calc(100vh - 65px);
+    min-height: calc(100vh - var(--header-s-h));
   }
 }
 .content {
-  min-height: calc(100vh - 89px - 122px);
+  min-height: calc(100vh - var(--header-h) - var(--footer-h));
   @include pad() {
-    min-height: calc(100vh - 65px - 122px);
+    min-height: calc(100vh - var(--header-s-h) - var(--footer-h));
   }
 }
 </style>

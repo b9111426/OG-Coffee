@@ -10,7 +10,10 @@ body{
   --danger:#cd4820;
   --ck-z-default: 10555 !important;
   --ck-z-modal: calc(var(--ck-z-default) + 999) !important;
-  --slide-x:-100px
+  --slide-x:-100px;
+  --header-h:89px;
+  --header-s-h:65px;
+  --footer-h:106px;
 }
 
 @include phone(){

@@ -19,7 +19,7 @@
                 v-if="item.is_soldOut"
                 class="position-absolute sellOutTag bg-danger start-50 top-50 translate-middle"
               ></div>
-              <img :src="item?.imageUrl[0]" class="card-img-top" alt="..." />
+              <img v-src="item?.imageUrl[0]" class="card-img-top" alt="..." />
             </div>
             <p
               v-if="!item.is_soldOut"

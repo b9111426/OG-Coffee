@@ -25,6 +25,7 @@
                 <label class="form-check-label float-start" for="cash">
                   現金
                 </label>
+                <img class="float-end" src="@/assets/images/money.png" alt="" />
               </div>
               <div class="form-check py-2 border-bottom">
                 <v-field
@@ -40,6 +41,11 @@
                 <label class="form-check-label float-start" for="creditCard">
                   信用卡
                 </label>
+                <img
+                  class="float-end"
+                  src="@/assets/images/credit-card.png"
+                  alt=""
+                />
               </div>
               <div class="form-check py-2 border-bottom">
                 <v-field
@@ -55,6 +61,7 @@
                 <label class="form-check-label float-start" for="linePay">
                   LINE Pay
                 </label>
+                <img class="float-end" src="@/assets/images/line.png" alt="" />
               </div>
               <div class="form-check pt-2 pb-4">
                 <v-field
@@ -70,7 +77,11 @@
                 <label class="form-check-label float-start" for="googlePay">
                   Google Pay
                 </label>
-
+                <img
+                  class="float-end"
+                  src="@/assets/images/google-pay.png"
+                  alt=""
+                />
                 <error-message name="付款類型" class="invalid-feedback">
                 </error-message>
               </div>
@@ -398,4 +409,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

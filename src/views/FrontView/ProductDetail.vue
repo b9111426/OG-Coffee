@@ -8,7 +8,7 @@
               v-if="isShow"
               ref="pic1"
               class="img-fluid img-thumbnail"
-              :src="product.imageUrl[0]"
+              v-src="product.imageUrl[0]"
               alt=""
             />
           </div>
