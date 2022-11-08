@@ -31,6 +31,7 @@ const app = createApp(App)
 
 app.config.globalProperties.lottie = lottie
 
+//千分位轉換
 app.directive('num', {
   mounted(el, binding) {
     const p = currency(binding.value)
@@ -41,6 +42,7 @@ app.directive('num', {
     el.innerHTML = p
   }
 })
+//日期轉換
 app.directive('date', {
   mounted(el, binding) {
     const t = date(binding.value)
@@ -51,7 +53,18 @@ app.directive('date', {
     el.innerHTML = t
   }
 })
-
+//lazy loading
+app.directive('src', (el, binding) => {
+  el.style.opacity = 0
+  if (binding.value) {
+    const img = new Image()
+    img.src = binding.value
+    img.onload = () => {
+      el.src = binding.value
+      el.style.opacity = 1
+    }
+  }
+})
 app.use(CKEditor)
 app.use(router)
 app.use(store)

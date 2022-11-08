@@ -61,8 +61,9 @@
         </div>
         <div class="carousel-item" data-bs-interval="3000">
           <img
-            src="~@/assets/images/carousel-01.jpg"
-            class="d-block"
+            v-src="
+              'https://storage.googleapis.com/vue-course-api.appspot.com/sausage/1667894185405.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=CY5I7%2F9Zq55J9%2BPuJD5Nq3wgTei%2BZC%2FIq8dHiK9DvATEx9239jSIdlHiuoRRLs6m%2FOLrKOBZ86hzpydAaosRcwx3FzPZ%2B3MRYrHVgGXGpJDaYFaz80Cs1s6HrH9pFm0ZtVirQuTkTEZVuY%2BCNyBncVizRaPx8iMOfZTLy724MHFLM00UQmD6AQIeCgIvDnaSQIz7KzSt8YZsHC%2By9FipmLG6MVUk5uhfWALIdGbIgRsOdoDdIfLhlr6P3yuaJpAf89psTstE9oJZnFRK4vwZ7EEEFPzDXgb8vRFLM6cIbxORk54PxvZOpNLwO6UiykbizcF12%2BUqiCpzyqpfcJwfAg%3D%3D'
+            "
             alt="..."
           />
           <div class="carousel-caption">
@@ -72,8 +73,9 @@
         </div>
         <div class="carousel-item" data-bs-interval="3000">
           <img
-            src="~@/assets/images/carousel-02.jpg"
-            class="d-block"
+            v-src="
+              'https://storage.googleapis.com/vue-course-api.appspot.com/sausage/1667894372645.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=IRGffsFnN6Ge4vWO5WkrhSvf84U1b4HbYvA6fjeDR%2BZ57tDwDyhPtx4AfGzsoNg2j0Mw3%2FRkyU%2FBfVg%2BccNn8GKQsh5nyduL%2B8dNA4aGSpWO42%2BcEn2DpqT%2F04BV7RR6Zp90sKQ2TpWzlx58%2FYPVyfQxzCo9ORPy57L%2BkCu1dRPcblDssVB9tWJ%2F%2F0JSZwYO6TBDwO%2FbiuTnJXS%2F%2BzJNtHPKabtMtMB%2FY6RQr9kdCkx73PvgLaWnC1CnRK%2Fo0w0fMOtQ%2FIl284UR2fPK6FyrtrfMuumpGJHu%2BdrtZjjp0PCoE%2FqRZKoqf5QAdC0AcJWrO885kS6ATpVcEB5cg9Y7iw%3D%3D'
+            "
             alt="..."
           />
           <div class="carousel-caption">
@@ -83,8 +85,9 @@
         </div>
         <div class="carousel-item" data-bs-interval="3000">
           <img
-            src="~@/assets/images/carousel-03.jpg"
-            class="d-block"
+            v-src="
+              'https://storage.googleapis.com/vue-course-api.appspot.com/sausage/1667894426825.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=HkK%2BoW0K%2BnW%2FEZ9wcSao%2FLd2WFIDzAR6LWtpWmgUSJAsmI%2BPRKB5ng2jfwXRJPgTLyZq%2Bl%2BOkCuV05FhYoRwI7YA1DDbKibSVnTLXnFjEz2ALharcrRgfuQZR70ussHdD7dgAG9cUYl%2BDTfi2A56iuaeol6sRufsijU6anSx106W%2FyHETp42uOolZ55q8uYac0WGXJdqsqfuBsu2wdteEEx%2Bf9ic5lKU4ZorDQUTpdjIXdAbIca6AH326g0FziOinHxYtq4QcRHEHXNRHWKqY89W5mkI%2BXGKAYIvXV92QDLH0VJrNE6uva%2B9hDapaZ1IB1qSMGxIxAX%2F5qZiJUp6gQ%3D%3D'
+            "
             alt="..."
           />
           <div class="carousel-caption">

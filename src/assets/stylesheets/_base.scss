@@ -18,6 +18,9 @@ body{
     --slide-x:0px
   }
 }
+img {
+  transition: opacity 0.3s;
+} 
 
 html,.card{
   & ::-webkit-scrollbar{
