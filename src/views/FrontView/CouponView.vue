@@ -46,13 +46,23 @@
         </div>
       </div>
     </div>
+
+    <!-- 分頁 -->
+    <Pagination
+      class="mt-4"
+      :pages="pagination"
+      @emit-pages="getCoupons"
+    ></Pagination>
   </div>
 </template>
 
 <script>
 import { apiCheckRequest } from '@/api'
+import Pagination from '@/components/Pagination.vue'
 import _ from 'lodash'
+
 export default {
+  components: { Pagination },
   data() {
     return {
       currentPage: 1
@@ -128,6 +138,9 @@ export default {
     },
     today() {
       return Math.round(new Date().getTime() / 1000)
+    },
+    pagination() {
+      return this.$store.getters['Coupon/couponPage']
     }
   }
 }
