@@ -36,10 +36,10 @@
             <div class="order-2 order-lg-1 col-8 col-lg-2 text-nowrap py-2">
               <div v-if="i.coupon">
                 <div
-                  class="border border-primary text-black p-2 rounded-3 d-flex justify-content-center"
+                  class="border border-primary text-black p-2 rounded-3 d-flex justify-content-center flex-wrap"
                 >
-                  <span class="text-break">優惠卷:</span>
-                  <span class="ms-2 text-break">{{ i.coupon?.title }}</span>
+                  <span>優惠卷:</span>
+                  <span class="ms-2">{{ i.coupon?.title }}</span>
                 </div>
               </div>
             </div>

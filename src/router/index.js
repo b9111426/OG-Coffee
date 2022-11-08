@@ -40,10 +40,6 @@ const routes = [
         component: () => import('../views/FrontView/QuestionView.vue')
       },
       {
-        path: 'newer',
-        component: () => import('../views/FrontView/NewUser.vue')
-      },
-      {
         path: 'cart',
         component: () => import('../views/FrontView/CartView.vue'),
         children: [

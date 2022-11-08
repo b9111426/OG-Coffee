@@ -59,11 +59,11 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch('handLoading', true)
     this.checkLogin()
   },
   methods: {
     async getCoupons(page = 1) {
-      this.$store.dispatch('handLoading', true)
       try {
         await this.$store.dispatch('Coupon/getCoupons', page)
         this.$store.dispatch('handLoading', false)

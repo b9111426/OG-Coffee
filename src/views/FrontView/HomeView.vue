@@ -26,10 +26,16 @@
           data-bs-slide-to="2"
           aria-label="Slide 3"
         ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
       </div>
       <div class="carousel-inner">
         <div
-          class="carousel-item overflow-hidden active"
+          class="carousel-item overflow-hidden active bg-primary"
           data-bs-interval="6000"
         >
           <video autoplay muted loop preload="metadata">
@@ -38,14 +44,24 @@
               src="https://joy.videvo.net/videvo_files/video/free/2020-03/large_watermarked/200312_pl_01_4k_020_preview.mp4"
             />
           </video>
-          <div class="carousel-caption">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
+          <div
+            class="carousel-caption h-100 d-flex flex-column justify-content-center align-items-center"
+          >
+            <h5 class="display-2 d-none d-lg-block mb-3">
+              新鮮烘培·當天現烘·手沖風味
+            </h5>
+            <h5 class="d-lg-none d-block">新鮮烘培·當天現烘·手沖風味</h5>
+            <p class="fs-3 d-none d-lg-block">
+              預約外送服務提供 / 科技烘培 / 品質絕對
+            </p>
+            <p class="fs-7 d-lg-none d-block">
+              預約外送服務提供 / 科技烘培 / 品質絕對
+            </p>
           </div>
         </div>
         <div class="carousel-item" data-bs-interval="3000">
           <img
-            src="https://picsum.photos/id/20/600/400"
+            src="~@/assets/images/carousel-01.jpg"
             class="d-block"
             alt="..."
           />
@@ -56,7 +72,18 @@
         </div>
         <div class="carousel-item" data-bs-interval="3000">
           <img
-            src="https://picsum.photos/id/30/600/400"
+            src="~@/assets/images/carousel-02.jpg"
+            class="d-block"
+            alt="..."
+          />
+          <div class="carousel-caption">
+            <h5>Third slide label</h5>
+            <p>Some representative placeholder content for the third slide.</p>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img
+            src="~@/assets/images/carousel-03.jpg"
             class="d-block"
             alt="..."
           />

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="toast-container position-fixed pe-3 pt-3 top-0 end-0"
+    class="toast-container position-fixed pe-3 pt-3 top-0 end-0 mt-5"
     style="z-index: 1600"
   >
     <div

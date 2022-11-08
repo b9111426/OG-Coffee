@@ -43,16 +43,6 @@
               聯絡我們</router-link
             >
           </li>
-          <li class="nav-item mx-1">
-            <router-link
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              to="/newer"
-            >
-              <i class="bi bi-search"></i>
-              找產品</router-link
-            >
-          </li>
         </ul>
       </div>
       <ul class="d-flex d-lg-none me-auto">
@@ -104,11 +94,6 @@
           <li class="nav-item">
             <router-link class="nav-link px-2" to="/quest"
               >常見問題</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link px-2" to="/newer"
-              >新手專區</router-link
             >
           </li>
         </ul>
@@ -166,11 +151,6 @@
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/quest"
                   >常見問題</router-link
-                >
-              </li>
-              <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/newer"
-                  >新手專區</router-link
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
