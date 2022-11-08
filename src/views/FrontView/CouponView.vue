@@ -1,6 +1,6 @@
 <template>
   <div class="container py-5">
-    <p class="mb-5">登入取得優惠卷</p>
+    <h4 class="mb-5 text-tertiary">登入取得優惠卷</h4>
 
     <div class="row row-cols-lg-2 row-cols-1 g-3">
       <div
@@ -38,6 +38,7 @@
             @click="takeCoupon(i)"
           >
             領取
+            <i v-if="idAry.indexOf(i.id) !== -1" class="bi bi-check-lg"></i>
           </button>
           <div
             class="coupon-bg position-relative"
@@ -65,12 +66,14 @@ export default {
   components: { Pagination },
   data() {
     return {
-      currentPage: 1
+      currentPage: 1,
+      idAry: []
     }
   },
   created() {
     this.$store.dispatch('handLoading', true)
     this.checkLogin()
+    this.handIdAry()
   },
   methods: {
     async getCoupons(page = 1) {
@@ -106,6 +109,7 @@ export default {
       const data = JSON.parse(localStorage.getItem('myCoupon'))
       if (data === null) {
         const obj = []
+        this.idAry.push(item.id)
         obj.push(item)
         localStorage.setItem('myCoupon', JSON.stringify(obj))
         this.$store.dispatch('fireToast', {
@@ -118,6 +122,7 @@ export default {
         })
         if (ary.length === 0) {
           data.push(item)
+          this.idAry.push(item.id)
           localStorage.setItem('myCoupon', JSON.stringify(data))
           this.$store.dispatch('fireToast', {
             title: `「${item.title}」優惠卷已領取`,
@@ -130,7 +135,15 @@ export default {
           })
         }
       }
-    }, 1000)
+    }, 1000),
+    handIdAry() {
+      const data = JSON.parse(localStorage.getItem('myCoupon'))
+      if (data !== null) {
+        data.forEach((i) => {
+          this.idAry.push(i.id)
+        })
+      }
+    }
   },
   computed: {
     coupons() {

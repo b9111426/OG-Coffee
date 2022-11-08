@@ -1,3 +1,5 @@
 <template>
-  <h2>關於橘子</h2>
+  <div class="container py-5">
+    <h4 class="mb-5 text-tertiary">關於橘子</h4>
+  </div>
 </template>

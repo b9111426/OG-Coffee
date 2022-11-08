@@ -218,7 +218,7 @@
             <div class="card-body border-bottom">
               <div class="d-flex flex-column">
                 <p class="me-auto mb-2">
-                  優惠卷:
+                  已領取的優惠卷:
                   <span v-if="myCoupons === null">目前無優惠卷</span>
                 </p>
                 <div class="d-block">
