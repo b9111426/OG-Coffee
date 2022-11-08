@@ -109,7 +109,7 @@ export default {
         const { token, expired } = res.data
         document.cookie = `ogCoffeeToken=${token}; expires=${new Date(expired)}`
         this.$store.dispatch('fireToast', { res, title: '登入成功' })
-        this.$router.push('/admin')
+        this.$router.push(this.toPage)
       } catch (err) {
         this.$store.dispatch('fireToast', { res: err.response })
       }
@@ -156,6 +156,11 @@ export default {
   },
   created() {
     this.$store.dispatch('handLoading', true)
+  },
+  computed: {
+    toPage() {
+      return this.$store.getters['toPage']
+    }
   }
 }
 </script>

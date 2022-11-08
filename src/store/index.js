@@ -8,10 +8,24 @@ import Articles from './Articles/index'
 import Components from './Components/index'
 
 export default createStore({
-  state: {},
-  actions: {},
-  mutations: {},
-  getters: {},
+  state: {
+    toPage: ''
+  },
+  actions: {
+    toPage({ commit }, str) {
+      commit('handToPage', str)
+    }
+  },
+  mutations: {
+    handToPage(state, str) {
+      state.toPage = str
+    }
+  },
+  getters: {
+    toPage(state) {
+      return state.toPage
+    }
+  },
   modules: {
     Products,
     Orders,

@@ -1,6 +1,6 @@
 <template>
   <div class="container py-5">
-    <h4 class="mb-5">登入取得優惠卷</h4>
+    <p class="mb-5">登入取得優惠卷</p>
 
     <div class="row row-cols-lg-2 row-cols-1 g-3">
       <div
@@ -84,6 +84,7 @@ export default {
           this.getCoupons()
         } catch (err) {
           this.$store.dispatch('fireToast', { title: '請重新登入' })
+          this.$store.dispatch('toPage', '/coupon')
           this.$router.push('/login')
         }
       } else {

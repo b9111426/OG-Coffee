@@ -33,6 +33,7 @@ export default {
           this.checkSuccess = true
         } catch (err) {
           this.$store.dispatch('fireToast', { title: '請重新登入' })
+          this.$store.dispatch('toPage', '/admin')
           this.$router.push('/login')
         }
       } else {
