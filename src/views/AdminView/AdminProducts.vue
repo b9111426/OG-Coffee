@@ -60,7 +60,7 @@
                     ></div>
                     <img
                       class="pre-pic img-thumbnail"
-                      v-src="item.imageUrl[0]"
+                      v-src="[item.imageUrl]"
                       alt="縮圖"
                     />
                   </div>

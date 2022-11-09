@@ -25,7 +25,7 @@
             <div class="order-0 order-lg-0 col-lg-3 col-10 d-flex py-2">
               <img
                 class="pre-pic img-thumbnail"
-                v-src="i.product.imageUrl[0]"
+                v-src="[i.product.imageUrl]"
                 alt="縮圖"
               />
               <div class="ms-1 text-start">
