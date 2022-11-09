@@ -42,7 +42,7 @@
                 <td>{{ item.title }}</td>
                 <td>{{ item.author }}</td>
                 <td>{{ item.description }}</td>
-                <td>{{ $filters.date(item.create_at) }}</td>
+                <td><span v-date="item.create_at"></span></td>
                 <td class="d-none d-lg-table-cell">
                   <div class="ps-4">
                     <div class="form-check d-flex justify-content-start">
