@@ -141,7 +141,7 @@
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/about"
-                  >關於橘子</router-link
+                  >橘子專欄</router-link
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
