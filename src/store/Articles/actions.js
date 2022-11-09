@@ -3,7 +3,8 @@ import {
   apiGetArticle,
   apiDeleteArticle,
   apiModifyArticle,
-  apiAddArticle
+  apiAddArticle,
+  apiFrontGetArticle
 } from '@/api'
 
 export default {
@@ -36,5 +37,9 @@ export default {
   async addArticle(context, article) {
     const res = await apiAddArticle(article)
     return res
+  },
+  async frontGetArticle({ commit }, page) {
+    const res = await apiFrontGetArticle(page)
+    commit('handFrontArticle', res)
   }
 }

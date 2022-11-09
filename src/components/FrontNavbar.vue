@@ -34,14 +34,10 @@
             </router-link>
           </li>
           <li class="nav-item mx-1">
-            <router-link
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              to="/about"
-            >
+            <a href="javascript:;" class="btn btn-outline-primary btn-sm"
+              >聯絡我們
               <i class="bi bi-chat-text-fill"></i>
-              聯絡我們</router-link
-            >
+            </a>
           </li>
         </ul>
       </div>
@@ -154,9 +150,7 @@
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/about">
-                  聯絡我們</router-link
-                >
+                <a href="javascript:;" class="px-2">聯絡我們</a>
               </li>
             </ul>
           </div>

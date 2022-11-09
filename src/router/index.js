@@ -33,7 +33,7 @@ const routes = [
       },
       {
         path: 'about',
-        component: () => import('../views/FrontView/AboutOG.vue')
+        component: () => import('../views/FrontView/ArticleView.vue')
       },
       {
         path: 'quest',

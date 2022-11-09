@@ -24,9 +24,9 @@
           <table class="table mt-4 table-hover">
             <thead>
               <tr class="table-light">
-                <th class="text-nowrap" width="200">標題</th>
-                <th class="text-nowrap" width="200">作者</th>
-                <th class="text-nowrap">描述</th>
+                <th class="text-nowrap">標題</th>
+                <th class="text-nowrap px-2" width="200">作者</th>
+                <th class="text-nowrap d-none d-lg-table-cell">描述</th>
                 <th class="text-nowrap" width="100">建立時間</th>
                 <th
                   class="text-center d-none d-lg-table-cell text-nowrap px-3"
@@ -39,9 +39,9 @@
             </thead>
             <tbody>
               <tr v-for="item in articles" :key="item.id">
-                <td>{{ item.title }}</td>
-                <td>{{ item.author }}</td>
-                <td>{{ item.description }}</td>
+                <td class="text-nowrap">{{ item.title }}</td>
+                <td class="text-nowrap">{{ item.author }}</td>
+                <td class="d-none d-lg-table-cell">{{ item.description }}</td>
                 <td><span v-date="item.create_at"></span></td>
                 <td class="d-none d-lg-table-cell">
                   <div class="ps-4">

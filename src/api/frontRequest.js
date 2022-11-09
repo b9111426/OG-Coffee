@@ -24,6 +24,9 @@ export const deleteCartRequest = (id) => frontApi.delete(`/cart/${id}`)
 export const addCartRequest = (data) => frontApi.post('/cart', { data })
 export const modifyCartRequest = (id, data) => frontApi.put(`/cart/${id}`, data)
 
-//付款
+//文章
+export const getFrontArticleRequest = (page) =>
+  frontApi.get(`/articles/?page=${page}`)
 
+//付款
 export const payOrderRequest = (id) => frontApi.post(`/pay/${id}`)
