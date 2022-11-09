@@ -21,7 +21,9 @@
           </button>
         </div>
         <div class="d-none d-lg-block">
-          <p class="border-bottom py-2 border-gray-dark position-relative">
+          <p
+            class="border-bottom py-2 border-gray-dark position-relative select-none"
+          >
             分類
             <span>
               <img
@@ -34,7 +36,7 @@
           </p>
           <div class="p-3" v-for="(i, idx) in categoryList" :key="idx + 5678">
             <a
-              class="collapsed fw-bold"
+              class="collapsed fw-bold select-none"
               data-bs-toggle="collapse"
               :href="`#collapse${idx}`"
             >
@@ -56,7 +58,7 @@
             >
               <a
                 href="#"
-                class="d-flex justify-content-between ms-2"
+                class="d-flex justify-content-between ms-2 select-none"
                 @click="renderSubCategory($event)"
                 :data-sub_category="x.category"
                 :data-category="i.category"
@@ -87,7 +89,7 @@
         <!--麵包屑-->
         <div class="d-flex align-items-center justify-content-start mb-3">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" ref="breadcrumb">
+            <ol class="breadcrumb select-none" ref="breadcrumb">
               <li class="breadcrumb-item">
                 <a href="javascript:;" @click="setAllProducts"> 全部商品 </a>
               </li>
@@ -116,10 +118,10 @@
             class="ms-5 link-dark border-bottom border-primary ms-auto"
             @click="switchSort"
           >
-            <span v-show="!sortRise" class="text-primary"
+            <span v-show="!sortRise" class="text-primary select-none"
               >價格由高至低<i class="bi bi-chevron-down ps-1"></i
             ></span>
-            <span v-show="sortRise" class="text-primary"
+            <span v-show="sortRise" class="text-primary select-none"
               >價格由低至高<i class="bi bi-chevron-up ps-1"></i
             ></span>
           </a>
