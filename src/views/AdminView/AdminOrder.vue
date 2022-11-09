@@ -1,6 +1,6 @@
 <template>
-  <h2>後台訂單</h2>
-  <div class="container">
+  <div class="container py-3">
+    <h2>後台訂單</h2>
     <div class="row mt-4">
       <div class="col-12 d-flex align-items-center mb-2 mb-lg-0">
         <div class="bg-white p-2 rounded text-dark">
@@ -170,18 +170,19 @@ export default {
     },
     updatePaid: _.debounce(async function (item) {
       this.isLoading = true
-      if (item.is_paid) {
-        item.paid_date = new Date().toLocaleDateString()
-      } else {
-        item.paid_date = ''
-      }
 
       const data = {
         id: item.id,
         order: item
       }
       try {
-        const res = await this.$store.dispatch('Orders/modifyOrder', data)
+        let res = null
+        if (item.is_paid) {
+          res = await this.$store.dispatch('Orders/payOrder', item.id)
+        } else {
+          item.paid_date = ''
+          res = await this.$store.dispatch('Orders/modifyOrder', data)
+        }
         this.isLoading = false
         await this.getOrders(this.currentPage)
         const orderComponent = this.$refs.orderModal

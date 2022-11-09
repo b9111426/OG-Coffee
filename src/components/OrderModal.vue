@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal scale-in-center"
+    class="modal slide-in-fwd-center"
     id="productModal"
     tabindex="-1"
     role="dialog"
@@ -115,8 +115,10 @@
                     <tr>
                       <th>付款時間</th>
                       <td>
-                        <span v-if="tempOrder.paid_date">
-                          {{ tempOrder.paid_date }}
+                        <span
+                          v-if="tempOrder.paid_date"
+                          v-date="tempOrder.paid_date"
+                        >
                         </span>
                         <span v-else>尚未付款</span>
                       </td>

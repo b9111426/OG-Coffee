@@ -1,6 +1,6 @@
 <template>
-  <h2>文章</h2>
-  <div class="container">
+  <div class="container py-3">
+    <h2>文章</h2>
     <div class="row mt-4">
       <div
         class="col-12 d-flex align-items-center justify-content-between mb-2 mb-lg-0"

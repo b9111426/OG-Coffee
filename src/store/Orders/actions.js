@@ -2,7 +2,8 @@ import {
   apiGetOrder,
   apiModifyOrder,
   apiDeleteOrder,
-  apiPostOrder
+  apiPostOrder,
+  apiPayOrder
 } from '@/api'
 export default {
   async getOrders({ commit }, page) {
@@ -32,5 +33,9 @@ export default {
       num += res.data.orders.length
     }
     context.commit('handAllOrders', num)
+  },
+  async payOrder(context, id) {
+    const res = await apiPayOrder(id)
+    return res
   }
 }

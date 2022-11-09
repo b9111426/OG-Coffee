@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container pb-3 mt-5">
     <div class="row">
       <ul class="progress_nav my-3" ref="progressNav">
         <a

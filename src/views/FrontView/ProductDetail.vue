@@ -129,21 +129,19 @@ export default {
       this.qty = val
     },
     addToCart: _.debounce(async function (string) {
-      let num = 999 - this.cartQty
-      if (num === 0) {
+      const limit = 999 - this.cartQty
+      if (limit === 0) {
         this.$store.dispatch('fireToast', {
           title: '商品數量已達上限',
           style: 'danger'
         })
         return
-      } else if (num === 999) {
-        num = this.qty
       }
 
       this.isLoading = true
       const data = {
         product_id: this.product.id,
-        qty: num
+        qty: this.qty
       }
       try {
         const res = await this.$store.dispatch('Cart/addCart', data)
