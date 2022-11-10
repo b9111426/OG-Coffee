@@ -32,8 +32,12 @@ const routes = [
         component: () => import('../views/FrontView/CouponView.vue')
       },
       {
-        path: 'about',
+        path: 'article',
         component: () => import('../views/FrontView/ArticleView.vue')
+      },
+      {
+        path: 'article/:id',
+        component: () => import('../views/FrontView/ArticleDetail.vue')
       },
       {
         path: 'quest',

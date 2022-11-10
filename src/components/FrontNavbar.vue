@@ -83,7 +83,7 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link px-2" to="/about"
+            <router-link class="nav-link px-2" to="/article"
               >橘子專欄</router-link
             >
           </li>
@@ -140,7 +140,7 @@
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/about"
+                <router-link class="nav-link px-2" to="/article"
                   >橘子專欄</router-link
                 >
               </li>

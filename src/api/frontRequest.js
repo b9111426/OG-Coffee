@@ -28,5 +28,7 @@ export const modifyCartRequest = (id, data) => frontApi.put(`/cart/${id}`, data)
 export const getFrontArticleRequest = (page) =>
   frontApi.get(`/articles/?page=${page}`)
 
+export const getArticleDetailRequest = (id) => frontApi.get(`/article/${id}`)
+
 //付款
 export const payOrderRequest = (id) => frontApi.post(`/pay/${id}`)

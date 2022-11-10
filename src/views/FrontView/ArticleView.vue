@@ -10,7 +10,7 @@
         >
           <img
             class="article-pic w-100 mb-2 border border-gray"
-            :src="i.imageUrl"
+            v-src="i.imageUrl"
             alt=""
           />
           <h5 class="my-3 text-tertiary">{{ i.title }}</h5>
@@ -27,7 +27,7 @@
             </p>
 
             <div class="text-start">
-              <a href="javascript:;">更多...</a>
+              <a href="javascript:;" @click="toNewRouter(i.id)">更多...</a>
             </div>
           </div>
         </div>
@@ -55,6 +55,9 @@ export default {
       } catch (err) {
         throw new Error(err)
       }
+    },
+    toNewRouter(id) {
+      this.$router.push({ path: `article/${id}` })
     }
   },
   computed: {

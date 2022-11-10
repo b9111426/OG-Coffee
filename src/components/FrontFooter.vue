@@ -11,7 +11,7 @@
             />
           </router-link>
         </div>
-        <div class="col">
+        <div class="col d-none d-lg-block">
           <h4 class="text-start mb-2">快速連結</h4>
           <ul class="text-start">
             <li>

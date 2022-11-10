@@ -11,7 +11,8 @@ import {
   postOrderRequest,
   postCouponRequest,
   payOrderRequest,
-  getFrontArticleRequest
+  getFrontArticleRequest,
+  getArticleDetailRequest
 } from './frontRequest'
 import {
   checkRequest,
@@ -51,6 +52,7 @@ export const apiPostOrder = postOrderRequest
 export const apiPostCoupon = postCouponRequest
 export const apiPayOrder = payOrderRequest
 export const apiFrontGetArticle = getFrontArticleRequest
+export const apiGetArticleDetail = getArticleDetailRequest
 
 //admin
 export const apiCheckRequest = checkRequest

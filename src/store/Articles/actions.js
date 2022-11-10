@@ -4,7 +4,8 @@ import {
   apiDeleteArticle,
   apiModifyArticle,
   apiAddArticle,
-  apiFrontGetArticle
+  apiFrontGetArticle,
+  apiGetArticleDetail
 } from '@/api'
 
 export default {
@@ -41,5 +42,9 @@ export default {
   async frontGetArticle({ commit }, page) {
     const res = await apiFrontGetArticle(page)
     commit('handFrontArticle', res)
+  },
+  async getArticleDetail(context, id) {
+    const res = await apiGetArticleDetail(id)
+    return res
   }
 }
