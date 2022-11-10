@@ -40,8 +40,6 @@
             data-bs-interval="6000"
           >
             <video
-              width="100%"
-              height="100%"
               preload="auto"
               autoplay
               muted
@@ -158,6 +156,8 @@ export default {
 }
 video {
   display: block;
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
   object-position: center;
 }
