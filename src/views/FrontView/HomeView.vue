@@ -36,10 +36,17 @@
         </div>
         <div class="carousel-inner">
           <div
-            class="carousel-item overflow-hidden active bg-primary"
+            class="carousel-item overflow-hidden active bg-primary w-100"
             data-bs-interval="6000"
           >
-            <video autoplay muted loop preload="metadata" playsinline>
+            <video
+              autoplay
+              muted
+              loop
+              preload="metadata"
+              playsinline
+              class="w-100 h-100"
+            >
               <source
                 type="video/mp4"
                 src="https://joy.videvo.net/videvo_files/video/free/2020-03/large_watermarked/200312_pl_01_4k_020_preview.mp4"
@@ -151,8 +158,6 @@ export default {
 }
 video {
   display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: center;
 }
