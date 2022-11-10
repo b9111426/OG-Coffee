@@ -333,4 +333,8 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.ck-editor__editable_inline {
+  min-height: 300px;
+}
+</style>

@@ -90,6 +90,7 @@ export default {
         /(?:(?:^|.*;\s*)ogCoffeeToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
+
       if (token) {
         try {
           await apiCheckRequest(token)
@@ -101,6 +102,7 @@ export default {
           this.$router.push('/login')
         }
       } else {
+        this.$store.dispatch('toPage', '/coupon')
         this.$store.dispatch('fireToast', { title: '請先登入' })
         this.$router.push('/login')
       }

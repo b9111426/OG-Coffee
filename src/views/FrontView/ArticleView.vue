@@ -1,20 +1,16 @@
 <template>
   <div class="container py-5">
     <h4 class="mb-5 text-tertiary">橘子專欄</h4>
-    <div class="row row-cols-lg-4 row-cols-1 g-2">
-      <div class="col">
-        <div
-          v-for="i in articles"
-          :key="i.id"
-          class="articleBox bg-light p-2 shadow"
-        >
+    <div class="row row-cols-lg-4 row-cols-1 g-4">
+      <div class="col" v-for="i in articles" :key="i.id">
+        <div class="articleBox bg-light p-2 shadow h-100 d-flex flex-column">
           <img
             class="article-pic w-100 mb-2 border border-gray"
             v-src="i.imageUrl"
             alt=""
           />
-          <h5 class="my-3 text-tertiary">{{ i.title }}</h5>
-          <div class="px-3 mb-3">
+          <h5 class="my-3 text-tertiary text-start">{{ i.title }}</h5>
+          <div class="px-3 mb-3 mt-auto">
             <div class="text-start mb-2">
               <a href="javascript:;" v-for="(x, idx) in i.tag" :key="idx + 2345"
                 >#{{ x }}</a
@@ -23,7 +19,7 @@
 
             <p class="text-start d-flex justify-content-between mb-2">
               <span v-date="i.create_at"></span>
-              <span>{{ i.author }}</span>
+              <span class="text-break">{{ i.author }}</span>
             </p>
 
             <div class="text-start">
@@ -33,10 +29,19 @@
         </div>
       </div>
     </div>
+
+    <!-- 分頁 -->
+    <Pagination
+      class="mt-4"
+      :pages="pagination"
+      @emit-pages="getArticles"
+    ></Pagination>
   </div>
 </template>
 <script>
+import Pagination from '@/components/Pagination.vue'
 export default {
+  components: { Pagination },
   data() {
     return {
       currentPage: 1
@@ -74,5 +79,7 @@ export default {
 .article-pic {
   object-fit: cover;
   object-position: center;
+  min-height: 250px;
+  max-height: 250px;
 }
 </style>

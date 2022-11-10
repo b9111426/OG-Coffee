@@ -29,6 +29,7 @@ export default {
     this.$store.dispatch('handLoading', true)
     this.getArticleDetail()
   },
+  mounted() {},
   methods: {
     async getArticleDetail() {
       const { id } = this.$route.params

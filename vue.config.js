@@ -1,9 +1,9 @@
 const path = require('path')
-const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin')
+//const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin')
 const { styles } = require('@ckeditor/ckeditor5-dev-utils')
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/OG-Coffee/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/og-coffee/' : '/',
   // The source of CKEditor is encapsulated in ES6 modules. By default, the code
   // from the node_modules directory is not transpiled, so you must explicitly tell
   // the CLI tools to transpile JavaScript files in all ckeditor5-* modules.
@@ -12,13 +12,12 @@ module.exports = {
   configureWebpack: {
     plugins: [
       // CKEditor needs its own plugin to be built using webpack.
-      new CKEditorWebpackPlugin({
-        // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
-        language: 'zh',
-
-        // Append translations to the file matching the `app` name.
-        translationsOutputFile: /app/
-      })
+      //new CKEditorWebpackPlugin({
+      //  // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
+      //  language: 'zh',
+      //  // Append translations to the file matching the `app` name.
+      //  translationsOutputFile: /app/
+      //})
     ]
   },
 
