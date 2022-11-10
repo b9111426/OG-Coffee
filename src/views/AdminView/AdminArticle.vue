@@ -163,13 +163,13 @@ export default {
       }
     },
     async openArticleModal(isNew, id) {
+      this.isNew = isNew
       if (isNew) {
         this.tempArticle = {
           isPublic: false,
           create_at: new Date().getTime() / 1000,
           tag: []
         }
-        this.isNew = true
       } else {
         try {
           const res = await this.$store.dispatch('Articles/getArticle', id)

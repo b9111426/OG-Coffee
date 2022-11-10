@@ -333,23 +333,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.ck-editor__editable_inline {
-  min-height: 300px;
-}
-
-.ck-content .table {
-  width: auto;
-}
-
-.ck.ck-content ul,
-.ck.ck-content ul li {
-  list-style-type: inherit;
-}
-
-.ck.ck-content ul,
-.ck.ck-content ol {
-  /* Default user agent stylesheet, you can change it to your needs. */
-  padding-left: 40px !important;
-}
-</style>
+<style lang="scss"></style>
