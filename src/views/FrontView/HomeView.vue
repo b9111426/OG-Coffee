@@ -39,7 +39,7 @@
             class="carousel-item overflow-hidden active bg-primary"
             data-bs-interval="6000"
           >
-            <video autoplay muted loop preload="metadata">
+            <video autoplay muted loop preload="metadata" playsinline>
               <source
                 type="video/mp4"
                 src="https://joy.videvo.net/videvo_files/video/free/2020-03/large_watermarked/200312_pl_01_4k_020_preview.mp4"
