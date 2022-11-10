@@ -39,7 +39,14 @@
             class="carousel-item overflow-hidden active bg-primary w-100"
             data-bs-interval="6000"
           >
-            <video autoplay muted playsinline class="w-100 h-100">
+            <video
+              width="100%"
+              height="100%"
+              preload="auto"
+              autoplay
+              muted
+              playsinline
+            >
               <source
                 type="video/mp4"
                 src="https://joy.videvo.net/videvo_files/video/free/2020-03/large_watermarked/200312_pl_01_4k_020_preview.mp4"
