@@ -27,7 +27,6 @@ export default {
         /(?:(?:^|.*;\s*)ogCoffeeToken\s*=\s*([^;]*).*$)|^.*$/,
         '$1'
       )
-      console.log('token', token)
       if (token) {
         try {
           await apiCheckRequest(token)
