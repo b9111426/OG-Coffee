@@ -1,7 +1,9 @@
 <template>
   <FrontNavbar></FrontNavbar>
   <div class="box">
-    <router-view class="content"></router-view>
+    <div class="content">
+      <router-view></router-view>
+    </div>
     <FrontFooter></FrontFooter>
   </div>
 </template>
