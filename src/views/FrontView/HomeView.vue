@@ -179,20 +179,45 @@
         </div>
       </div>
     </div>
+
+    <div class="row row-cols-lg-2 row-cols-1 mb-5">
+      <div class="col mb-3 mb-lg-0">
+        <img
+          class="ab-pic img-fluid img-thumbnail w-100"
+          v-src="
+            'https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+          "
+          alt=""
+        />
+      </div>
+      <div class="col d-flex flex-column justify-content-center">
+        <h3>關於橘子咖啡</h3>
+        <p class="mb-4 h5">about OG-Coffee</p>
+        <p class="text-start">
+          每個夢想都始於一杯新鮮的咖啡。 在 about
+          OG-Coffee，我們的夢想是在最舒適的空間中創造出最好的咖啡。
+          我們想邀請大家過來與我們分享他們的夢想
+        </p>
+      </div>
+    </div>
+
+    <section class="mb-5">
+      <p class="text-start">熱銷商品</p>
+      <HotProducts></HotProducts>
+    </section>
   </div>
 </template>
 
 <script>
+import HotProducts from '@/components/HotProducts.vue'
 export default {
   inject: ['emitter'],
+  components: { HotProducts },
   data() {
     return {}
   },
   created() {
     this.$store.dispatch('handLoading', true)
-  },
-  mounted() {
-    this.$store.dispatch('handLoading', false)
   }
 }
 </script>
@@ -217,5 +242,9 @@ video {
   object-fit: cover;
   object-position: center;
   height: 250px;
+}
+
+.ab-pic {
+  min-height: 300px;
 }
 </style>

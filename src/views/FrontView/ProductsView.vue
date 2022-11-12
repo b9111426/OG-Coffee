@@ -2,6 +2,7 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-lg-3 col-12 py-2">
+        <!--收尋功能-->
         <div class="input-group mb-3">
           <input
             type="text"
@@ -20,6 +21,8 @@
             <i class="bi bi-search"></i>
           </button>
         </div>
+
+        <!--分類篩選-->
         <div class="d-none d-lg-block">
           <p
             class="border-bottom py-2 border-gray-dark position-relative select-none"
@@ -86,8 +89,8 @@
         </div>
       </div>
       <div class="col-lg-9 col-12 py-2">
-        <!--麵包屑-->
         <div class="d-flex align-items-center justify-content-start mb-3">
+          <!--麵包屑-->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb select-none" ref="breadcrumb">
               <li class="breadcrumb-item">
@@ -112,6 +115,8 @@
               </template>
             </ol>
           </nav>
+
+          <!--排序功能-->
           <a
             v-show="sortState"
             href="javascript:;"
