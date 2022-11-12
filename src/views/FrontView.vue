@@ -18,6 +18,17 @@ export default {
   },
   created() {
     this.$store.dispatch('handLoading', true)
+    this.getAllProducts()
+  },
+  methods: {
+    async getAllProducts() {
+      try {
+        await this.$store.dispatch('Products/getFrontAllProduct')
+      } catch (err) {
+        this.$store.dispatch('handLoading', false)
+        throw new Error(err)
+      }
+    }
   }
 }
 </script>

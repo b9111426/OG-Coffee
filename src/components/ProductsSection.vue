@@ -68,18 +68,9 @@ export default {
     return {}
   },
   created() {
-    this.getAllProducts()
+    this.getProducts(1, '飲品')
   },
   methods: {
-    async getAllProducts() {
-      try {
-        await this.$store.dispatch('Products/getFrontAllProduct')
-        this.getProducts(1, '飲品')
-      } catch (err) {
-        this.$store.dispatch('handLoading', false)
-        throw new Error(err)
-      }
-    },
     getProducts: _.debounce(async function (page = 1, category) {
       try {
         const data = { page, category }

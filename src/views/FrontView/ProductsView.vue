@@ -60,7 +60,7 @@
               :id="`collapse${idx}`"
             >
               <a
-                href="#"
+                href="javascript:;"
                 class="d-flex justify-content-between ms-2 select-none"
                 @click="renderSubCategory($event)"
                 :data-sub_category="x.category"
@@ -160,7 +160,9 @@ export default {
     }
   },
   created() {
-    this.getAllProducts()
+    this.getProducts(1, this.firstCategory)
+
+    this.breadcrumb.push(this.firstCategory)
     this.$store.dispatch('handLoading', true)
   },
   methods: {
@@ -181,17 +183,7 @@ export default {
         throw new Error(err)
       }
     }, 500),
-    async getAllProducts() {
-      try {
-        await this.$store.dispatch('Products/getFrontAllProduct')
-        const firstCategory = this.categoryList[0].category
-        this.getProducts(1, firstCategory)
-        this.breadcrumb.push(firstCategory)
-      } catch (err) {
-        this.$store.dispatch('handLoading', false)
-        throw new Error(err)
-      }
-    },
+
     renderCategory(e) {
       const category = e.currentTarget.dataset.category
       this.breadcrumb = []
@@ -227,8 +219,8 @@ export default {
       const category = e.currentTarget.dataset.category
       this.breadcrumb = [category, subCategory]
       this.$store.dispatch('Products/searchSubCategory', subCategory)
-      this.$router.push('/products')
       this.$store.dispatch('Products/setSortState', true)
+      this.$router.push('/products')
     },
     switchSort() {
       this.sortRise = !this.sortRise
@@ -244,6 +236,14 @@ export default {
     },
     sortState() {
       return this.$store.getters['Products/sortState']
+    },
+    firstCategory() {
+      return this.$store.getters['Products/firstCategory']
+    }
+  },
+  watch: {
+    firstCategory(val) {
+      this.getProducts(1, val)
     }
   }
 }

@@ -72,10 +72,26 @@
       >
       <div class="navBottom me-auto">
         <ul class="navbar-nav d-lg-flex d-none flex-row mb-lg-0">
-          <li class="nav-item">
-            <router-link class="nav-link px-2" to="/products"
-              >所有商品</router-link
+          <li class="d-list nav-item position-relative">
+            <a href="javascript:;" class="nav-link px-2" @click="toProduct"
+              >所有商品 <i class="bi bi-caret-down-fill fs-7"></i
+            ></a>
+            <ul
+              class="d-menu text-start position-absolute bg-white p-1 border shadow start-50"
             >
+              <li
+                class="position-relative"
+                v-for="(i, idx) in categoryList"
+                :key="idx + 35343"
+              >
+                <a
+                  class="px-1 d-block text-nowrap"
+                  href="javascript:;"
+                  @click="selectList(i.category)"
+                  >{{ i.category }}</a
+                >
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <router-link class="nav-link px-2" to="/coupon"
@@ -130,8 +146,8 @@
           <div class="navBottom">
             <ul class="navbar-nav">
               <li class="nav-item" data-bs-dismiss="offcanvas">
-                <router-link class="nav-link px-2" to="/products"
-                  >所有商品</router-link
+                <a href="javascript:;" class="nav-link px-2" @click="toProduct"
+                  >所有商品</a
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
@@ -165,6 +181,16 @@ export default {
   methods: {
     async getCart() {
       await this.$store.dispatch('Cart/getCart')
+    },
+    selectList(val) {
+      this.$store.dispatch('Products/setFirstCategory', val)
+      this.$store.dispatch('Products/setSubCategory', '')
+      this.$store.dispatch('Products/setSortState', true)
+      this.$router.push('/products')
+    },
+    async toProduct() {
+      this.$store.dispatch('Products/setFirstCategory', '')
+      this.$router.push('/products')
     }
   },
   computed: {
@@ -178,6 +204,9 @@ export default {
     },
     isShake() {
       return this.$store.getters['Cart/isShake']
+    },
+    categoryList() {
+      return this.$store.getters['Products/category']
     }
   },
   created() {
@@ -221,5 +250,23 @@ export default {
 .cartBadge {
   height: 20px;
   width: 20px;
+}
+
+.d-list:hover .d-menu {
+  display: block;
+}
+.d-menu {
+  display: none;
+  transform: translate(-50px, 0);
+  min-width: 100px;
+}
+
+.d-menu ul {
+  min-width: 100px;
+  display: none;
+}
+
+.d-menu > li:hover > ul {
+  display: block;
 }
 </style>

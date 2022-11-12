@@ -22,5 +22,8 @@ export default {
   },
   notFound(state) {
     return state.notFound
+  },
+  firstCategory(state) {
+    return state.firstCategory
   }
 }

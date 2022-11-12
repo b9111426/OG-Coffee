@@ -12,7 +12,8 @@ export default {
     categoryList: [],
     isLoading: false,
     isSortShow: true,
-    notFound: ''
+    notFound: '',
+    firstCategory: ''
   },
   actions,
   mutations,

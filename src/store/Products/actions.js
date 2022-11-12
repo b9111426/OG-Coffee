@@ -33,6 +33,9 @@ export default {
   setTempProduct({ commit }, category) {
     commit('handTempProduct', category)
   },
+  setFirstCategory({ commit }, str) {
+    commit('handFirstCategory', str)
+  },
   async getFrontProducts({ commit }, data) {
     let { category, page } = data
     let res = null

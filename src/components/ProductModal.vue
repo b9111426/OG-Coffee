@@ -8,7 +8,9 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-primary">
-          <h5 class="modal-title">{{ product.title }}</h5>
+          <h5 class="modal-title text-white">
+            {{ product.title }}
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -236,5 +238,9 @@ export default {
 <style lang="scss" scoped>
 .subImg {
   cursor: pointer;
+}
+.modal-body {
+  max-height: 350px;
+  overflow: auto;
 }
 </style>

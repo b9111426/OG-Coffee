@@ -138,5 +138,8 @@ export default {
       ary.push(res.data.products[i])
     })
     state.allProducts = ary
+  },
+  handFirstCategory(state, str) {
+    state.firstCategory = str
   }
 }
