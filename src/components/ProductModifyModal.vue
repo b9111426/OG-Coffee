@@ -1,11 +1,9 @@
 <template>
   <div
-    id="productModal"
+    id="productModifyModal"
     ref="modal"
     class="modal scale-in-center"
     tabindex="-1"
-    aria-labelledby="productModalLabel"
-    aria-hidden="true"
   >
     <div
       class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable text-start"

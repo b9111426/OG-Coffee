@@ -12,14 +12,16 @@
             :class="{ 'card-link': !item.is_soldOut }"
             @click="toNewRouter(item.id, item.is_soldOut)"
           >
-            <div
-              class="card-pic position-relative d-inline-block overflow-hidden"
-            >
+            <div class="position-relative d-inline-block overflow-hidden">
               <div
                 v-if="item.is_soldOut"
                 class="position-absolute sellOutTag bg-danger start-50 top-50 translate-middle"
               ></div>
-              <img v-src="[item.imageUrl]" class="card-img-top" alt="..." />
+              <img
+                v-src="item.imageUrl === undefined ? '' : item.imageUrl[0]"
+                class="card-img-top"
+                alt="..."
+              />
             </div>
             <p
               v-if="!item.is_soldOut"
@@ -131,13 +133,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .card-link {
   cursor: pointer;
 }
-.card-pic {
-  object-fit: cover;
-  object-position: center;
-}
+
 .card-link > p {
   opacity: 0;
   text-shadow: 0 0 5px #000;
@@ -160,5 +160,13 @@ export default {
 }
 .btn-size {
   height: 35px;
+}
+.card-img-top {
+  height: 230px;
+  object-fit: cover;
+  object-position: center;
+  @include phone() {
+    height: 150px;
+  }
 }
 </style>

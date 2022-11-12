@@ -60,7 +60,9 @@
                     ></div>
                     <img
                       class="pre-pic img-thumbnail"
-                      v-src="[item.imageUrl]"
+                      v-src="
+                        item.imageUrl === undefined ? '' : item.imageUrl[0]
+                      "
                       alt="縮圖"
                     />
                   </div>

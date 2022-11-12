@@ -202,22 +202,33 @@
     </div>
 
     <section class="mb-5">
-      <p class="text-start">熱銷商品</p>
-      <HotProducts></HotProducts>
+      <h4 class="h4 text-primary">熱銷商品</h4>
+      <ProductsSection @open-modal="openModal"></ProductsSection>
     </section>
   </div>
+  <ProductModal ref="productModal"></ProductModal>
 </template>
 
 <script>
-import HotProducts from '@/components/HotProducts.vue'
+import ProductsSection from '@/components/ProductsSection.vue'
+import ProductModal from '@/components/ProductModal.vue'
 export default {
   inject: ['emitter'],
-  components: { HotProducts },
+  components: { ProductsSection, ProductModal },
   data() {
-    return {}
+    return {
+      id: ''
+    }
   },
   created() {
     this.$store.dispatch('handLoading', true)
+  },
+  methods: {
+    openModal(id) {
+      const modalComponent = this.$refs.productModal
+      modalComponent.openModal()
+      modalComponent.getProduct(id)
+    }
   }
 }
 </script>
