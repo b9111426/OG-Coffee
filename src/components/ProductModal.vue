@@ -236,11 +236,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .subImg {
   cursor: pointer;
 }
 .modal-body {
-  max-height: 350px;
-  overflow: auto;
+  @include pad() {
+    max-height: 350px;
+    overflow: auto;
+  }
 }
 </style>

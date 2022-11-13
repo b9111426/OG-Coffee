@@ -79,11 +79,7 @@
             <ul
               class="d-menu text-start position-absolute bg-white p-1 border shadow start-50"
             >
-              <li
-                class="position-relative"
-                v-for="(i, idx) in categoryList"
-                :key="idx + 35343"
-              >
+              <li v-for="(i, idx) in categoryList" :key="idx + 35343">
                 <a
                   class="px-1 d-block text-nowrap"
                   href="javascript:;"
@@ -145,10 +141,23 @@
         <div class="offcanvas-body">
           <div class="navBottom">
             <ul class="navbar-nav">
-              <li class="nav-item" data-bs-dismiss="offcanvas">
+              <li class="d-list nav-item" data-bs-dismiss="offcanvas">
                 <a href="javascript:;" class="nav-link px-2" @click="toProduct"
-                  >所有商品</a
+                  >所有商品
+                  <i class="bi bi-caret-down-fill fs-7"></i>
+                </a>
+                <ul
+                  class="d-menu text-center bg-primary p-1 border border-tertiary shadow start-50"
                 >
+                  <li v-for="(i, idx) in categoryList" :key="idx + 35343">
+                    <a
+                      class="px-1 d-block text-nowrap"
+                      href="javascript:;"
+                      @click="selectList(i.category)"
+                      >{{ i.category }}</a
+                    >
+                  </li>
+                </ul>
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
                 <router-link class="nav-link px-2" to="/coupon"
@@ -166,7 +175,7 @@
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
-                <a href="javascript:;" class="px-2">聯絡我們</a>
+                <a href="javascript:;" class="py-2 d-block">聯絡我們</a>
               </li>
             </ul>
           </div>
@@ -226,6 +235,9 @@ export default {
   &:focus {
     background-color: var(--primary);
     color: #fff;
+    @include pad() {
+      background-color: #555;
+    }
   }
 }
 .frontNavbar-logo {
@@ -259,14 +271,9 @@ export default {
   display: none;
   transform: translate(-50px, 0);
   min-width: 100px;
-}
-
-.d-menu ul {
-  min-width: 100px;
-  display: none;
-}
-
-.d-menu > li:hover > ul {
-  display: block;
+  @include pad() {
+    min-width: 100%;
+    transform: translate(0, 0);
+  }
 }
 </style>

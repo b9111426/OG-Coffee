@@ -23,7 +23,12 @@
             </p>
 
             <div class="text-start">
-              <a href="javascript:;" @click="toNewRouter(i.id)">更多...</a>
+              <a
+                class="link-danger"
+                href="javascript:;"
+                @click="toNewRouter(i.id)"
+                >更多...</a
+              >
             </div>
           </div>
         </div>
