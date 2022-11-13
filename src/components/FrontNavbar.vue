@@ -191,7 +191,9 @@
                 >
               </li>
               <li class="nav-item" data-bs-dismiss="offcanvas">
-                <a href="javascript:;" class="py-2 d-block">聯絡我們</a>
+                <a href="javascript:;" class="py-2 d-block" @click="openModal"
+                  >聯絡我們</a
+                >
               </li>
             </ul>
           </div>
