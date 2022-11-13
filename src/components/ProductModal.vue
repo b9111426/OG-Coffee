@@ -13,7 +13,7 @@
           </h5>
           <button
             type="button"
-            class="btn-close"
+            class="btn-close bg-gray me-1"
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>

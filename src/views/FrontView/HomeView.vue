@@ -92,8 +92,7 @@
             <div
               class="carousel-caption h-100 d-flex flex-column justify-content-end"
             >
-              <h2 class="text-dark text-start">阿里山莊園咖啡豆</h2>
-              <p class="text-dark fs-4 text-start fs-6 mb-5">熱銷強豆</p>
+              <h2 class="text-start">熱銷阿里山莊園咖啡豆</h2>
             </div>
           </div>
           <div class="carousel-item" data-bs-interval="3000">
@@ -105,10 +104,8 @@
               alt="..."
             />
             <div class="carousel-caption">
-              <h5>Third slide label</h5>
-              <p>
-                Some representative placeholder content for the third slide.
-              </p>
+              <h1>專業咖啡課程</h1>
+              <p class="fs-3">場地租借/親子烘培體驗/進階專業課程</p>
             </div>
           </div>
         </div>

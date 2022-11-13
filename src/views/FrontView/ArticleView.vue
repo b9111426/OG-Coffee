@@ -1,7 +1,7 @@
 <template>
   <div class="container py-5">
     <h4 class="mb-5 text-tertiary">橘子專欄</h4>
-    <div class="row row-cols-lg-4 row-cols-1 g-4">
+    <div class="row row-cols-lg-4 row-cols-2 g-4">
       <div class="col" v-for="i in articles" :key="i.id">
         <div class="articleBox bg-light p-2 shadow h-100 d-flex flex-column">
           <img

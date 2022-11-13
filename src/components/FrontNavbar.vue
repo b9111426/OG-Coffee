@@ -34,7 +34,10 @@
             </router-link>
           </li>
           <li class="nav-item mx-1">
-            <a href="javascript:;" class="btn btn-outline-primary btn-sm"
+            <a
+              href="javascript:;"
+              class="btn btn-outline-primary btn-sm"
+              @click="openModal"
               >聯絡我們
               <i class="bi bi-chat-text-fill"></i>
             </a>
@@ -196,10 +199,13 @@
       </div>
     </div>
   </nav>
+  <ConnectModal ref="connectModal"></ConnectModal>
 </template>
 
 <script>
+import ConnectModal from '@/components/ConnectModal'
 export default {
+  components: { ConnectModal },
   data() {
     return {
       isMenuShow: 'none'
@@ -224,6 +230,9 @@ export default {
       } else {
         this.isMenuShow = 'none'
       }
+    },
+    openModal() {
+      this.$refs.connectModal.openModal()
     }
   },
   computed: {

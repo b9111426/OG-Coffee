@@ -198,9 +198,6 @@
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header">加購及購物袋</div>
-        </div>
       </div>
       <div class="col-lg-4 col-12">
         <div class="card">
