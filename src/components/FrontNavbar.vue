@@ -141,17 +141,30 @@
         <div class="offcanvas-body">
           <div class="navBottom">
             <ul class="navbar-nav">
-              <li class="d-list nav-item" data-bs-dismiss="offcanvas">
-                <a href="javascript:;" class="nav-link px-2" @click="toProduct"
-                  >所有商品
+              <li class="nav-item" @click="openMenu">
+                <a href="javascript:;" class="nav-link px-2"
+                  >商品列表
                   <i class="bi bi-caret-down-fill fs-7"></i>
                 </a>
                 <ul
-                  class="d-menu text-center bg-primary p-1 border border-tertiary shadow start-50"
+                  class="s-menu text-center bg-primary p-1 border border-tertiary shadow start-50"
                 >
-                  <li v-for="(i, idx) in categoryList" :key="idx + 35343">
+                  <li>
                     <a
-                      class="px-1 d-block text-nowrap"
+                      class="py-2 d-block"
+                      href="javascript:;"
+                      data-bs-dismiss="offcanvas"
+                      @click="toProduct"
+                      >所有商品</a
+                    >
+                  </li>
+                  <li
+                    data-bs-dismiss="offcanvas"
+                    v-for="(i, idx) in categoryList"
+                    :key="idx + 35343"
+                  >
+                    <a
+                      class="px-2 d-block text-nowrap"
                       href="javascript:;"
                       @click="selectList(i.category)"
                       >{{ i.category }}</a
@@ -187,19 +200,30 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isMenuShow: 'none'
+    }
+  },
   methods: {
     async getCart() {
       await this.$store.dispatch('Cart/getCart')
     },
     selectList(val) {
       this.$store.dispatch('Products/setFirstCategory', val)
-      this.$store.dispatch('Products/setSubCategory', '')
       this.$store.dispatch('Products/setSortState', true)
       this.$router.push('/products')
     },
     async toProduct() {
       this.$store.dispatch('Products/setFirstCategory', '')
       this.$router.push('/products')
+    },
+    openMenu() {
+      if (this.isMenuShow === 'none') {
+        this.isMenuShow = 'block'
+      } else {
+        this.isMenuShow = 'none'
+      }
     }
   },
   computed: {
@@ -267,13 +291,14 @@ export default {
 .d-list:hover .d-menu {
   display: block;
 }
+
 .d-menu {
   display: none;
   transform: translate(-50px, 0);
   min-width: 100px;
-  @include pad() {
-    min-width: 100%;
-    transform: translate(0, 0);
-  }
+}
+
+.s-menu {
+  display: v-bind(isMenuShow);
 }
 </style>
