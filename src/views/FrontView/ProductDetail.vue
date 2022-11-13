@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div class="col mt-4 mt-lg-0">
+      <div class="col my-5 my-lg-0">
         <h3 class="text-start text-break">{{ product.title }}</h3>
         <h4 class="text-start text-break mb-lg-5 mb-3">
           {{ product.subtitle }}

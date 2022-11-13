@@ -164,7 +164,7 @@
                     :key="idx + 35343"
                   >
                     <a
-                      class="px-2 d-block text-nowrap"
+                      class="py-1 d-block text-nowrap"
                       href="javascript:;"
                       @click="selectList(i.category)"
                       >{{ i.category }}</a
