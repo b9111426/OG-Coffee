@@ -268,6 +268,13 @@
             <button class="btn btn-success w-100" type="submit">
               送出訂單
             </button>
+            <p
+              class="text-danger"
+              v-for="(i, idx) in Object.values(errors)"
+              :key="idx + 23425"
+            >
+              {{ i }}
+            </p>
           </div>
         </div>
       </div>

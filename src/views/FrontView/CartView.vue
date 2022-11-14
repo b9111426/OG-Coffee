@@ -37,7 +37,7 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.href === '/cart') {
+      if (to.path === '/cart') {
         this.switchNode = false
         for (let i = 1; i < 3; i++) {
           this.$refs.progressNav.children[i].className = 'step'
