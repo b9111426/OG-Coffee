@@ -1,24 +1,48 @@
 <template>
   <FrontNavbar></FrontNavbar>
-  <div class="box">
+  <div class="box" ref="box">
     <div class="content">
       <router-view></router-view>
     </div>
     <FrontFooter></FrontFooter>
   </div>
+  <UpBtn :active="active" @up-to-top="moveTop"></UpBtn>
 </template>
 
 <script>
 import FrontNavbar from '@/components/FrontNavbar.vue'
 import FrontFooter from '@/components/FrontFooter.vue'
+import UpBtn from '@/components/UpBtn.vue'
 export default {
   components: {
     FrontNavbar,
-    FrontFooter
+    FrontFooter,
+    UpBtn
+  },
+  data() {
+    return {
+      active: false
+    }
   },
   created() {
     this.$store.dispatch('handLoading', true)
     this.getAllProducts()
+  },
+  mounted() {
+    const box = this.$refs.box
+
+    box.onscroll = () => {
+      if (
+        box.scrollTop + box.getBoundingClientRect().bottom >
+          box.scrollHeight / 2 &&
+        box.scrollTop + box.getBoundingClientRect().bottom >
+          window.screen.height * 1.3
+      ) {
+        this.active = true
+      } else {
+        this.active = false
+      }
+    }
   },
   methods: {
     async getAllProducts() {
@@ -28,6 +52,12 @@ export default {
         this.$store.dispatch('handLoading', false)
         throw new Error(err)
       }
+    },
+    moveTop() {
+      this.$refs.box.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     }
   }
 }

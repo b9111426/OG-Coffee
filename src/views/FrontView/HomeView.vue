@@ -210,6 +210,7 @@
 <script>
 import ProductsSection from '@/components/ProductsSection.vue'
 import ProductModal from '@/components/ProductModal.vue'
+
 export default {
   inject: ['emitter'],
   components: { ProductsSection, ProductModal },
