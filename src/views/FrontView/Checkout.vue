@@ -269,7 +269,7 @@
               送出訂單
             </button>
             <p
-              class="text-danger"
+              class="text-danger d-lg-none d-block"
               v-for="(i, idx) in Object.values(errors)"
               :key="idx + 23425"
             >
