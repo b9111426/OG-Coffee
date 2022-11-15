@@ -22,7 +22,9 @@
  
 # 技術使用
 
-<a href="[https://medium.com/@zluvsand](https://vuejs.org/)">
+<a>
     <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
 </a>
-
+<a>
+    <img height="50" src="https://www.vectorlogo.zone/logos/sass-lang/sass-lang-icon.svg"/>
+</a>
