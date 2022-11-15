@@ -22,6 +22,6 @@
  
 # 技術使用
 <a href="https://medium.com/@zluvsand">
-    <img height="50"  style="color:#4FC08D"src="https://cdn4.iconfinder.com/data/icons/social-media-rounded-corners/512/Medium_rounded_cr-306.png"/>
+    <img height="50" style="background:#4FC08D" src="https://cdn4.iconfinder.com/data/icons/social-media-rounded-corners/512/Medium_rounded_cr-306.png"/>
 </a>
 
