@@ -40,4 +40,4 @@
     <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
 </a>
 
-Html、CSS、Bootstrap、Scss、Vue3、javascript
+Html、CSS、Bootstrap、Scss、javascript、Vue3
