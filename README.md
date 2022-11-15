@@ -46,4 +46,4 @@ Html、CSS、Bootstrap、Scss、javascript、Vue3
 - vue3-loading-overlay
 - CKEditor
 - vee-validation 
-- 
+
