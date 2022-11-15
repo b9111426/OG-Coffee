@@ -1,25 +1,45 @@
 <template>
   <AdminNavbar></AdminNavbar>
-  <div class="box">
+  <div class="box" ref="box">
     <router-view v-if="checkSuccess"></router-view>
   </div>
+  <UpBtn :active="active" @up-to-top="moveTop"></UpBtn>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
+import UpBtn from '@/components/UpBtn.vue'
 import { apiCheckRequest } from '@/api'
 export default {
   data() {
     return {
-      checkSuccess: false
+      checkSuccess: false,
+      active: false
     }
   },
   components: {
-    AdminNavbar
+    AdminNavbar,
+    UpBtn
   },
   created() {
     this.$store.dispatch('handLoading', true)
     this.checkLogin()
+  },
+  mounted() {
+    const box = this.$refs.box
+
+    box.onscroll = () => {
+      if (
+        box.scrollTop + box.getBoundingClientRect().bottom >
+          box.scrollHeight / 2 &&
+        box.scrollTop + box.getBoundingClientRect().bottom >
+          window.screen.height
+      ) {
+        this.active = true
+      } else {
+        this.active = false
+      }
+    }
   },
   methods: {
     async checkLogin() {
@@ -41,6 +61,12 @@ export default {
         this.$store.dispatch('fireToast', { title: '請先登入' })
         this.$router.push('/login')
       }
+    },
+    moveTop() {
+      this.$refs.box.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
     }
   }
 }

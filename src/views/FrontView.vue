@@ -30,11 +30,13 @@ export default {
   },
   mounted() {
     const box = this.$refs.box
-    const reactHeight = box.scrollTop + box.getBoundingClientRect().bottom
+
     box.onscroll = () => {
       if (
-        reactHeight > box.scrollHeight / 2 &&
-        reactHeight > window.screen.height * 1.3
+        box.scrollTop + box.getBoundingClientRect().bottom >
+          box.scrollHeight / 2 &&
+        box.scrollTop + box.getBoundingClientRect().bottom >
+          window.screen.height * 1.3
       ) {
         this.active = true
       } else {

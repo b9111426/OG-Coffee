@@ -17,15 +17,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/stylesheets/mixin';
 .upBtn {
   width: 70px;
   height: 70px;
   background-color: adjust-hue(#a2997f, -15%);
   border-radius: 10px;
   position: fixed;
-  right: 50px;
+  right: 100px;
   bottom: 150px;
   z-index: 600;
   cursor: pointer;
+
+  @include phone() {
+    width: 50px;
+    height: 50px;
+    right: 30px;
+    bottom: 50px;
+  }
 }
 </style>
