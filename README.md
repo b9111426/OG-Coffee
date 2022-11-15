@@ -22,6 +22,6 @@
  
 # 技術使用
 <a href="https://medium.com/@zluvsand">
-    <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
+    <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-ar21.svg"/>
 </a>
 
