@@ -50,4 +50,5 @@ Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
     
     <img width="500" src="https://i.imgur.com/LFOOpju.png"/>
 - vee-validation 
+
     <img width="500" src="https://i.imgur.com/4v2I3ZB.png"/>
