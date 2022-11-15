@@ -22,9 +22,9 @@
  
 # 技術使用
 
-<a href="">
+<span>
     <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
-</a>
+</span>
 <a href="">
     <img height="50" src="https://www.vectorlogo.zone/logos/sass-lang/sass-lang-icon.svg"/>
 </a>
