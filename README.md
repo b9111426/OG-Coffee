@@ -25,10 +25,10 @@
     <img height="50" src="https://www.vectorlogo.zone/logos/w3_html5/w3_html5-icon.svg"/>
 </a>
 <a href="">
-    <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
+    <img height="50" src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg"/>
 </a>
 <a href="">
-    <img height="50" src="https://www.vectorlogo.zone/logos/w3_css/w3_css-icon.svg"/>
+    <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
 </a>
 
 Html、CSS、Bootstrap、Scss、Vue3、javascript
