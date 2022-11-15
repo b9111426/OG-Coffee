@@ -47,6 +47,7 @@ Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
 - 運用directive做數字千分位轉換、日期轉換、圖片的 lazyload 效果
 
 ## 套件使用
+- axios
 - vue3-loading-overlay
 - CKEditor
 
