@@ -45,6 +45,6 @@ Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
 ## 插件使用
 - vue3-loading-overlay
 - CKEditor
-![](https://i.imgur.com/LFOOpju.png =500x500)
+![](https://i.imgur.com/LFOOpju.png)
 - vee-validation 
 
