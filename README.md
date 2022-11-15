@@ -46,7 +46,7 @@ Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
 - 此專案使用vuex、搭配props、emit做資料傳遞
 - 運用directive做數字千分位轉換、日期轉換、圖片的 lazyload 效果
 
-## 插件使用
+## 套件使用
 - vue3-loading-overlay
 - CKEditor
 
