@@ -21,7 +21,5 @@
   - 文章
  
 # 技術使用
-<a href="https://vuejs.org/">
-    <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
-</a>
+<img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
 
