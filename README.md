@@ -21,13 +21,4 @@
   - 文章
  
 # 技術使用
-
-<a href="">
-    <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
-</a>
-<a href="">
-    <img height="50" src="https://www.vectorlogo.zone/logos/sass-lang/sass-lang-icon.svg"/>
-</a>
-<a href="">
-    <img height="50" src="https://upload.vectorlogo.zone/logos/getbootstrap/images/987f8f6c-263a-47b1-a85d-853cfca215d9.svg"/>
-</a>
+Html、CSS、Bootstrap、Scss、Vue3、javascript
