@@ -47,6 +47,7 @@ Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
 - CKEditor
 
     CKEditor-toolbar套用
-     <img width="500" src="https://i.imgur.com/LFOOpju.png"/>
+    
+    <img width="500" src="https://i.imgur.com/LFOOpju.png"/>
 - vee-validation 
 
