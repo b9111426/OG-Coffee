@@ -42,5 +42,5 @@
 
 Html、CSS、Bootstrap、Scss、javascript、Vue3
 
-##插件使用
+## 插件使用
 
