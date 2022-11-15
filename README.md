@@ -40,7 +40,7 @@
     <img height="50" src="https://www.vectorlogo.zone/logos/vuejs/vuejs-icon.svg"/>
 </a>
 
-Html、CSS、Bootstrap、Scss、javascript、Vue3
+Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
 
 ## 插件使用
 - vue3-loading-overlay
