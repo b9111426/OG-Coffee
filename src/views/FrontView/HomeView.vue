@@ -48,14 +48,14 @@
             <div
               class="carousel-caption h-100 d-flex flex-column justify-content-center align-items-center"
             >
-              <h5 class="display-2 d-none d-lg-block mb-3">
+              <h1 class="display-3 text-nowrap d-none d-md-block px-5 mb-3">
                 新鮮烘培·當天現烘·手沖風味
-              </h5>
-              <h5 class="d-lg-none d-block">新鮮烘培·當天現烘·手沖風味</h5>
-              <p class="fs-3 d-none d-lg-block">
+              </h1>
+              <h5 class="d-md-none d-block">新鮮烘培·當天現烘·手沖風味</h5>
+              <p class="fs-3 d-none d-md-block">
                 預約外送服務提供 / 科技烘培 / 品質絕對
               </p>
-              <p class="fs-7 d-lg-none d-block">
+              <p class="fs-7 d-md-none d-block">
                 預約外送服務提供 / 科技烘培 / 品質絕對
               </p>
             </div>
@@ -71,12 +71,12 @@
             <div
               class="carousel-caption h-100 d-flex flex-column justify-content-center"
             >
-              <h2 class="text-dark d-none d-lg-block me-auto">
+              <h2 class="d-none d-md-block me-auto">
                 環保外帶紙杯，100%防水植纖紙漿
               </h2>
-              <h6 class="d-lg-none d-block">環保外帶紙杯，100%防水植纖紙漿</h6>
-              <p class="d-lg-none d-block fs-6">一次性飲料杯你有更好的選擇</p>
-              <p class="text-dark fs-4 d-none d-lg-block me-auto">
+              <h6 class="d-md-none d-block">環保外帶紙杯，100%防水植纖紙漿</h6>
+              <p class="d-md-none d-block fs-6">一次性飲料杯你有更好的選擇</p>
+              <p class="fs-4 d-none d-md-block me-auto">
                 一次性飲料杯你有更好的選擇
               </p>
             </div>
@@ -105,7 +105,12 @@
             />
             <div class="carousel-caption">
               <h1>專業咖啡課程</h1>
-              <p class="fs-3">場地租借/親子烘培體驗/進階專業課程</p>
+              <p class="fs-3 d-none d-lg-block">
+                場地租借/親子烘培體驗/進階專業課程
+              </p>
+              <p class="fs-5 d-lg-none d-block">
+                場地租借/親子烘培體驗/進階專業課程
+              </p>
             </div>
           </div>
         </div>
