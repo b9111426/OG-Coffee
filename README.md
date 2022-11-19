@@ -11,11 +11,11 @@
 
 - 前台
   - 商品分業: 商品分類、商品收尋、價格排序、商品完售樣式、商品加減填按鈕元件、動態路由切換商品內頁
-  - 優惠卷: Localstorage存取優惠卷、優惠卷逾期樣式變換
+  - 優惠卷: Localstorage 存取優惠卷、優惠卷逾期樣式變換
   - 文章專欄頁面: 動態路由切換商品內頁
-  - 購物車: 外送、內用區分，預約外送時間、流程進度條樣式變換、表單submit驗證
-  - 登入後台 :密碼隱藏顯示、Localstorage存取帳密、cookie存取
-  - 聯絡我們: modal開關、表單submit驗證
+  - 購物車: 外送、內用區分，預約外送時間、流程進度條樣式變換、表單submit 驗證
+  - 登入後台 :密碼隱藏顯示、Localstorage存取帳密、cookie 存取
+  - 聯絡我們: modal開關、表單submit 驗證
 - 後台: 商品總數計算
   - 商品 :圖片上傳
   - 訂單
@@ -43,19 +43,19 @@
 </a>
 
 Html、CSS、Bootstrap、Scss、javascript、Vue3、Vuex、Vue Router、Vue Cli
-- 此專案使用vuex、搭配props、emit做資料傳遞
-- 運用directive做數字千分位轉換、日期轉換、圖片的 lazyload 效果
+- 此專案使用vuex、搭配props、emit 做資料傳遞
+- 運用directive 做數字千分位轉換、日期轉換、圖片的 lazyload 效果
 
 ## 套件使用
 - axios
 - vue3-loading-overlay
 - CKEditor
 
-    CKEditor-toolbar套用
+    CKEditor-toolbar 套用
     
     <img width="500" src="https://i.imgur.com/LFOOpju.png"/>
 - vee-validation 
 
     <img width="500" src="https://i.imgur.com/4v2I3ZB.png"/>
-- lodash函式庫的debounce事件延遲(防抖)
-- Lottie動畫套用
+- lodash 函式庫的debounce 事件延遲(防抖)
+- Lottie 動畫套用
